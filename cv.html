@@ -1,103 +1,154 @@
 ---
 layout: cv
-title: CV - Keunhong Park
+title: CV — Wonik Jang
+description: Education, publications, research, projects, intellectual property, awards, and leadership of Wonik Jang.
+permalink: /cv/
 ---
-
-<!-- Header -->
-<header class="flex flex-col md:flex-row print:flex-row md:items-center print:items-center gap-6 pb-6 border-b border-border-subtle">
-  <div class="flex-1">
-    <h1 class="font-display text-3xl md:text-4xl font-semibold text-text">{{ site.name }}</h1>
-    <p class="text-text-body text-lg mt-1">{{ site.position }}</p>
+<header class="flex flex-col md:flex-row print:flex-row md:items-start gap-6 pb-6 border-b border-border-subtle">
+  <div class="flex-1 min-w-0">
+    <h1 class="font-display text-3xl md:text-4xl font-semibold text-text">{{ site.name | escape }}</h1>
+    <p class="text-text-body text-lg mt-1">{{ site.position | escape }}</p>
+    <p class="text-text-muted text-sm mt-1">{{ site.affiliation | escape }} · {{ site.location | escape }}</p>
   </div>
-
   <div class="text-sm text-text-body space-y-1 md:text-right print:text-right">
-    <p>
-      <a href="{{ site.url }}" class="hover:text-text no-underline">
-        {% include icons/globe.html class="w-4 h-4 inline mr-1" %}
-        {% assign url_parts = site.url | split: "//" %}{{ url_parts[1] }}
-      </a>
-    </p>
-    <p>
-      <a href="https://github.com/{{ site.github_username }}" class="hover:text-text no-underline">
-        {% include icons/github.html class="w-4 h-4 inline mr-1" %}
-        {{ site.github_username }}
-      </a>
-    </p>
-    <p>
-      <a href="https://twitter.com/{{ site.twitter_username }}" class="hover:text-text no-underline">
-        {% include icons/twitter.html class="w-4 h-4 inline mr-1" %}
-        {{ site.twitter_username }}
-      </a>
-    </p>
-    <p>
-      <a href="mailto:{{ site.email }}" class="hover:text-text no-underline">
-        {% include icons/envelope.html class="w-4 h-4 inline mr-1" %}
-        {{ site.email }}
-      </a>
-    </p>
+    <p><a href="{{ '/' | absolute_url }}" class="no-underline">{% include icons/globe.html class="w-4 h-4 inline mr-1" %}{{ site.url | remove: 'https://' | escape }}</a></p>
+    <p><a href="mailto:{{ site.email | escape }}" class="no-underline break-words">{% include icons/envelope.html class="w-4 h-4 inline mr-1" %}{{ site.email | escape }}</a></p>
+    <p><a href="https://github.com/{{ site.github_username }}" class="no-underline">{% include icons/github.html class="w-4 h-4 inline mr-1" %}{{ site.github_username }}</a></p>
+    <p><a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="no-underline"><i class="ai ai-google-scholar mr-1" aria-hidden="true"></i>Google Scholar</a></p>
   </div>
 </header>
-
-<!-- Education -->
-<section class="mt-8">
-  <h2 class="font-display text-2xl font-semibold text-text mb-4">Education</h2>
-  {% for school in site.data.education %}
-  <div class="flex flex-col md:flex-row md:justify-between gap-1 mb-4">
-    <div class="flex-1">
-      <p class="font-semibold">{{ school.name }}</p>
-      <p class="text-text-body text-sm">{{ school.description }}</p>
+<section class="mt-8" aria-labelledby="research-interests">
+  {% include section-title.html id="research-interests" title="Research Interests" %}
+  <ul class="cv-list text-text-body">
+    {% for interest in site.data.cv.interests %}<li>{{ interest | escape }}</li>{% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="education">
+  {% include section-title.html id="education" title="Education" %}
+  {% for school in site.data.cv.education %}
+  <div class="cv-item mb-5">
+    <div class="cv-entry">
+      <div class="min-w-0">
+        <h3 class="font-serif font-semibold">{{ school.institution | escape }}</h3>
+        <p class="text-text-body">{{ school.degree | escape }}</p>
+      </div>
+      <div class="cv-entry-meta">
+        <p class="text-text-muted text-sm">{{ school.location | escape }}</p>
+        <p class="cv-date">{{ school.dates | escape }}</p>
+      </div>
     </div>
-    <div class="text-text-muted text-sm md:text-right flex-shrink-0">
-      {{ school.dates }}
-    </div>
+    <ul class="cv-list mt-1 text-text-body text-sm"><li>{{ school.description | escape }}</li></ul>
   </div>
   {% endfor %}
 </section>
-
-<!-- Employment -->
-<section class="mt-8">
-  <h2 class="font-display text-2xl font-semibold text-text mb-4">Employment</h2>
-  {% for job in site.data.employment %}
-  <div class="flex flex-col md:flex-row md:justify-between gap-1 mb-4">
-    <div class="flex-1">
-      <p class="font-semibold">{{ job.company }}</p>
-      <p class="text-text-body text-sm">{{ job.description }}</p>
-    </div>
-    <div class="text-text-muted text-sm md:text-right flex-shrink-0">
-      {{ job.dates }}<br>
-      {{ job.location }}
-    </div>
+<section class="mt-8" aria-labelledby="cv-publications">
+  {% include section-title.html id="cv-publications" title="Publications" %}
+  {% for group in site.data.cv.publication_groups %}
+  <div class="mt-5">
+    <h3 class="cv-subheading">{{ group.title | escape }}</h3>
+    <ul class="cv-list space-y-5">
+      {% assign group_publications = site.data.publications | where: "category", group.id | sort: "sort_date" | reverse %}
+      {% for pub in group_publications %}{% include cv-publication.html pub=pub %}{% endfor %}
+    </ul>
   </div>
   {% endfor %}
 </section>
-
-<!-- Publications -->
-<section class="mt-8">
-  <h2 class="font-display text-2xl font-semibold text-text mb-4">Publications</h2>
-  {% for publication in site.data.publications %}
-  <div class="flex flex-col md:flex-row md:justify-between gap-1 mb-4">
-    <div class="flex-1">
-      <p>
-        <a href="{{ publication.project_page }}" class="font-semibold hover:text-text-body">{{ publication.title }}</a>
-      </p>
-      <p class="text-text-body text-sm">
-        {% for author_id in publication.authors %}
-          {% assign author = site.data.authors[author_id] %}
-          {% if author.is_me %}
-            <span class="font-semibold">{{ author.first_name | slice: 0 }}. {{ author.last_name }}</span>{% unless forloop.last %}, {% endunless %}
-          {% else %}
-            <a href="{{ author.website }}" class="hover:text-text">{{ author.first_name | slice: 0 }}. {{ author.last_name }}</a>{% unless forloop.last %}, {% endunless %}
-          {% endif %}
-        {% endfor %}
-        {% if publication.with_collaborators %}
-          with collaborators at <a href="{{ publication.with_collaborators.url }}" class="hover:text-text">{{ publication.with_collaborators.name }}</a>
-        {% endif %}
-      </p>
-      <p class="text-text-muted text-sm">{{ publication.description }}</p>
+<section class="mt-8" aria-labelledby="research">
+  {% include section-title.html id="research" title="Research" %}
+  {% assign research = site.data.cv.research %}
+  <div class="cv-entry">
+    <div class="min-w-0">
+      <h3 class="font-serif font-semibold">{{ research.institution | escape }}</h3>
+      <p class="text-text-body">{{ research.role | escape }}</p>
     </div>
-    <div class="text-text-muted text-sm md:text-right flex-shrink-0">
-      {{ publication.venue }}
+    <div class="cv-entry-meta">
+      <p class="text-text-muted text-sm">{{ research.location | escape }}</p>
+      <p class="cv-date">{{ research.dates | escape }}</p>
     </div>
+  </div>
+  <ul class="cv-list mt-2 space-y-3 text-text-body">
+    {% for activity in research.activities %}
+    <li>
+      <h4 class="font-serif font-semibold">{{ activity.title | escape }} <span class="font-normal italic text-text-muted ml-1">{{ activity.dates | escape }}</span></h4>
+      <p class="text-sm">{{ activity.description | escape }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="projects">
+  {% include section-title.html id="projects" title="Projects" %}
+  {% for project in site.data.cv.projects %}
+  <div class="cv-item">
+    <div class="cv-entry">
+      <div class="min-w-0">
+        <h3 class="font-serif font-semibold">{{ project.title | escape }}</h3>
+        <p class="text-text-body text-sm">{{ project.role | escape }}, {{ project.team | escape }} (<span lang="ko">{{ project.team_ko | escape }}</span>), {{ project.institution | escape }}</p>
+      </div>
+      <p class="cv-date">{{ project.dates | escape }}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm">
+      {% for detail in project.details %}<li>{{ detail | escape }}</li>{% endfor %}
+    </ul>
   </div>
   {% endfor %}
 </section>
+<section class="mt-8" aria-labelledby="intellectual-property">
+  {% include section-title.html id="intellectual-property" title="Intellectual Property" %}
+  <h3 class="cv-subheading">Patent Applications</h3>
+  <ul class="cv-list space-y-5">
+    {% for patent in site.data.cv.patents %}
+    <li class="cv-item">
+      <div class="cv-entry">
+        <div class="min-w-0">
+          <h4 class="font-serif font-semibold leading-snug">{{ patent.title | escape }}</h4>
+          <p class="text-text-body text-sm mt-1">{% include authors.html authors=patent.authors %}</p>
+          {% for detail in patent.details %}<p class="text-text-body text-sm">{{ detail | escape }}</p>{% endfor %}
+        </div>
+        <p class="cv-date">{{ patent.date | escape }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <h3 class="cv-subheading mt-5">Software Copyright Registrations</h3>
+  <ul class="cv-list space-y-5">
+    {% for copyright in site.data.cv.copyrights %}
+    <li class="cv-item">
+      <div class="cv-entry">
+        <div class="min-w-0">
+          <h4 class="font-serif font-semibold leading-snug">{{ copyright.title | escape }}</h4>
+          <p class="text-text-body text-sm mt-1">{% include authors.html authors=copyright.authors %}</p>
+          <p class="text-text-body text-sm">{{ copyright.description | escape }}</p>
+        </div>
+        <p class="cv-date">{{ copyright.date | escape }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="awards">
+  {% include section-title.html id="awards" title="Awards" %}
+  {% for award in site.data.cv.awards %}
+  <div class="cv-item">
+    <div class="cv-entry">
+      <h3 class="font-serif font-semibold min-w-0 leading-snug">{{ award.title | escape }}</h3>
+      <p class="cv-date">{{ award.date | escape }}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm"><li>{{ award.description | escape }}</li></ul>
+  </div>
+  {% endfor %}
+</section>
+<section class="mt-8" aria-labelledby="leadership">
+  {% include section-title.html id="leadership" title="Leadership" %}
+  {% for role in site.data.cv.leadership %}
+  <div class="cv-item mb-5">
+    <div class="cv-entry">
+      <h3 class="font-serif font-semibold min-w-0 leading-snug">{{ role.title | escape }}</h3>
+      <p class="cv-date">{{ role.dates | escape }}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm">
+      {% for detail in role.details %}<li>{{ detail | escape }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>
+<p class="mt-10 font-sans text-xs text-text-muted">Updated {{ site.updated | escape }}</p>

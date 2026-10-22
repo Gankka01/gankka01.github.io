@@ -1,0 +1,11 @@
+<li class="cv-item">
+  <div class="cv-entry">
+    <div class="min-w-0">
+      <h4 class="font-serif font-semibold leading-snug">{% include publication-title.html pub=include.pub %}</h4>
+      <p class="text-text-body text-sm mt-1">{% include authors.html authors=include.pub.authors %}</p>
+      <p class="text-text-muted text-sm">{{ include.pub.venue | escape }}{% if include.pub.pages %}, pp. {{ include.pub.pages | escape }}{% endif %}.{% if include.pub.status %} {{ include.pub.status | escape }}.{% endif %}</p>
+      {% include publication-links.html pub=include.pub %}
+    </div>
+    <p class="cv-date">{{ include.pub.date | escape }}</p>
+  </div>
+</li>

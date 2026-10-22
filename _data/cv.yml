@@ -1,0 +1,84 @@
+interests:
+  - Reinforcement learning and multi-agent learning
+  - GPU resource scheduling and AI infrastructure
+  - Digital watermarking and AI-generated text detection
+
+education:
+  - institution: Kyung Hee University
+    degree: Master of Artificial Intelligence
+    location: Yongin, South Korea
+    dates: Mar. 2025 – Feb. 2027
+    description: Graduate studies in artificial intelligence at ICNS Lab under the supervision of Prof. Eui-Nam Huh.
+  - institution: Kangnam University
+    degree: Bachelor's Degree in Data Science
+    location: Yongin, South Korea
+    dates: Mar. 2019 – Feb. 2025
+    description: Double major in Data Science and Public Service.
+
+publication_groups:
+  - id: journal
+    title: Journal Articles
+  - id: conference
+    title: Conference Papers
+  - id: manuscript
+    title: Manuscripts Under Review
+
+research:
+  institution: ICNS Lab, Kyung Hee University
+  role: Graduate Researcher
+  location: Yongin, South Korea
+  dates: 2025–2026
+  activities:
+    - title: AI-MCMP
+      dates: "2026"
+      description: Develop AIOps system components and design scheduler agents for cloud resource management.
+    - title: Cloud Continuum Technologies for Large-Scale AI Services
+      dates: 2025–2026
+      description: Develop AI-generated text detection methods and document research outcomes.
+    - title: CCRC Seminar Coordination
+      dates: 2025–2026
+      description: Coordinate communication, seminar scheduling, and operations across participating laboratories.
+
+projects:
+  - title: Video-Based Matching of Lost Dogs
+    role: Team Leader and Main Developer
+    team: Team Dasimanna
+    team_ko: 다시만나
+    institution: Kangnam University
+    dates: "2023"
+    details:
+      - Developed video analysis and deep learning classifiers for lost-dog matching.
+      - The team earned an Encouragement Award at the 2023 Data Youth Campus competition.
+      - The project led to a memorandum of understanding (MOU) with ToBePet.
+
+patents:
+  - title: Text Detection Device for AI-Generated Content Based on Part-of-Speech and Phonological and Method of Operating the Same
+    authors: [euinam_huh, wonik_jang]
+    date: July 2025
+    details:
+      - Filed by the University-Industry Cooperation Group of Kyung Hee University.
+      - Korean application 10-2025-0088858, filed July 2, 2025.
+      - Corresponding PCT application PCT/KR2025/023209, filed December 30, 2025.
+
+copyrights:
+  - title: "DCC (Deep Classify Cut): Multiple Deep-Learning Classifiers"
+    authors: [wonik_jang]
+    date: September 2023
+    description: Korea Copyright Commission, registration C-2023-039364, September 4, 2023.
+
+awards:
+  - title: Encouragement Award, 2023 Data Youth Campus Outstanding Project Competition
+    date: November 2023
+    description: Awarded by the President of the Korea Data Strategy Society for the team project Video-Based Matching of Lost Dogs.
+
+leadership:
+  - title: Campus Representative, CCC (Korea Campus Crusade for Christ) at Kangnam University
+    dates: 2023–2024
+    details:
+      - Managed budgets and events for a student organization of approximately 100 members.
+      - Represented religious clubs and served on the university's student club council.
+  - title: District Secretary, CCC Yongin District
+    dates: 2022–2023
+    details:
+      - Coordinated joint activities among CCC groups at eight campuses.
+      - Managed retreat budgets and logistics for approximately 200 district participants.
