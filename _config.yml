@@ -1,74 +1,32 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+title: Wonik Jang
+name: Wonik Jang
+position: Artificial Intelligence Researcher
+email: ericegg0104@gmail.com
+description: >-
+  Wonik Jang is a master's student at Kyung Hee University researching
+  reinforcement learning, AI infrastructure, and digital watermarking.
+bio: |
+  I'm a master's student in artificial intelligence at **Kyung Hee University**,
+  working with **Prof. Eui-Nam Huh** at the **ICNS Lab**.
 
-title: Keunhong Park
-name: Keunhong Park
-position: Research Scientist
-email: 2pm4kil6c@mozmail.com
-description: |
-  I lead the pre-training team at [World Labs](https://www.worldlabs.ai/blog) where I recently led the development of [Atlas](https://www.worldlabs.ai/blog/atlas) and [RTFM](https://www.worldlabs.ai/blog/rtfm).
-   
-  Previously I was a research scientist at [Google](https://ai.google/research/) where 
-  I built technology to [generate 3D assets](https://research.google/blog/bringing-3d-shoppable-products-online-with-generative-ai/) 
-  for products on Google Search. I received my Ph.D from the [University of Washington](https://grail.cs.washington.edu/) 
-  in 2021, advised by [Ali Farhadi](https://homes.cs.washington.edu/~ali/) and [Steve Seitz](https://homes.cs.washington.edu/~seitz/).
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://keunhong.com" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: KeunhongP
-github_username: keunhong
-google_scholar: HVZb-5oAAAAJ
-google_analytics: G-MFWSBLRKG0
-
-# Build settings
+  My research interests include reinforcement and multi-agent learning,
+  GPU resource scheduling, digital watermarking, and AI-generated text detection.
+location: Yongin, South Korea
+affiliation: Kyung Hee University
+baseurl: ""
+url: "https://gankka01.github.io"
+github_username: Gankka01
+google_scholar: wVjmE7gAAAAJ
+portrait:
+portrait_alt: Wonik Jang
+updated: "October 22, 2026"
 plugins:
-  - jekyll-feed
   - jekyll-tailwindcss
-
-# Blog settings
-permalink: /blog/:year/:month/:day/:title/
-excerpt_separator: <!--more-->
-
-defaults:
-  - scope:
-      path: "_posts"
-      type: "posts"
-    values:
-      layout: "post"
-      math: false
-
-# Exclude from processing.
-# The following items will not be processed, by default.
-# Any item listed under the `exclude:` key here will be automatically added to
-# the internal "default list".
-#
-# Excluded items can be processed by explicitly listing the directories or
-# their entries' file path in the `include:` list.
-#
-# exclude:
-#   - .sass-cache/
-#   - .jekyll-cache/
-#   - gemfiles/
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules/
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+exclude:
+  - README.md
+  - LICENSE.md
+  - Gemfile
+  - Gemfile.lock
+  - tailwind.config.js
+  - vendor
+  - node_modules

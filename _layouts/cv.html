@@ -4,14 +4,11 @@
   {% include head.html %}
 </head>
 <body class="bg-surface text-text font-serif antialiased print:bg-white">
-  <div class="print:hidden">
-    {% include header.html %}
-  </div>
-  <main class="max-w-4xl mx-auto px-6 py-8 print:py-4 print:px-4">
+  <a class="skip-link no-print" href="#main-content">Skip to content</a>
+  {% include header.html %}
+  <main id="main-content" class="cv max-w-4xl mx-auto px-6 py-8 print:py-4 print:px-4" tabindex="-1">
     {{ content }}
   </main>
-  <div class="print:hidden">
-    {% include footer.html %}
-  </div>
+  {% include footer.html %}
 </body>
 </html>
