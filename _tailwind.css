@@ -24,8 +24,8 @@
   --color-link-underline: #cbd5e1;
 
   /* Fonts */
-  --font-serif: 'Crimson Pro', Georgia, Cambria, serif;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-serif: 'Crimson Pro', 'Noto Serif KR', Georgia, Cambria, serif;
+  --font-display: 'Cormorant Garamond', 'Noto Serif KR', Georgia, serif;
   --font-sans: 'Source Sans 3', system-ui, sans-serif;
 }
 
@@ -135,6 +135,10 @@ a.no-underline:hover {
 .skip-link:focus {
   transform: translateY(0);
 }
+/* Main receives focus after navigation; interactive controls keep their rings. */
+#main-content:focus {
+  outline: none;
+}
 .image-placeholder {
   display: flex;
   align-items: center;
@@ -158,6 +162,51 @@ a.no-underline:hover {
   text-align-last: left;
   hyphens: auto;
 }
+
+/* Home sits to the left of CV; the shared menu stays in place. */
+body > header {
+  view-transition-name: site-header;
+}
+html[data-page-direction] {
+  --page-slide-offset: 100%;
+}
+html[data-page-direction="back"] {
+  --page-slide-offset: -100%;
+}
+@keyframes page-slide-out {
+  to { transform: translateX(calc(-1 * var(--page-slide-offset))); }
+}
+@keyframes page-slide-in {
+  from { transform: translateX(var(--page-slide-offset)); }
+}
+html[data-page-direction]::view-transition-old(root),
+html[data-page-direction]::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(.22, .61, .36, 1);
+  animation-fill-mode: both;
+  mix-blend-mode: normal;
+}
+html[data-page-direction]::view-transition-old(root) {
+  animation-name: page-slide-out;
+}
+html[data-page-direction]::view-transition-new(root) {
+  animation-name: page-slide-in;
+}
+::view-transition-group(site-header),
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @property --publication-glow-angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -170,16 +219,27 @@ a.no-underline:hover {
   transition: transform 280ms ease;
 }
 .publication-image::after {
+  --publication-glow-width: 16px;
   content: "";
   position: absolute;
-  inset: -1px;
-  padding: 1.5px;
+  inset: 0;
+  z-index: 1;
   border-radius: inherit;
-  background: conic-gradient(from var(--publication-glow-angle), #2563eb14, #2563eb40 25%, #2563ebcc 38%, #93c5fd 44%, #2563eb40 51%, #2563eb14 70%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
+  background: conic-gradient(from var(--publication-glow-angle), #2563eb40, #2563eb70 25%, #2563ebdb 38%, #60a5faed 44%, #2563eb70 51%, #2563eb40 70%);
+  /* Combine four soft inner edges; the center stays fully transparent. */
+  -webkit-mask:
+    linear-gradient(to right, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to left, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to bottom, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to top, #000, transparent var(--publication-glow-width));
+  -webkit-mask-composite: source-over;
+  mask:
+    linear-gradient(to right, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to left, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to bottom, #000, transparent var(--publication-glow-width)),
+    linear-gradient(to top, #000, transparent var(--publication-glow-width));
+  mask-composite: add;
+  mask-repeat: no-repeat;
   pointer-events: none;
   opacity: 0;
   transition: opacity 220ms ease;
@@ -206,7 +266,6 @@ a.no-underline:hover {
   }
   .publication-image:hover::after {
     animation: none;
-    background: var(--color-accent);
   }
 }
 .cv-entry {
