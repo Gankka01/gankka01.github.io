@@ -1,7 +1,7 @@
 <footer class="py-12 no-print">
   <div class="max-w-4xl mx-auto px-6 text-center">
     <div class="flex justify-center items-center gap-5 mb-4">
-      <a href="mailto:{{ site.email | escape }}" class="no-underline" aria-label="Email {{ site.name | escape }}">{% include icons/envelope.html class="w-5 h-5" %}</a>
+      <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy" aria-label="Copy email address">{% include icons/envelope.html class="w-5 h-5" %}</button>
       <a href="https://github.com/{{ site.github_username }}" class="no-underline" aria-label="{{ site.name | escape }} on GitHub">{% include icons/github.html class="w-5 h-5" %}</a>
       <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="no-underline" aria-label="{{ site.name | escape }} on Google Scholar"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
     </div>
@@ -11,3 +11,4 @@
     </p>
   </div>
 </footer>
+<p id="email-copy-status" class="copy-status no-print" role="status" aria-live="polite" hidden></p>

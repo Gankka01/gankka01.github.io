@@ -11,8 +11,9 @@ permalink: /cv/
     <p class="text-text-muted text-sm mt-1">{{ site.affiliation | escape }} · {{ site.location | escape }}</p>
   </div>
   <div class="text-sm text-text-body space-y-1 md:text-right print:text-right">
+    <p class="no-print"><a href="{{ site.cv_pdf | relative_url }}" target="_blank" rel="noopener" class="no-underline" aria-label="View CV PDF (opens in a new tab)">{% include icons/file.html class="w-4 h-4 inline mr-1" %}View PDF</a></p>
     <p><a href="{{ '/' | absolute_url }}" class="no-underline">{% include icons/globe.html class="w-4 h-4 inline mr-1" %}{{ site.url | remove: 'https://' | escape }}</a></p>
-    <p><a href="mailto:{{ site.email | escape }}" class="no-underline break-words">{% include icons/envelope.html class="w-4 h-4 inline mr-1" %}{{ site.email | escape }}</a></p>
+    <p><button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy break-words" aria-label="Copy email address: {{ site.email | escape }}">{% include icons/envelope.html class="w-4 h-4 inline mr-1" %}{{ site.email | escape }}</button></p>
     <p><a href="https://github.com/{{ site.github_username }}" class="no-underline">{% include icons/github.html class="w-4 h-4 inline mr-1" %}{{ site.github_username }}</a></p>
     <p><a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="no-underline"><i class="ai ai-google-scholar mr-1" aria-hidden="true"></i>Google Scholar</a></p>
   </div>
@@ -69,7 +70,7 @@ permalink: /cv/
   <ul class="cv-list mt-2 space-y-3 text-text-body">
     {% for activity in research.activities %}
     <li>
-      <h4 class="font-serif font-semibold">{{ activity.title | escape }} <span class="font-normal italic text-text-muted ml-1">{{ activity.dates | escape }}</span></h4>
+      <h4 class="font-serif font-semibold">{{ activity.title | escape }} <span class="font-normal text-text-muted ml-1">{{ activity.dates | escape }}</span></h4>
       <p class="text-sm">{{ activity.description | escape }}</p>
     </li>
     {% endfor %}

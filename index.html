@@ -8,7 +8,7 @@ permalink: /
     <div class="flex flex-col items-center text-center md:text-left md:flex-row md:items-start gap-8">
       <div class="flex-shrink-0">
         {% if site.portrait %}
-        <img src="{{ site.portrait | relative_url }}" alt="{{ site.portrait_alt | escape }}" width="400" height="400" class="w-48 h-48 md:w-56 md:h-56 object-cover">
+        <img src="{{ site.portrait | relative_url }}" alt="{{ site.portrait_alt | escape }}" width="313" height="313" class="w-48 h-48 md:w-56 md:h-56 object-cover object-center">
         {% else %}
         <div class="image-placeholder w-48 h-48 md:w-56 md:h-56" aria-label="Portrait placeholder for {{ site.name | escape }}"><span>Portrait</span></div>
         {% endif %}
@@ -17,10 +17,10 @@ permalink: /
         <h1 class="font-display text-3xl md:text-4xl font-semibold text-text">Hello, I'm {{ site.name | escape }}</h1>
         <div class="text-text-body mt-4 max-w-prose leading-relaxed prose">{{ site.bio | markdownify }}</div>
         <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-6 font-sans text-sm">
-          <a href="{{ '/cv/' | relative_url }}" class="inline-flex items-center no-underline">{% include icons/file.html class="w-4 h-4 mr-1.5" %}CV</a>
+          <a href="{{ site.cv_pdf | relative_url }}" target="_blank" rel="noopener" class="inline-flex items-center no-underline" aria-label="View CV PDF (opens in a new tab)">{% include icons/file.html class="w-4 h-4 mr-1.5" %}CV</a>
           <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="inline-flex items-center no-underline"><i class="ai ai-google-scholar mr-1.5" aria-hidden="true"></i>Scholar</a>
           <a href="https://github.com/{{ site.github_username }}" class="inline-flex items-center no-underline">{% include icons/github.html class="w-4 h-4 mr-1.5" %}GitHub</a>
-          <a href="mailto:{{ site.email | escape }}" class="inline-flex items-center no-underline">{% include icons/envelope.html class="w-4 h-4 mr-1.5" %}Email</a>
+          <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy inline-flex items-center" aria-label="Copy email address">{% include icons/envelope.html class="w-4 h-4 mr-1.5" %}Email</button>
         </div>
       </div>
     </div>

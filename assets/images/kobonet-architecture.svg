@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">KoboNet architecture</title>
+  <desc id="desc">An input document branches into pronunciation analysis and part-of-speech analysis. IPA conversion and phonetic-category ratios produce 22-dimensional features. KoNLpy part-of-speech tagging and POS-category ratios produce 10-dimensional features. Both feature vectors feed an MLP classifier, which produces a human or AI prediction.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#2563EB"/>
+    </marker>
+    <style>
+      text { font-family: 'DejaVu Sans', sans-serif; fill: #1E293B; text-anchor: middle; }
+      .panel { fill: #F8FAFC; stroke: #94A3B8; stroke-width: 2; }
+      .stage { fill: #FFFFFF; stroke: #CBD5E1; stroke-width: 2; }
+      .head { font-size: 30px; font-weight: 600; }
+      .label { font-size: 27px; }
+      .feature { font-size: 30px; font-weight: 600; fill: #1D4ED8; }
+      .flow { fill: none; stroke: #2563EB; stroke-width: 3; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+
+  <!-- Shared text input. -->
+  <rect x="332" y="48" width="360" height="80" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2.5"/>
+  <text x="512" y="99" font-size="33" font-weight="600">Input document</text>
+
+  <!-- One document feeds both independent feature-analysis branches. -->
+  <path class="flow" d="M512 128 V180"/>
+  <path class="flow" d="M512 180 H268 V228" marker-end="url(#arrow)"/>
+  <path class="flow" d="M512 180 H756 V228" marker-end="url(#arrow)"/>
+
+  <!-- Pronunciation-analysis branch. -->
+  <rect class="panel" x="56" y="230" width="424" height="428" rx="8"/>
+  <text class="head" x="268" y="274">Pronunciation</text>
+  <text class="head" x="268" y="311">analysis</text>
+  <path d="M80 328 H456" stroke="#CBD5E1" stroke-width="2"/>
+  <rect class="stage" x="100" y="346" width="336" height="64" rx="5"/>
+  <text class="label" x="268" y="388">IPA conversion</text>
+  <path class="flow" d="M268 410 V442" marker-end="url(#arrow)"/>
+  <rect class="stage" x="100" y="444" width="336" height="80" rx="5"/>
+  <text class="label" x="268" y="477">Phonetic-category</text>
+  <text class="label" x="268" y="509">ratios</text>
+  <path class="flow" d="M268 524 V560" marker-end="url(#arrow)"/>
+  <rect x="100" y="562" width="336" height="64" rx="5" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+  <text class="feature" x="268" y="605">22-D features</text>
+
+  <!-- Part-of-speech-analysis branch. -->
+  <rect class="panel" x="544" y="230" width="424" height="428" rx="8"/>
+  <text class="head" x="756" y="293">POS analysis</text>
+  <path d="M568 328 H944" stroke="#CBD5E1" stroke-width="2"/>
+  <rect class="stage" x="588" y="346" width="336" height="64" rx="5"/>
+  <text x="756" y="387" font-size="25">POS tagging · KoNLpy</text>
+  <path class="flow" d="M756 410 V442" marker-end="url(#arrow)"/>
+  <rect class="stage" x="588" y="444" width="336" height="80" rx="5"/>
+  <text class="label" x="756" y="477">POS-category</text>
+  <text class="label" x="756" y="509">ratios</text>
+  <path class="flow" d="M756 524 V560" marker-end="url(#arrow)"/>
+  <rect x="588" y="562" width="336" height="64" rx="5" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+  <text class="feature" x="756" y="605">10-D features</text>
+
+  <!-- Both documented feature vectors feed the classifier; no additional operation is asserted. -->
+  <path class="flow" d="M268 626 V700 H512"/>
+  <path class="flow" d="M756 626 V700 H512"/>
+  <path class="flow" d="M512 700 V740" marker-end="url(#arrow)"/>
+  <rect x="296" y="742" width="432" height="80" rx="8" fill="#2563EB" stroke="#1D4ED8" stroke-width="2"/>
+  <text x="512" y="794" font-size="34" font-weight="600" style="fill:#FFFFFF">MLP classifier</text>
+
+  <!-- Neutral class prediction, without invented probabilities. -->
+  <path class="flow" d="M512 822 V890" marker-end="url(#arrow)"/>
+  <rect x="248" y="892" width="528" height="80" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="2"/>
+  <text x="512" y="943" font-size="31" font-weight="600">Human / AI prediction</text>
+</svg>

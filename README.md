@@ -8,11 +8,15 @@ The original typography and page structure are retained, with a cool background 
 - Home: `https://gankka01.github.io/`
 - CV: `https://gankka01.github.io/cv/`
 
-These are the intended public addresses once the site is deployed through GitHub Pages.
+Both pages are published through GitHub Pages.
 
 Home lists PatchMark, the KCC 2026 paper, and KoboNet in reverse chronological order.
 The CV includes all four papers, grouped by publication type, including the ICOIN submission.
-Photographs and research figures are intentionally represented by square placeholders.
+Home displays the selected hand-drawn portrait and the three approved research figures.
+The portrait is cropped to a square by the page layout; the original image is preserved.
+Research thumbnails open their full-size images in a new tab.
+The Home CV button opens the current PDF; the navigation CV link opens the web CV.
+Email buttons copy the address and display a confirmation or a readable fallback.
 
 ## Editing content
 
@@ -24,11 +28,14 @@ Photographs and research figures are intentionally represented by square placeho
 | Education, research, projects, IP, awards, leadership | `_data/cv.yml` |
 | Home layout | `index.html` |
 | Web CV layout | `cv.html` |
+| PDF CV | `assets/files/Wonik_Jang_CV.pdf` |
+| Portrait and research images | `assets/images/` |
+| Email-copy behavior | `assets/js/site.js` |
 | Colors and spacing | `_tailwind.css` |
 | Credit line | `_includes/footer.html` |
 
-Set `portrait: /images/portrait.jpg` in `_config.yml` after adding the photograph.
-For each paper, set `image` and `image_alt` after adding an image under `images/`.
+Set `portrait` and `cv_pdf` in `_config.yml` to the corresponding image and PDF paths.
+For each paper, set `image` and `image_alt` after adding an image under `assets/images/`.
 Empty image fields display a placeholder.
 
 The `accent_name` field colors only a paper's leading model name.
@@ -64,7 +71,8 @@ The original template is offered under **[CC BY-SA 4.0](https://creativecommons.
 This adaptation of the template is offered under the same license. See [LICENSE.md](LICENSE.md).
 
 Changes made for this adaptation: replacement of personal and research content,
-Home/CV navigation, shared publication data, selective blue accents, image placeholders,
+Home/CV navigation, shared publication data, selective blue accents, approved image assets,
+PDF links, clipboard email buttons, upright CV dates, larger section headings and rules,
 responsive CV date columns, accessibility labels, and removal of the original blog,
 media files, custom domain, and analytics configuration.
 

@@ -16,8 +16,8 @@
   show_on_home: true
   publication_url:
   code_url: https://github.com/Gankka01/PatchMark
-  image:
-  image_alt:
+  image: /assets/images/patchmark.png
+  image_alt: A boardwalk divided into the original scene and an illustrative QR watermark overlay
   image_label: PatchMark
 
 - id: behavior-perturbed-agents
@@ -34,8 +34,8 @@
   show_on_home: true
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12929654
   code_url:
-  image:
-  image_alt:
+  image: /assets/images/marl-figure1-square.svg
+  image_alt: Figure 1 comparing MAPPO and MAA2C learning curves across three cooperative multi-agent tasks
   image_label: Cooperative MARL
 
 - id: kobonet
@@ -53,8 +53,8 @@
   show_on_home: true
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318433
   code_url:
-  image:
-  image_alt:
+  image: /assets/images/kobonet-architecture.svg
+  image_alt: KoboNet architecture combining pronunciation and part-of-speech features for human or AI text classification
   image_label: KoboNet
 
 - id: global-advantage-weighting

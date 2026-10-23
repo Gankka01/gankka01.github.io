@@ -6,20 +6,23 @@ description: >-
   Wonik Jang is a master's student at Kyung Hee University researching
   reinforcement learning, AI infrastructure, and digital watermarking.
 bio: |
-  I'm a master's student in artificial intelligence at **Kyung Hee University**,
+  I'm a master's student in artificial intelligence at **Kyung Hee University**,<br>
   working with **Prof. Eui-Nam Huh** at the **ICNS Lab**.
 
-  My research interests include reinforcement and multi-agent learning,
-  GPU resource scheduling, digital watermarking, and AI-generated text detection.
+  My research interests include reinforcement and multi-agent learning,<br>
+  GPU resource scheduling,<br>
+  digital watermarking,<br>
+  and AI-generated text detection.
 location: Yongin, South Korea
 affiliation: Kyung Hee University
 baseurl: ""
 url: "https://gankka01.github.io"
 github_username: Gankka01
 google_scholar: wVjmE7gAAAAJ
-portrait:
-portrait_alt: Wonik Jang
-updated: "October 22, 2026"
+portrait: /assets/images/portrait.png
+portrait_alt: Hand-drawn profile illustration selected by Wonik Jang
+cv_pdf: /assets/files/Wonik_Jang_CV.pdf
+updated: "October 23, 2026"
 plugins:
   - jekyll-tailwindcss
 exclude:
