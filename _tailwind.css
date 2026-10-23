@@ -153,6 +153,62 @@ a.no-underline:hover {
 .publication-row + .publication-row {
   border-top: 1px solid var(--color-border-subtle);
 }
+.profile-bio p + p {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+@property --publication-glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.publication-image {
+  position: relative;
+  isolation: isolate;
+  cursor: default;
+  transition: transform 280ms ease;
+}
+.publication-image::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--publication-glow-angle), #2563eb14, #2563eb40 25%, #2563ebcc 38%, #93c5fd 44%, #2563eb40 51%, #2563eb14 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+@keyframes publication-border-flow {
+  to { --publication-glow-angle: 360deg; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .publication-image:hover {
+    transform: scale(1.02);
+  }
+  .publication-image:hover::after {
+    opacity: 1;
+    animation: publication-border-flow 3.2s linear infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .publication-image,
+  .publication-image::after {
+    transition: none;
+  }
+  .publication-image:hover {
+    transform: none;
+  }
+  .publication-image:hover::after {
+    animation: none;
+    background: var(--color-accent);
+  }
+}
 .cv-entry {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -188,9 +244,18 @@ a.no-underline:hover {
   color: var(--color-text-muted);
 }
 .cv-section-title {
-  padding-bottom: .35rem;
-  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  gap: .25em;
   line-height: 1.2;
+}
+.cv-section-label {
+  min-width: 0;
+}
+.cv-section-title::after {
+  content: "";
+  flex: 1 0 1.5rem;
+  border-bottom: 1px solid var(--color-text-subtle);
 }
 .email-copy {
   color: var(--color-link);

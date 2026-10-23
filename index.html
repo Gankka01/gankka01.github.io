@@ -15,7 +15,7 @@ permalink: /
       </div>
       <div class="flex-1 min-w-0">
         <h1 class="font-display text-3xl md:text-4xl font-semibold text-text">Hello, I'm {{ site.name | escape }}</h1>
-        <div class="text-text-body mt-4 max-w-prose leading-relaxed prose">{{ site.bio | markdownify }}</div>
+        <div class="profile-bio text-text-body mt-4 max-w-prose leading-relaxed prose">{{ site.bio | markdownify }}</div>
         <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-6 font-sans text-sm">
           <a href="{{ site.cv_pdf | relative_url }}" target="_blank" rel="noopener" class="inline-flex items-center no-underline" aria-label="View CV PDF (opens in a new tab)">{% include icons/file.html class="w-4 h-4 mr-1.5" %}CV</a>
           <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="inline-flex items-center no-underline"><i class="ai ai-google-scholar mr-1.5" aria-hidden="true"></i>Scholar</a>

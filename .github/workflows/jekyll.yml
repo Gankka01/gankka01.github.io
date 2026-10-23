@@ -28,12 +28,17 @@ jobs:
           bundler-cache: true
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v4
 
       - name: Build with Jekyll
-        run: bundle exec jekyll build
+        run: |
+          printf 'url: "%s"\nbaseurl: "%s"\n' "$PAGES_ORIGIN" "$PAGES_BASE_PATH" > "$RUNNER_TEMP/pages-config.yml"
+          bundle exec jekyll build --config "_config.yml,$RUNNER_TEMP/pages-config.yml"
         env:
           JEKYLL_ENV: production
+          PAGES_ORIGIN: ${{ steps.pages.outputs.origin }}
+          PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

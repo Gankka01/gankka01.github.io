@@ -2,9 +2,9 @@
 <article class="publication-row flex flex-col md:flex-row gap-6 py-6" aria-labelledby="pub-{{ pub.id }}">
   <div class="w-40 md:w-1/5 flex-shrink-0">
     {% if pub.image %}
-    <a href="{{ pub.image | relative_url }}" target="_blank" rel="noopener" class="block no-underline" aria-label="Open full-size image for {{ pub.image_label | escape }}">
-      <img src="{{ pub.image | relative_url }}" alt="{{ pub.image_alt | escape }}" width="400" height="400" loading="lazy" class="aspect-square w-full object-contain rounded-lg">
-    </a>
+    <div class="publication-image aspect-square rounded-lg">
+      <img src="{{ pub.image | relative_url }}" alt="{{ pub.image_alt | escape }}" width="400" height="400" loading="lazy" class="block aspect-square w-full object-contain rounded-lg">
+    </div>
     {% else %}
     <div class="image-placeholder aspect-square w-full rounded-lg" aria-label="Research image placeholder for {{ pub.image_label | escape }}">
       <span>{{ pub.image_label | escape }}</span>
