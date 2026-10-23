@@ -8,7 +8,7 @@ permalink: /
     <div class="flex flex-col items-center text-center md:text-left md:flex-row md:items-start gap-8">
       <div class="flex-shrink-0">
         {% if site.portrait %}
-        <img src="{{ site.portrait | relative_url }}" alt="{{ site.portrait_alt | escape }}" width="313" height="313" class="w-48 h-48 md:w-56 md:h-56 object-cover object-center">
+        <img src="{{ site.portrait | relative_url }}" alt="{{ site.portrait_alt | escape }}" width="768" height="768" class="w-48 h-48 md:w-56 md:h-56 object-cover object-center">
         {% else %}
         <div class="image-placeholder w-48 h-48 md:w-56 md:h-56" aria-label="Portrait placeholder for {{ site.name | escape }}"><span>Portrait</span></div>
         {% endif %}
