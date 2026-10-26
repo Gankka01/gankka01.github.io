@@ -163,6 +163,13 @@ a.no-underline:hover {
 .publication-doi {
   overflow-wrap: anywhere;
 }
+.profile-portrait-image {
+  display: block;
+  box-shadow: 10px 14px 28px -10px rgb(15 23 42 / .24),
+    4px 6px 10px -5px rgb(15 23 42 / .16);
+  transition: transform 420ms cubic-bezier(.22, .61, .36, 1),
+    box-shadow 420ms cubic-bezier(.22, .61, .36, 1);
+}
 .profile-bio p + p {
   text-align: justify;
   text-align-last: left;
@@ -254,6 +261,12 @@ html[data-page-direction]::view-transition-new(root) {
   to { --publication-glow-angle: 360deg; }
 }
 @media (hover: hover) and (pointer: fine) {
+  /* Keep the hover area still while the portrait tilts and scales. */
+  .profile-portrait:hover .profile-portrait-image {
+    transform: scale(1.04) rotate(-2deg);
+    box-shadow: 14px 20px 34px -12px rgb(15 23 42 / .28),
+      6px 9px 16px -7px rgb(15 23 42 / .18);
+  }
   .publication-image:hover {
     transform: scale(1.02);
   }
@@ -263,10 +276,12 @@ html[data-page-direction]::view-transition-new(root) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .profile-portrait-image,
   .publication-image,
   .publication-image::after {
     transition: none;
   }
+  .profile-portrait:hover .profile-portrait-image,
   .publication-image:hover {
     transform: none;
   }
