@@ -110,7 +110,7 @@ document.addEventListener('click', (event) => {
   document.addEventListener('pointerout', bounce);
 })();
 
-// A shared glass email bubble, independent of the button's hover transform.
+// A shared email bubble, independent of the button's hover transform.
 (() => {
   const selector = '[data-copy-email]';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -181,7 +181,7 @@ document.addEventListener('click', (event) => {
       pose(),
       { offset: .36, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
       { offset: 1, transform: 'translateY(8px) scale(.9)', opacity: 0 }
-    ], 420, reset);
+    ], 210, reset);
   }
 
   function position() {
@@ -189,7 +189,7 @@ document.addEventListener('click', (event) => {
     const rect = active.getBoundingClientRect();
     if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) return reset();
     const edge = 12;
-    const gap = 10;
+    const gap = 14;
     const width = tooltip.offsetWidth;
     const height = tooltip.offsetHeight;
     const center = rect.left + rect.width / 2;
@@ -228,13 +228,13 @@ document.addEventListener('click', (event) => {
     tooltip.removeAttribute('aria-hidden');
     position();
     if (tooltip.hidden) return;
-    // Match the orb's 460/420 ms durations, with one gentle hop each way.
+    // A quick, single hop on entry and exit (230/210 ms).
     animate([
       start,
       { offset: .5, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
       { offset: .78, transform: 'translateY(1px) scale(.995)', opacity: 1 },
       { offset: 1, transform: 'translateY(0) scale(1)', opacity: 1 }
-    ], 460);
+    ], 230);
   }
 
   function scheduleHide() {
@@ -351,7 +351,6 @@ document.addEventListener('click', (event) => {
       if (ticket !== requestNumber) return;
       const differentPage = normalizePath(url.pathname) !== normalizePath(displayedURL.pathname);
       const forward = routes.get(normalizePath(url.pathname)) > routes.get(normalizePath(displayedURL.pathname));
-      document.documentElement.dataset.pageDirection = forward ? 'forward' : 'back';
 
       const swap = () => {
         if (ticket !== requestNumber) return;
@@ -390,6 +389,7 @@ document.addEventListener('click', (event) => {
       };
 
       if (differentPage && document.startViewTransition && !reducedMotion.matches) {
+        document.documentElement.dataset.pageDirection = forward ? 'forward' : 'back';
         transition = document.startViewTransition(swap);
         await transition.updateCallbackDone;
         await transition.finished.catch(() => {});
