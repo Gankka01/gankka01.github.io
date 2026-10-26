@@ -110,6 +110,121 @@ document.addEventListener('click', (event) => {
   document.addEventListener('pointerout', bounce);
 })();
 
+// Show the actual destination in one shared tooltip, including after page swaps.
+(() => {
+  const selector = 'a[href]:not(.skip-link):not([data-back-to-top]), [data-copy-email]';
+  const tooltip = document.createElement('div');
+  tooltip.id = 'link-destination-tooltip';
+  tooltip.className = 'link-tooltip no-print';
+  tooltip.setAttribute('role', 'tooltip');
+  tooltip.hidden = true;
+  document.body.append(tooltip);
+  let active;
+  let hideTimer;
+  let positionFrame;
+
+  function destination(control) {
+    if (control.hasAttribute('data-copy-email')) return control.dataset.copyEmail.trim();
+    try {
+      const url = new URL(control.href, document.baseURI);
+      if (url.protocol === 'mailto:') return decodeURIComponent(url.pathname);
+      if (url.protocol === 'https:' || url.protocol === 'http:') return url.href;
+    } catch { /* Leave unsupported or malformed destinations alone. */ }
+    return '';
+  }
+
+  function hide() {
+    clearTimeout(hideTimer);
+    cancelAnimationFrame(positionFrame);
+    if (active) {
+      const descriptions = (active.getAttribute('aria-describedby') || '')
+        .split(/\s+/).filter((id) => id && id !== tooltip.id);
+      if (descriptions.length) active.setAttribute('aria-describedby', descriptions.join(' '));
+      else active.removeAttribute('aria-describedby');
+    }
+    active = null;
+    tooltip.hidden = true;
+  }
+
+  function position() {
+    if (!active?.isConnected) return hide();
+    const rect = active.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) return hide();
+    const edge = 12;
+    const gap = 10;
+    const width = tooltip.offsetWidth;
+    const height = tooltip.offsetHeight;
+    const center = rect.left + rect.width / 2;
+    const left = Math.max(edge, Math.min(center - width / 2, innerWidth - width - edge));
+    const above = rect.top - height - gap >= edge;
+    tooltip.dataset.placement = above ? 'top' : 'bottom';
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${above ? rect.top - height - gap : rect.bottom + gap}px`;
+    tooltip.style.setProperty('--tooltip-arrow-x', `${Math.max(14, Math.min(center - left, width - 14))}px`);
+  }
+
+  function schedulePosition() {
+    if (!active) return;
+    cancelAnimationFrame(positionFrame);
+    positionFrame = requestAnimationFrame(position);
+  }
+
+  function show(control) {
+    const text = destination(control);
+    if (!text) return;
+    clearTimeout(hideTimer);
+    if (active === control) return;
+    hide();
+    active = control;
+    // Text only: keep the complete scheme, domain, path, and query visible.
+    tooltip.textContent = text;
+    const descriptions = (control.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+    control.setAttribute('aria-describedby', [...new Set([...descriptions, tooltip.id])].join(' '));
+    tooltip.hidden = false;
+    position();
+    positionFrame = requestAnimationFrame(position);
+  }
+
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      if (active?.matches(':hover') || tooltip.matches(':hover')
+        || (active === document.activeElement && active?.matches(':focus-visible'))) return;
+      hide();
+    }, 140);
+  }
+
+  document.addEventListener('pointerover', (event) => {
+    if (event.pointerType === 'touch') return;
+    if (tooltip.contains(event.target)) return clearTimeout(hideTimer);
+    const control = event.target.closest(selector);
+    if (control && !control.contains(event.relatedTarget)) show(control);
+  });
+  document.addEventListener('pointerout', (event) => {
+    if (active?.contains(event.target) || tooltip.contains(event.target)) scheduleHide();
+  });
+  document.addEventListener('focusin', (event) => {
+    const control = event.target.closest(selector);
+    if (control?.matches(':focus-visible')) show(control);
+  });
+  document.addEventListener('focusout', (event) => {
+    if (active === event.target) scheduleHide();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') hide();
+  });
+  document.addEventListener('click', (event) => {
+    if (!tooltip.contains(event.target)) hide();
+  });
+  document.addEventListener('transitionend', (event) => {
+    if (event.target === active && event.propertyName === 'transform') position();
+  });
+  addEventListener('scroll', schedulePosition, { passive: true });
+  addEventListener('resize', schedulePosition);
+  addEventListener('popstate', hide);
+  addEventListener('blur', hide);
+})();
+
 // The static HTML routes remain available for direct visits and without JS.
 (() => {
   const nav = document.querySelector('[data-site-navigation]');

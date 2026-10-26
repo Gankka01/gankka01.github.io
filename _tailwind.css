@@ -135,6 +135,51 @@ a.no-underline:hover {
 .publication-doi a {
   transform-origin: left center;
 }
+/* Keep destination bubbles outside scaled links and within the viewport. */
+.link-tooltip {
+  position: fixed;
+  z-index: 50;
+  width: max-content;
+  max-width: min(28rem, calc(100vw - 24px));
+  padding: .45rem .65rem;
+  border: 1px solid #dbe3ef;
+  border-radius: .45rem;
+  background: #fff;
+  box-shadow: 0 3px 8px rgb(15 23 42 / .24),
+    0 1px 2px rgb(15 23 42 / .12);
+  color: var(--color-accent);
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  direction: ltr;
+  unicode-bidi: plaintext;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: none;
+}
+.link-tooltip[hidden] {
+  display: none;
+}
+.link-tooltip::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--tooltip-arrow-x) - 4px);
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid #dbe3ef;
+  border-bottom: 1px solid #dbe3ef;
+  background: #fff;
+  transform: rotate(45deg);
+}
+.link-tooltip[data-placement="bottom"]::after {
+  top: -5px;
+  bottom: auto;
+  transform: rotate(225deg);
+}
 .skip-link {
   position: fixed;
   top: .75rem;
