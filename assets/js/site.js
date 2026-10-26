@@ -68,17 +68,17 @@ document.addEventListener('click', (event) => {
 // Bounce once on entry and once on exit; the hit area and ground shadow stay put.
 (() => {
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const touchLayout = matchMedia('(hover: none) and (pointer: coarse)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const motions = new WeakMap();
+  let bottomControl;
+  let bottomFrame;
 
-  function bounce(event) {
-    const control = event.target.closest('[data-back-to-top]');
-    if (!control || control.contains(event.relatedTarget) || event.pointerType === 'touch'
-      || !finePointer.matches || reducedMotion.matches) return;
+  function bounce(control, entering) {
+    if (reducedMotion.matches) return;
     const orb = control.querySelector('.back-to-top-orb');
     const shadow = control.querySelector('.back-to-top-shadow');
     if (!orb?.animate || !shadow) return;
-    const entering = event.type === 'pointerover';
     const parts = [
       [orb, [
         { offset: .18, transform: `translateY(1px) scale(${entering ? '1.08, .94' : '1.03, .94'})` },
@@ -106,8 +106,124 @@ document.addEventListener('click', (event) => {
     }
   }
 
-  document.addEventListener('pointerover', bounce);
-  document.addEventListener('pointerout', bounce);
+  function pointerBounce(event) {
+    const control = event.target.closest('[data-back-to-top]');
+    if (!control || control.contains(event.relatedTarget) || event.pointerType === 'touch'
+      || !finePointer.matches) return;
+    bounce(control, event.type === 'pointerover');
+  }
+
+  function updateBottom() {
+    bottomFrame = null;
+    const control = document.querySelector('[data-back-to-top]');
+    if (bottomControl !== control) {
+      bottomControl?.classList.remove('is-bottom-active');
+      bottomControl = control;
+    }
+    if (!control) return;
+    const wasAtBottom = control.classList.contains('is-bottom-active');
+    const remaining = document.documentElement.scrollHeight - innerHeight - scrollY;
+    // A small exit margin avoids retriggering on mobile browser chrome changes.
+    const atBottom = touchLayout.matches && document.documentElement.scrollHeight > innerHeight + 2
+      && remaining <= (wasAtBottom ? 80 : 24);
+    control.classList.toggle('is-bottom-active', atBottom);
+    if (atBottom && !wasAtBottom) bounce(control, true);
+  }
+
+  function scheduleBottom() {
+    if (!bottomFrame) bottomFrame = requestAnimationFrame(updateBottom);
+  }
+
+  document.addEventListener('pointerover', pointerBounce);
+  document.addEventListener('pointerout', pointerBounce);
+  document.addEventListener('site:pagechange', scheduleBottom);
+  addEventListener('scroll', scheduleBottom, { passive: true });
+  addEventListener('resize', scheduleBottom);
+  addEventListener('pageshow', scheduleBottom);
+  touchLayout.addEventListener('change', scheduleBottom);
+  if ('ResizeObserver' in window) new ResizeObserver(scheduleBottom).observe(document.body);
+  scheduleBottom();
+})();
+
+// Touch feedback never captures scrolling; each paper gets one quiet entrance glow.
+(() => {
+  const touchLayout = matchMedia('(hover: none) and (pointer: coarse)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const selector = '.publication-image, .profile-portrait';
+  const timers = new Map();
+  const revealedImages = new Set();
+  let gesture;
+  let observer;
+
+  function clearFeedback() {
+    gesture = null;
+    for (const [element, timer] of timers) {
+      clearTimeout(timer);
+      element.classList.remove('is-touch-active');
+    }
+    timers.clear();
+    document.querySelectorAll('.is-scroll-glowing')
+      .forEach((element) => element.classList.remove('is-scroll-glowing'));
+  }
+
+  function observeImages() {
+    observer?.disconnect();
+    clearFeedback();
+    if (!touchLayout.matches || reducedMotion.matches || !('IntersectionObserver' in window)) return;
+    observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || entry.intersectionRatio < .25) continue;
+        const element = entry.target;
+        const key = element.querySelector('img')?.getAttribute('src');
+        observer.unobserve(element);
+        if (revealedImages.has(key)) continue;
+        revealedImages.add(key);
+        if (!element.classList.contains('is-touch-active')) element.classList.add('is-scroll-glowing');
+      }
+    }, { threshold: .25 });
+    document.querySelectorAll('.publication-image').forEach((element) => {
+      if (!revealedImages.has(element.querySelector('img')?.getAttribute('src'))) observer.observe(element);
+    });
+  }
+
+  document.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch') return;
+    gesture = null;
+    if (!event.isPrimary || reducedMotion.matches) return;
+    const element = event.target.closest(selector);
+    if (element) gesture = { element, id: event.pointerId, x: event.clientX, y: event.clientY,
+      started: event.timeStamp };
+  }, { passive: true });
+  document.addEventListener('pointermove', (event) => {
+    if (gesture?.id === event.pointerId
+      && Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) > 10) gesture = null;
+  }, { passive: true });
+  document.addEventListener('pointercancel', () => { gesture = null; }, { passive: true });
+  document.addEventListener('pointerup', (event) => {
+    if (gesture?.id !== event.pointerId) return;
+    const tap = gesture;
+    gesture = null;
+    if (!tap.element.isConnected || reducedMotion.matches || event.timeStamp - tap.started > 650
+      || Math.hypot(event.clientX - tap.x, event.clientY - tap.y) > 10) return;
+    const element = tap.element;
+    element.classList.remove('is-scroll-glowing');
+    element.classList.add('is-touch-active');
+    clearTimeout(timers.get(element));
+    // Keep the paper's hover state for 0.5 s, then let CSS ease it back to rest.
+    timers.set(element, setTimeout(() => {
+      element.classList.remove('is-touch-active');
+      timers.delete(element);
+    }, element.matches('.publication-image') ? 500 : 650));
+  }, { passive: true });
+  document.addEventListener('animationend', (event) => {
+    if (event.animationName === 'publication-border-glimpse') event.target.classList.remove('is-scroll-glowing');
+  });
+  document.addEventListener('site:pagechange', observeImages);
+  touchLayout.addEventListener('change', observeImages);
+  reducedMotion.addEventListener('change', observeImages);
+  addEventListener('pagehide', clearFeedback);
+  addEventListener('pageshow', (event) => { if (event.persisted) observeImages(); });
+  observeImages();
 })();
 
 // A shared email bubble, independent of the button's hover transform.
@@ -211,10 +327,10 @@ document.addEventListener('click', (event) => {
     positionFrame = requestAnimationFrame(position);
   }
 
-  function show(control) {
+  function show(control, clicked = false) {
     const text = control.dataset.copyEmail.trim();
     if (!text) return;
-    if (active === control && tooltip.dataset.state !== 'closing') return;
+    if (active === control && tooltip.dataset.state !== 'closing' && !clicked) return;
     const start = active === control && !tooltip.hidden
       ? pose() : { offset: 0, transform: 'translateY(8px) scale(.9)', opacity: 0 };
     if (active !== control) reset();
@@ -227,6 +343,17 @@ document.addEventListener('click', (event) => {
     tooltip.removeAttribute('aria-hidden');
     position();
     if (tooltip.hidden) return;
+    // A click gets its own hop without dismissing or rebuilding the visible bubble.
+    if (clicked) {
+      animate([
+        start,
+        { offset: .18, transform: 'translateY(1px) scale(1.02, .97)', opacity: 1 },
+        { offset: .5, transform: 'translateY(-7px) scale(1.025)', opacity: 1 },
+        { offset: .8, transform: 'translateY(1px) scale(.995)', opacity: 1 },
+        { offset: 1, transform: 'translateY(0) scale(1)', opacity: 1 }
+      ], 300);
+      return;
+    }
     // A quick, single hop on entry and exit (230/210 ms).
     animate([
       start,
@@ -263,12 +390,18 @@ document.addEventListener('click', (event) => {
     if (event.key === 'Escape') hide(true);
   });
   document.addEventListener('click', (event) => {
+    const control = event.target.closest(selector);
+    if (control) {
+      show(control, true);
+      return;
+    }
     if (!tooltip.contains(event.target)) hide(true);
   });
   addEventListener('scroll', schedulePosition, { passive: true });
   addEventListener('resize', schedulePosition);
   addEventListener('popstate', reset);
   addEventListener('blur', reset);
+  document.addEventListener('site:pagechange', reset);
 })();
 
 // The static HTML routes remain available for direct visits and without JS.
@@ -383,6 +516,7 @@ document.addEventListener('click', (event) => {
         window.scrollTo({ left: entry.x, top: entry.y, behavior: 'instant' });
         restoring = false;
         rememberPosition();
+        document.dispatchEvent(new Event('site:pagechange'));
       };
 
       if (differentPage && document.startViewTransition && !reducedMotion.matches) {

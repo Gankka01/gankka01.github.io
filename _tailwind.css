@@ -490,7 +490,7 @@ html[data-page-direction]::view-transition-new(root) {
   position: relative;
   isolation: isolate;
   cursor: default;
-  transition: transform 280ms ease;
+  transition: transform 420ms cubic-bezier(.22, .61, .36, 1);
 }
 .publication-image::after {
   --publication-glow-width: 16px;
@@ -516,10 +516,44 @@ html[data-page-direction]::view-transition-new(root) {
   mask-repeat: no-repeat;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 220ms ease;
+  transition: opacity 360ms ease;
+  animation: publication-border-flow 3.2s linear infinite paused;
 }
 @keyframes publication-border-flow {
   to { --publication-glow-angle: 360deg; }
+}
+@keyframes publication-border-glimpse {
+  0% { --publication-glow-angle: 0deg; opacity: 0; }
+  22% { opacity: .55; }
+  72% { opacity: .55; }
+  100% { --publication-glow-angle: 360deg; opacity: 0; }
+}
+/* Explicit touch states avoid a browser's sticky simulated :hover. */
+.publication-image.is-scroll-glowing::after {
+  animation: publication-border-glimpse 1.8s ease-in-out both;
+}
+.publication-image.is-touch-active {
+  transform: scale(1.02);
+}
+.publication-image.is-touch-active::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+.profile-portrait.is-touch-active .profile-portrait-image {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow: 18px 26px 36px -7px rgb(15 23 42 / .42),
+    8px 12px 18px -4px rgb(15 23 42 / .28);
+}
+.back-to-top.is-bottom-active .back-to-top-orb {
+  transform: translateY(-1px) scale(1.06);
+}
+.back-to-top.is-bottom-active .back-to-top-shadow {
+  transform: scale(1.03);
+  opacity: .85;
+}
+.back-to-top.is-bottom-active .back-to-top-orb::before {
+  opacity: .5;
+  animation-play-state: running;
 }
 @media (hover: hover) and (pointer: fine) {
   :where(a[href]:not(.skip-link):not(.back-to-top), .email-copy):hover {
@@ -548,7 +582,7 @@ html[data-page-direction]::view-transition-new(root) {
   }
   .publication-image:hover::after {
     opacity: 1;
-    animation: publication-border-flow 3.2s linear infinite;
+    animation-play-state: running;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -564,13 +598,17 @@ html[data-page-direction]::view-transition-new(root) {
   :where(a[href]:not(.skip-link):not(.back-to-top), .email-copy):hover,
   .back-to-top:hover .back-to-top-orb,
   .back-to-top:hover .back-to-top-shadow,
+  .back-to-top.is-bottom-active .back-to-top-orb,
+  .back-to-top.is-bottom-active .back-to-top-shadow,
   .profile-portrait:hover .profile-portrait-image,
-  .publication-image:hover {
+  .profile-portrait.is-touch-active .profile-portrait-image,
+  .publication-image:hover,
+  .publication-image.is-touch-active {
     transform: none;
   }
   .back-to-top-orb::before,
-  .publication-image:hover::after {
-    animation: none;
+  .publication-image::after {
+    animation: none !important;
   }
 }
 .cv-entry {
