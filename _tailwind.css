@@ -123,6 +123,18 @@ a:focus-visible, button:focus-visible {
 a.no-underline:hover {
   color: var(--color-link-hover);
 }
+/* Scale controls visually so nearby text and buttons stay in place. */
+:where(a[href]:not(.skip-link), .email-copy) {
+  transition: color 180ms ease,
+    transform 240ms cubic-bezier(.22, .61, .36, 1);
+}
+:where(a[href]:not(.skip-link), .email-copy):not(.inline-flex) {
+  display: inline-block;
+  max-width: 100%;
+}
+.publication-doi a {
+  transform-origin: left center;
+}
 .skip-link {
   position: fixed;
   top: .75rem;
@@ -165,8 +177,8 @@ a.no-underline:hover {
 }
 .profile-portrait-image {
   display: block;
-  box-shadow: 10px 14px 28px -10px rgb(15 23 42 / .24),
-    4px 6px 10px -5px rgb(15 23 42 / .16);
+  box-shadow: 12px 18px 28px -5px rgb(15 23 42 / .38),
+    5px 8px 12px -3px rgb(15 23 42 / .24);
   transition: transform 420ms cubic-bezier(.22, .61, .36, 1),
     box-shadow 420ms cubic-bezier(.22, .61, .36, 1);
 }
@@ -261,11 +273,15 @@ html[data-page-direction]::view-transition-new(root) {
   to { --publication-glow-angle: 360deg; }
 }
 @media (hover: hover) and (pointer: fine) {
+  :where(a[href]:not(.skip-link), .email-copy):hover {
+    color: var(--color-link-hover);
+    transform: scale(1.06);
+  }
   /* Keep the hover area still while the portrait tilts and scales. */
   .profile-portrait:hover .profile-portrait-image {
     transform: scale(1.04) rotate(-2deg);
-    box-shadow: 14px 20px 34px -12px rgb(15 23 42 / .28),
-      6px 9px 16px -7px rgb(15 23 42 / .18);
+    box-shadow: 18px 26px 36px -7px rgb(15 23 42 / .42),
+      8px 12px 18px -4px rgb(15 23 42 / .28);
   }
   .publication-image:hover {
     transform: scale(1.02);
@@ -276,11 +292,13 @@ html[data-page-direction]::view-transition-new(root) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  :where(a[href]:not(.skip-link), .email-copy),
   .profile-portrait-image,
   .publication-image,
   .publication-image::after {
     transition: none;
   }
+  :where(a[href]:not(.skip-link), .email-copy):hover,
   .profile-portrait:hover .profile-portrait-image,
   .publication-image:hover {
     transform: none;
