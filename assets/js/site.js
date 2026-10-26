@@ -65,6 +65,51 @@ document.addEventListener('click', (event) => {
     behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
 });
 
+// Bounce once on entry and once on exit; the hit area and ground shadow stay put.
+(() => {
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motions = new WeakMap();
+
+  function bounce(event) {
+    const control = event.target.closest('[data-back-to-top]');
+    if (!control || control.contains(event.relatedTarget) || event.pointerType === 'touch'
+      || !finePointer.matches || reducedMotion.matches) return;
+    const orb = control.querySelector('.back-to-top-orb');
+    const shadow = control.querySelector('.back-to-top-shadow');
+    if (!orb?.animate || !shadow) return;
+    const entering = event.type === 'pointerover';
+    const parts = [
+      [orb, [
+        { offset: .18, transform: `translateY(1px) scale(${entering ? '1.08, .94' : '1.03, .94'})` },
+        { offset: .48, transform: `translateY(${entering ? '-5px' : '-4px'}) scale(1.04, 1.09)` },
+        { offset: .78, transform: 'translateY(.5px) scale(1.08, .98)' },
+        { offset: 1, transform: entering ? 'translateY(-1px) scale(1.06)' : 'translateY(0) scale(1)' }
+      ]],
+      [shadow, [
+        { offset: .18, transform: 'scale(1.08)', opacity: .85 },
+        { offset: .48, transform: 'scale(.78)', opacity: .42 },
+        { offset: .78, transform: 'scale(1.06)', opacity: .85 },
+        { offset: 1, transform: entering ? 'scale(1.03)' : 'scale(1)', opacity: entering ? .85 : .75 }
+      ]]
+    ];
+    for (const [element, frames] of parts) {
+      // Rapid pointer changes continue from the current pose instead of snapping.
+      const style = getComputedStyle(element);
+      const start = { offset: 0, transform: style.transform, opacity: style.opacity };
+      motions.get(element)?.cancel();
+      motions.set(element, element.animate([start, ...frames], {
+        duration: entering ? 460 : 420,
+        easing: 'cubic-bezier(.22, .61, .36, 1)',
+        iterations: 1
+      }));
+    }
+  }
+
+  document.addEventListener('pointerover', bounce);
+  document.addEventListener('pointerout', bounce);
+})();
+
 // The static HTML routes remain available for direct visits and without JS.
 (() => {
   const nav = document.querySelector('[data-site-navigation]');

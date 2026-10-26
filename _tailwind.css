@@ -124,11 +124,11 @@ a.no-underline:hover {
   color: var(--color-link-hover);
 }
 /* Scale controls visually so nearby text and buttons stay in place. */
-:where(a[href]:not(.skip-link), .email-copy) {
+:where(a[href]:not(.skip-link):not(.back-to-top), .email-copy) {
   transition: color 180ms ease,
     transform 240ms cubic-bezier(.22, .61, .36, 1);
 }
-:where(a[href]:not(.skip-link), .email-copy):not(.inline-flex) {
+:where(a[href]:not(.skip-link):not(.back-to-top), .email-copy):not(.inline-flex) {
   display: inline-block;
   max-width: 100%;
 }
@@ -199,41 +199,64 @@ a.no-underline:hover {
   isolation: isolate;
   align-items: center;
   justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  overflow: hidden;
-  border: 1px solid rgb(96 165 250 / .42);
+  /* Keep a steady, generous hit area around the smaller, moving glass orb. */
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  color: var(--color-accent);
-  background:
-    radial-gradient(ellipse at 30% 20%, #ffffffdb, #ffffff00 52%),
-    radial-gradient(circle at 76% 84%, #2563eb2e, #2563eb00 65%),
-    linear-gradient(145deg, #ffffff38, #dbeafe40);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 1px 3px #fffffff2,
-    inset -4px -6px 10px #2563eb24,
-    4px 8px 16px -4px #1e40af42,
-    1px 3px 5px -2px #0f172a26;
-  transition: transform 240ms cubic-bezier(.22, .61, .36, 1),
-    box-shadow 300ms ease;
 }
-.back-to-top::before,
-.back-to-top::after {
+.back-to-top-shadow {
+  position: absolute;
+  top: calc(50% + .7rem);
+  left: calc(50% - .55rem);
+  width: 1.1rem;
+  height: .65rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(0 0 0 / .24), transparent 72%);
+  filter: blur(1px);
+  opacity: .75;
+  pointer-events: none;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+.back-to-top-orb {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  overflow: hidden;
+  border: 1px solid rgb(160 160 160 / .36);
+  border-radius: 50%;
+  color: #111;
+  background:
+    radial-gradient(ellipse at 28% 22%, #fffffff2, #ffffff80 14%, #ffffff00 42%),
+    radial-gradient(circle, transparent 38%, #ffffff59 64%, #70707029 100%),
+    linear-gradient(145deg, #ffffff12, #ffffff0a 48%, #a0a0a01a);
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+  box-shadow: inset 2px 2px 4px #fffffff2,
+    inset -2px -3px 5px rgb(32 32 32 / .14),
+    inset 0 -1px 2px #ffffffa6;
+  pointer-events: none;
+  transition: transform 180ms ease;
+}
+.back-to-top-orb::before,
+.back-to-top-orb::after {
   content: "";
   position: absolute;
   pointer-events: none;
 }
-.back-to-top::before {
+.back-to-top-orb::before {
   inset: -35%;
-  background: conic-gradient(from 20deg, #2563eb00, #60a5fa70 22%,
-    #ffffffb3 42%, #2563eb00 58%, #2563eb59 78%, #2563eb00);
-  filter: blur(5px);
+  background: conic-gradient(from 20deg, #ffffff00, #a0a0a033 22%,
+    #ffffffd9 42%, #ffffff00 58%, #a0a0a026 78%, #ffffff00);
+  filter: blur(2px);
   opacity: 0;
   animation: glass-orb-shimmer 3.6s ease-in-out infinite paused;
   transition: opacity 300ms ease;
 }
-.back-to-top::after {
+.back-to-top-orb::after {
   top: 12%;
   left: 18%;
   width: 42%;
@@ -243,11 +266,11 @@ a.no-underline:hover {
   transform: rotate(-32deg);
   filter: blur(.5px);
 }
-.back-to-top svg {
+.back-to-top-orb svg {
   position: relative;
   z-index: 1;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: .85rem;
+  height: .85rem;
 }
 .back-to-top:focus-visible {
   border-radius: 50%;
@@ -342,18 +365,19 @@ html[data-page-direction]::view-transition-new(root) {
   to { --publication-glow-angle: 360deg; }
 }
 @media (hover: hover) and (pointer: fine) {
-  :where(a[href]:not(.skip-link), .email-copy):hover {
+  :where(a[href]:not(.skip-link):not(.back-to-top), .email-copy):hover {
     color: var(--color-link-hover);
     transform: scale(1.06);
   }
-  .back-to-top:hover {
-    box-shadow: inset 0 1px 3px #fffffff2,
-      inset -4px -6px 12px #2563eb33,
-      5px 11px 20px -4px #1e40af52,
-      1px 4px 7px -2px #0f172a26;
+  .back-to-top:hover .back-to-top-orb {
+    transform: translateY(-1px) scale(1.06);
   }
-  .back-to-top:hover::before {
+  .back-to-top:hover .back-to-top-shadow {
+    transform: scale(1.03);
     opacity: .85;
+  }
+  .back-to-top:hover .back-to-top-orb::before {
+    opacity: .5;
     animation-play-state: running;
   }
   /* Keep the hover area still while the portrait tilts and scales. */
@@ -371,20 +395,23 @@ html[data-page-direction]::view-transition-new(root) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  :where(a[href]:not(.skip-link), .email-copy),
-  .back-to-top,
-  .back-to-top::before,
+  :where(a[href]:not(.skip-link):not(.back-to-top), .email-copy),
+  .back-to-top-orb,
+  .back-to-top-orb::before,
+  .back-to-top-shadow,
   .profile-portrait-image,
   .publication-image,
   .publication-image::after {
     transition: none;
   }
-  :where(a[href]:not(.skip-link), .email-copy):hover,
+  :where(a[href]:not(.skip-link):not(.back-to-top), .email-copy):hover,
+  .back-to-top:hover .back-to-top-orb,
+  .back-to-top:hover .back-to-top-shadow,
   .profile-portrait:hover .profile-portrait-image,
   .publication-image:hover {
     transform: none;
   }
-  .back-to-top::before,
+  .back-to-top-orb::before,
   .publication-image:hover::after {
     animation: none;
   }
