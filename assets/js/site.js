@@ -110,56 +110,98 @@ document.addEventListener('click', (event) => {
   document.addEventListener('pointerout', bounce);
 })();
 
-// Show the actual destination in one shared tooltip, including after page swaps.
+// A shared glass email bubble, independent of the button's hover transform.
 (() => {
-  const selector = 'a[href]:not(.skip-link):not([data-back-to-top]), [data-copy-email]';
+  const selector = '[data-copy-email]';
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const tooltip = document.createElement('div');
-  tooltip.id = 'link-destination-tooltip';
-  tooltip.className = 'link-tooltip no-print';
+  const surface = document.createElement('span');
+  tooltip.id = 'email-address-tooltip';
+  tooltip.className = 'email-tooltip no-print';
   tooltip.setAttribute('role', 'tooltip');
+  surface.className = 'email-tooltip-surface';
+  tooltip.append(surface);
   tooltip.hidden = true;
   document.body.append(tooltip);
   let active;
   let hideTimer;
   let positionFrame;
+  let motion;
 
-  function destination(control) {
-    if (control.hasAttribute('data-copy-email')) return control.dataset.copyEmail.trim();
-    try {
-      const url = new URL(control.href, document.baseURI);
-      if (url.protocol === 'mailto:') return decodeURIComponent(url.pathname);
-      if (url.protocol === 'https:' || url.protocol === 'http:') return url.href;
-    } catch { /* Leave unsupported or malformed destinations alone. */ }
-    return '';
-  }
-
-  function hide() {
-    clearTimeout(hideTimer);
-    cancelAnimationFrame(positionFrame);
+  function removeDescription() {
     if (active) {
       const descriptions = (active.getAttribute('aria-describedby') || '')
         .split(/\s+/).filter((id) => id && id !== tooltip.id);
       if (descriptions.length) active.setAttribute('aria-describedby', descriptions.join(' '));
       else active.removeAttribute('aria-describedby');
     }
+  }
+
+  function reset() {
+    clearTimeout(hideTimer);
+    cancelAnimationFrame(positionFrame);
+    motion?.cancel();
+    motion = null;
+    removeDescription();
     active = null;
     tooltip.hidden = true;
+    tooltip.dataset.state = 'closed';
+    tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  function pose() {
+    const style = getComputedStyle(surface);
+    return { offset: 0, transform: style.transform, opacity: style.opacity };
+  }
+
+  function animate(frames, duration, finished) {
+    motion?.cancel();
+    motion = null;
+    if (reducedMotion.matches || !surface.animate) return finished?.();
+    const animation = surface.animate(frames, { duration, easing: 'ease-in-out', iterations: 1 });
+    motion = animation;
+    animation.onfinish = () => {
+      if (motion !== animation) return;
+      motion = null;
+      animation.cancel();
+      finished?.();
+    };
+  }
+
+  function hide(immediate = false) {
+    clearTimeout(hideTimer);
+    cancelAnimationFrame(positionFrame);
+    if (tooltip.hidden) return;
+    if (immediate || reducedMotion.matches || !surface.animate) return reset();
+    if (tooltip.dataset.state === 'closing') return;
+    removeDescription();
+    tooltip.dataset.state = 'closing';
+    tooltip.setAttribute('aria-hidden', 'true');
+    animate([
+      pose(),
+      { offset: .36, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
+      { offset: 1, transform: 'translateY(8px) scale(.9)', opacity: 0 }
+    ], 630, reset);
   }
 
   function position() {
-    if (!active?.isConnected) return hide();
+    if (!active?.isConnected) return reset();
     const rect = active.getBoundingClientRect();
-    if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) return hide();
+    if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) return reset();
     const edge = 12;
     const gap = 10;
     const width = tooltip.offsetWidth;
     const height = tooltip.offsetHeight;
     const center = rect.left + rect.width / 2;
+    // The center stays still while the button scales; use its layout height.
+    const middle = rect.top + rect.height / 2;
+    const top = middle - active.offsetHeight / 2;
+    const bottom = middle + active.offsetHeight / 2;
     const left = Math.max(edge, Math.min(center - width / 2, innerWidth - width - edge));
-    const above = rect.top - height - gap >= edge;
+    const above = top - height - gap >= edge;
     tooltip.dataset.placement = above ? 'top' : 'bottom';
     tooltip.style.left = `${left}px`;
-    tooltip.style.top = `${above ? rect.top - height - gap : rect.bottom + gap}px`;
+    tooltip.style.top = `${above ? top - height - gap : bottom + gap}px`;
     tooltip.style.setProperty('--tooltip-arrow-x', `${Math.max(14, Math.min(center - left, width - 14))}px`);
   }
 
@@ -170,19 +212,29 @@ document.addEventListener('click', (event) => {
   }
 
   function show(control) {
-    const text = destination(control);
+    const text = control.dataset.copyEmail.trim();
     if (!text) return;
     clearTimeout(hideTimer);
-    if (active === control) return;
-    hide();
+    if (active === control && tooltip.dataset.state !== 'closing') return;
+    const start = active === control && !tooltip.hidden
+      ? pose() : { offset: 0, transform: 'translateY(8px) scale(.9)', opacity: 0 };
+    if (active !== control) reset();
     active = control;
-    // Text only: keep the complete scheme, domain, path, and query visible.
-    tooltip.textContent = text;
+    surface.textContent = text;
     const descriptions = (control.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
     control.setAttribute('aria-describedby', [...new Set([...descriptions, tooltip.id])].join(' '));
     tooltip.hidden = false;
+    tooltip.dataset.state = 'open';
+    tooltip.removeAttribute('aria-hidden');
     position();
-    positionFrame = requestAnimationFrame(position);
+    if (tooltip.hidden) return;
+    // 1.5 times the orb's 460/420 ms durations, with one gentle hop each way.
+    animate([
+      start,
+      { offset: .5, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
+      { offset: .78, transform: 'translateY(1px) scale(.995)', opacity: 1 },
+      { offset: 1, transform: 'translateY(0) scale(1)', opacity: 1 }
+    ], 690);
   }
 
   function scheduleHide() {
@@ -211,18 +263,15 @@ document.addEventListener('click', (event) => {
     if (active === event.target) scheduleHide();
   });
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') hide();
+    if (event.key === 'Escape') hide(true);
   });
   document.addEventListener('click', (event) => {
-    if (!tooltip.contains(event.target)) hide();
-  });
-  document.addEventListener('transitionend', (event) => {
-    if (event.target === active && event.propertyName === 'transform') position();
+    if (!tooltip.contains(event.target)) hide(true);
   });
   addEventListener('scroll', schedulePosition, { passive: true });
   addEventListener('resize', schedulePosition);
-  addEventListener('popstate', hide);
-  addEventListener('blur', hide);
+  addEventListener('popstate', reset);
+  addEventListener('blur', reset);
 })();
 
 // The static HTML routes remain available for direct visits and without JS.
