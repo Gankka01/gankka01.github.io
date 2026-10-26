@@ -3,11 +3,12 @@
 <head>
   {% include head.html %}
 </head>
-<body class="bg-surface text-text font-serif antialiased print:bg-white">
+<body id="top" class="bg-surface text-text font-serif antialiased print:bg-white">
   <a class="skip-link no-print" href="#main-content">Skip to content</a>
   {% include header.html %}
   <main id="main-content" class="cv max-w-4xl mx-auto px-6 py-8 print:py-4 print:px-4" tabindex="-1">
     {{ content }}
+    {% include back-to-top.html %}
   </main>
   {% include footer.html %}
 </body>

@@ -53,6 +53,18 @@ document.addEventListener('click', async (event) => {
   }
 });
 
+// A delegated handler survives Home/CV swaps without adding history entries.
+document.addEventListener('click', (event) => {
+  const control = event.target.closest('[data-back-to-top]');
+  if (!control || event.defaultPrevented || event.button !== 0 || event.metaKey
+    || event.ctrlKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  document.querySelector('[data-site-navigation] a[aria-current="page"]')
+    ?.focus({ preventScroll: true });
+  window.scrollTo({ top: 0, left: 0,
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+});
+
 // The static HTML routes remain available for direct visits and without JS.
 (() => {
   const nav = document.querySelector('[data-site-navigation]');

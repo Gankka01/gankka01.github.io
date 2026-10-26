@@ -188,6 +188,75 @@ a.no-underline:hover {
   hyphens: auto;
 }
 
+/* A translucent glass orb at the end of each page's content. */
+.back-to-top-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0 .5rem;
+}
+.back-to-top {
+  position: relative;
+  isolation: isolate;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  overflow: hidden;
+  border: 1px solid rgb(96 165 250 / .42);
+  border-radius: 50%;
+  color: var(--color-accent);
+  background:
+    radial-gradient(ellipse at 30% 20%, #ffffffdb, #ffffff00 52%),
+    radial-gradient(circle at 76% 84%, #2563eb2e, #2563eb00 65%),
+    linear-gradient(145deg, #ffffff38, #dbeafe40);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 1px 3px #fffffff2,
+    inset -4px -6px 10px #2563eb24,
+    4px 8px 16px -4px #1e40af42,
+    1px 3px 5px -2px #0f172a26;
+  transition: transform 240ms cubic-bezier(.22, .61, .36, 1),
+    box-shadow 300ms ease;
+}
+.back-to-top::before,
+.back-to-top::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.back-to-top::before {
+  inset: -35%;
+  background: conic-gradient(from 20deg, #2563eb00, #60a5fa70 22%,
+    #ffffffb3 42%, #2563eb00 58%, #2563eb59 78%, #2563eb00);
+  filter: blur(5px);
+  opacity: 0;
+  animation: glass-orb-shimmer 3.6s ease-in-out infinite paused;
+  transition: opacity 300ms ease;
+}
+.back-to-top::after {
+  top: 12%;
+  left: 18%;
+  width: 42%;
+  height: 24%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffffffeb, #ffffff00);
+  transform: rotate(-32deg);
+  filter: blur(.5px);
+}
+.back-to-top svg {
+  position: relative;
+  z-index: 1;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.back-to-top:focus-visible {
+  border-radius: 50%;
+}
+@keyframes glass-orb-shimmer {
+  0%, 100% { transform: translate(-4%, 3%) rotate(-20deg); }
+  50% { transform: translate(4%, -3%) rotate(55deg); }
+}
+
 /* Home sits to the left of CV; the shared menu stays in place. */
 body > header {
   view-transition-name: site-header;
@@ -277,6 +346,16 @@ html[data-page-direction]::view-transition-new(root) {
     color: var(--color-link-hover);
     transform: scale(1.06);
   }
+  .back-to-top:hover {
+    box-shadow: inset 0 1px 3px #fffffff2,
+      inset -4px -6px 12px #2563eb33,
+      5px 11px 20px -4px #1e40af52,
+      1px 4px 7px -2px #0f172a26;
+  }
+  .back-to-top:hover::before {
+    opacity: .85;
+    animation-play-state: running;
+  }
   /* Keep the hover area still while the portrait tilts and scales. */
   .profile-portrait:hover .profile-portrait-image {
     transform: scale(1.04) rotate(-2deg);
@@ -293,6 +372,8 @@ html[data-page-direction]::view-transition-new(root) {
 }
 @media (prefers-reduced-motion: reduce) {
   :where(a[href]:not(.skip-link), .email-copy),
+  .back-to-top,
+  .back-to-top::before,
   .profile-portrait-image,
   .publication-image,
   .publication-image::after {
@@ -303,6 +384,7 @@ html[data-page-direction]::view-transition-new(root) {
   .publication-image:hover {
     transform: none;
   }
+  .back-to-top::before,
   .publication-image:hover::after {
     animation: none;
   }
