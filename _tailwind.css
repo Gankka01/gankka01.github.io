@@ -195,21 +195,22 @@ a.no-underline:hover {
   padding: 1.5rem 0 .5rem;
 }
 .back-to-top {
+  --orb-scale: 1.35;
   position: relative;
   isolation: isolate;
   align-items: center;
   justify-content: center;
   /* Keep a steady, generous hit area around the smaller, moving glass orb. */
-  width: 2.5rem;
-  height: 2.5rem;
+  width: calc(2.5rem * var(--orb-scale));
+  height: calc(2.5rem * var(--orb-scale));
   border-radius: 50%;
 }
 .back-to-top-shadow {
   position: absolute;
-  top: calc(50% + .7rem);
-  left: calc(50% - .55rem);
-  width: 1.1rem;
-  height: .65rem;
+  top: calc(50% + .7rem * var(--orb-scale));
+  left: calc(50% - .55rem * var(--orb-scale));
+  width: calc(1.1rem * var(--orb-scale));
+  height: calc(.65rem * var(--orb-scale));
   border-radius: 50%;
   background: radial-gradient(ellipse, rgb(0 0 0 / .24), transparent 72%);
   filter: blur(1px);
@@ -223,8 +224,8 @@ a.no-underline:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.625rem;
-  height: 1.625rem;
+  width: calc(1.625rem * var(--orb-scale));
+  height: calc(1.625rem * var(--orb-scale));
   overflow: hidden;
   border: 1px solid rgb(160 160 160 / .36);
   border-radius: 50%;
@@ -269,8 +270,8 @@ a.no-underline:hover {
 .back-to-top-orb svg {
   position: relative;
   z-index: 1;
-  width: .85rem;
-  height: .85rem;
+  width: calc(.85rem * var(--orb-scale));
+  height: calc(.85rem * var(--orb-scale));
 }
 .back-to-top:focus-visible {
   border-radius: 50%;
