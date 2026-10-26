@@ -1,12 +1,12 @@
 {% if include.pub.publication_url or include.pub.code_url %}
 <div class="publication-links flex flex-wrap gap-x-4 gap-y-2 mt-3 font-sans text-sm no-print">
   {% if include.pub.publication_url %}
-  <a href="{{ include.pub.publication_url | escape }}" class="inline-flex items-center no-underline" aria-label="{{ include.pub.publication_label | default: 'Publication' | escape }} page for {{ include.pub.title | escape }}">
+  <a href="{{ include.pub.publication_url | escape }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" aria-label="{{ include.pub.publication_label | default: 'Publication' | escape }} page for {{ include.pub.title | escape }} (opens in a new tab)">
     {% include icons/document.html class="w-4 h-4 mr-1.5" %}{{ include.pub.publication_label | default: 'Publication' | escape }}
   </a>
   {% endif %}
   {% if include.pub.code_url %}
-  <a href="{{ include.pub.code_url | escape }}" class="inline-flex items-center no-underline" aria-label="Source code for {{ include.pub.title | escape }}">
+  <a href="{{ include.pub.code_url | escape }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" aria-label="Source code for {{ include.pub.title | escape }} (opens in a new tab)">
     {% include icons/github.html class="w-4 h-4 mr-1.5" %}Code
   </a>
   {% endif %}

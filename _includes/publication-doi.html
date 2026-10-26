@@ -1,3 +1,3 @@
 {%- if include.pub.doi -%}
-<br><span class="publication-doi">doi : <a href="https://doi.org/{{ include.pub.doi | escape }}">{{ include.pub.doi | escape }}</a></span>
+<br><span class="publication-doi">doi : <a href="https://doi.org/{{ include.pub.doi | escape }}" target="_blank" rel="noopener noreferrer" aria-label="DOI {{ include.pub.doi | escape }} (opens in a new tab)">{{ include.pub.doi | escape }}</a></span>
 {%- endif -%}

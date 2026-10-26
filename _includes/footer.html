@@ -2,12 +2,12 @@
   <div class="max-w-4xl mx-auto px-6 text-center">
     <div class="flex justify-center items-center gap-5 mb-4">
       <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy" aria-label="Copy email address">{% include icons/envelope.html class="w-5 h-5" %}</button>
-      <a href="https://github.com/{{ site.github_username }}" class="no-underline" aria-label="{{ site.name | escape }} on GitHub">{% include icons/github.html class="w-5 h-5" %}</a>
-      <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="no-underline" aria-label="{{ site.name | escape }} on Google Scholar"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
+      <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ site.name | escape }} on GitHub (opens in a new tab)">{% include icons/github.html class="w-5 h-5" %}</a>
+      <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ site.name | escape }} on Google Scholar (opens in a new tab)"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
     </div>
     <p class="font-sans text-xs text-text-muted leading-relaxed">
-      Template adapted from <a href="https://github.com/keunhong/keunhong.github.io">Keunhong Park</a>.
-      Thanks for sharing! · <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>
+      Template adapted from <a href="https://github.com/keunhong/keunhong.github.io" target="_blank" rel="noopener noreferrer" aria-label="Keunhong Park template (opens in a new tab)">Keunhong Park</a>.
+      Thanks for sharing! · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer" aria-label="CC BY-SA 4.0 license (opens in a new tab)">CC BY-SA 4.0</a>
     </p>
   </div>
 </footer>

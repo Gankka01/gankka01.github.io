@@ -18,8 +18,8 @@ permalink: /
         <div class="profile-bio text-text-body mt-4 max-w-prose leading-relaxed prose">{{ site.bio | markdownify }}</div>
         <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-6 font-sans text-sm">
           <a href="{{ site.cv_pdf | relative_url }}" target="_blank" rel="noopener" class="inline-flex items-center no-underline" aria-label="View CV PDF (opens in a new tab)">{% include icons/file.html class="w-4 h-4 mr-1.5" %}CV</a>
-          <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" class="inline-flex items-center no-underline"><i class="ai ai-google-scholar mr-1.5" aria-hidden="true"></i>Scholar</a>
-          <a href="https://github.com/{{ site.github_username }}" class="inline-flex items-center no-underline">{% include icons/github.html class="w-4 h-4 mr-1.5" %}GitHub</a>
+          <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" aria-label="Google Scholar (opens in a new tab)"><i class="ai ai-google-scholar mr-1.5" aria-hidden="true"></i>Scholar</a>
+          <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" aria-label="GitHub (opens in a new tab)">{% include icons/github.html class="w-4 h-4 mr-1.5" %}GitHub</a>
           <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy inline-flex items-center" aria-label="Copy email address">{% include icons/envelope.html class="w-4 h-4 mr-1.5" %}Email</button>
         </div>
       </div>
