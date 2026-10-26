@@ -124,7 +124,6 @@ document.addEventListener('click', (event) => {
   tooltip.hidden = true;
   document.body.append(tooltip);
   let active;
-  let hideTimer;
   let positionFrame;
   let motion;
 
@@ -138,7 +137,6 @@ document.addEventListener('click', (event) => {
   }
 
   function reset() {
-    clearTimeout(hideTimer);
     cancelAnimationFrame(positionFrame);
     motion?.cancel();
     motion = null;
@@ -154,11 +152,11 @@ document.addEventListener('click', (event) => {
     return { offset: 0, transform: style.transform, opacity: style.opacity };
   }
 
-  function animate(frames, duration, finished) {
+  function animate(frames, duration, finished, easing = 'ease-in-out') {
     motion?.cancel();
     motion = null;
     if (reducedMotion.matches || !surface.animate) return finished?.();
-    const animation = surface.animate(frames, { duration, easing: 'ease-in-out', iterations: 1 });
+    const animation = surface.animate(frames, { duration, easing, iterations: 1 });
     motion = animation;
     animation.onfinish = () => {
       if (motion !== animation) return;
@@ -169,7 +167,6 @@ document.addEventListener('click', (event) => {
   }
 
   function hide(immediate = false) {
-    clearTimeout(hideTimer);
     cancelAnimationFrame(positionFrame);
     if (tooltip.hidden) return;
     if (immediate || reducedMotion.matches || !surface.animate) return reset();
@@ -181,7 +178,7 @@ document.addEventListener('click', (event) => {
       pose(),
       { offset: .36, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
       { offset: 1, transform: 'translateY(8px) scale(.9)', opacity: 0 }
-    ], 210, reset);
+    ], 210, reset, 'ease-out');
   }
 
   function position() {
@@ -203,6 +200,9 @@ document.addEventListener('click', (event) => {
     tooltip.style.left = `${left}px`;
     tooltip.style.top = `${above ? top - height - gap : bottom + gap}px`;
     tooltip.style.setProperty('--tooltip-arrow-x', `${Math.max(14, Math.min(center - left, width - 14))}px`);
+    // Keep the path from the button to the bubble hoverable without a hide delay.
+    tooltip.style.setProperty('--tooltip-bridge-height', `${gap + 1}px`);
+    tooltip.style.setProperty('--tooltip-trigger-width', `${active.offsetWidth + 8}px`);
   }
 
   function schedulePosition() {
@@ -214,7 +214,6 @@ document.addEventListener('click', (event) => {
   function show(control) {
     const text = control.dataset.copyEmail.trim();
     if (!text) return;
-    clearTimeout(hideTimer);
     if (active === control && tooltip.dataset.state !== 'closing') return;
     const start = active === control && !tooltip.hidden
       ? pose() : { offset: 0, transform: 'translateY(8px) scale(.9)', opacity: 0 };
@@ -237,30 +236,28 @@ document.addEventListener('click', (event) => {
     ], 230);
   }
 
-  function scheduleHide() {
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => {
-      if (active?.matches(':hover') || tooltip.matches(':hover')
-        || (active === document.activeElement && active?.matches(':focus-visible'))) return;
-      hide();
-    }, 140);
+  function containsTarget(target) {
+    return target instanceof Node && (active?.contains(target) || tooltip.contains(target));
   }
 
   document.addEventListener('pointerover', (event) => {
     if (event.pointerType === 'touch') return;
-    if (tooltip.contains(event.target)) return clearTimeout(hideTimer);
+    if (tooltip.contains(event.target)) return;
     const control = event.target.closest(selector);
     if (control && !control.contains(event.relatedTarget)) show(control);
   });
   document.addEventListener('pointerout', (event) => {
-    if (active?.contains(event.target) || tooltip.contains(event.target)) scheduleHide();
+    // Ignore moves within the button, bubble, and their invisible connecting area.
+    if (!containsTarget(event.target) || containsTarget(event.relatedTarget)) return;
+    if (active === document.activeElement && active?.matches(':focus-visible')) return;
+    hide();
   });
   document.addEventListener('focusin', (event) => {
     const control = event.target.closest(selector);
     if (control?.matches(':focus-visible')) show(control);
   });
   document.addEventListener('focusout', (event) => {
-    if (active === event.target) scheduleHide();
+    if (active === event.target && !active.matches(':hover') && !tooltip.matches(':hover')) hide();
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') hide(true);

@@ -157,6 +157,19 @@ a.no-underline:hover {
 .email-tooltip[hidden] {
   display: none;
 }
+/* A narrow hover bridge replaces the old time-based dismissal grace period. */
+.email-tooltip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(var(--tooltip-arrow-x) - var(--tooltip-trigger-width) / 2);
+  width: var(--tooltip-trigger-width);
+  height: var(--tooltip-bridge-height);
+}
+.email-tooltip[data-placement="bottom"]::before {
+  top: auto;
+  bottom: 100%;
+}
 .email-tooltip[data-state="closing"] {
   pointer-events: none;
 }
