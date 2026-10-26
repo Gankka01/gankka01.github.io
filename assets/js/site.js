@@ -181,7 +181,7 @@ document.addEventListener('click', (event) => {
       pose(),
       { offset: .36, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
       { offset: 1, transform: 'translateY(8px) scale(.9)', opacity: 0 }
-    ], 630, reset);
+    ], 420, reset);
   }
 
   function position() {
@@ -228,13 +228,13 @@ document.addEventListener('click', (event) => {
     tooltip.removeAttribute('aria-hidden');
     position();
     if (tooltip.hidden) return;
-    // 1.5 times the orb's 460/420 ms durations, with one gentle hop each way.
+    // Match the orb's 460/420 ms durations, with one gentle hop each way.
     animate([
       start,
       { offset: .5, transform: 'translateY(-5px) scale(1.025)', opacity: 1 },
       { offset: .78, transform: 'translateY(1px) scale(.995)', opacity: 1 },
       { offset: 1, transform: 'translateY(0) scale(1)', opacity: 1 }
-    ], 690);
+    ], 460);
   }
 
   function scheduleHide() {
