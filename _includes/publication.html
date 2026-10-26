@@ -16,9 +16,10 @@
       {% include publication-title.html pub=pub %}
     </h3>
     <p class="text-text-body mt-1">{% include authors.html authors=pub.authors %}</p>
-    <p class="text-text-muted text-sm mt-1">
+    <p class="publication-meta text-text-muted text-sm mt-1">
       {{ pub.venue | escape }}{% if pub.pages %}, pp. {{ pub.pages | escape }}{% endif %}.
       {% if pub.status %}{{ pub.status | escape }}. {% endif %}{{ pub.date | escape }}.
+      {% include publication-doi.html pub=pub %}
     </p>
     <p class="text-text-body mt-3 leading-relaxed">{{ pub.description | escape }}</p>
     {% include publication-links.html pub=pub %}

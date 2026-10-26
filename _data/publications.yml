@@ -10,11 +10,13 @@
   date: October 2026
   venue: IEEE Access
   status: Accepted for publication
+  doi: 10.1109/ACCESS.2026.3745881
   description: >-
     Patch-based invisible image watermarking with a 2D barcode mechanism
     for high-capacity message embedding and recovery.
   show_on_home: true
-  publication_url:
+  publication_url: https://ieeexplore.ieee.org/document/11745962
+  publication_label: Publication (Preprint)
   code_url: https://github.com/Gankka01/PatchMark
   image: /assets/images/patchmark.png
   image_alt: A boardwalk divided into the original scene and an illustrative QR watermark overlay

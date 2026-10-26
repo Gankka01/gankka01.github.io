@@ -1,6 +1,4 @@
-{%- if include.pub.accent_name -%}
-  {%- assign prefix_length = include.pub.accent_name | size -%}
-  <span class="text-accent">{{ include.pub.accent_name | escape }}</span>{{ include.pub.title | slice: prefix_length, 1000 | escape }}
-{%- else -%}
-  {{ include.pub.title | escape }}
-{%- endif -%}
+{%- assign first_word = include.pub.title | split: ' ' | first -%}
+{%- assign title_accent = include.pub.accent_name | default: first_word -%}
+{%- assign prefix_length = title_accent | size -%}
+<span class="text-accent">{{ title_accent | escape }}</span>{{ include.pub.title | slice: prefix_length, 1000 | escape }}

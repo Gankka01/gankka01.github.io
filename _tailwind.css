@@ -157,6 +157,12 @@ a.no-underline:hover {
 .publication-row + .publication-row {
   border-top: 1px solid var(--color-border-subtle);
 }
+.publication-meta {
+  line-height: 1.45;
+}
+.publication-doi {
+  overflow-wrap: anywhere;
+}
 .profile-bio p + p {
   text-align: justify;
   text-align-last: left;

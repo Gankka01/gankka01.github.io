@@ -19,7 +19,7 @@ google_scholar: wVjmE7gAAAAJ
 portrait: /assets/images/wonik-jang-profile.webp
 portrait_alt: Portrait of Wonik Jang
 cv_pdf: /assets/files/Wonik_Jang_CV.pdf
-updated: "October 23, 2026"
+updated: "October 26, 2026"
 plugins:
   - jekyll-tailwindcss
 exclude:
