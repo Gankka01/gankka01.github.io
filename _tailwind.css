@@ -368,6 +368,29 @@ a.no-underline:hover {
   --page-motion-duration: 320ms;
   --page-motion-easing: cubic-bezier(.22, .61, .36, 1);
 }
+/* Equal side columns keep Home/CV centered independently of the wordmark. */
+.site-header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: .5rem;
+}
+.site-brand {
+  line-height: 0;
+}
+.site-brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.site-brand-header {
+  width: clamp(4rem, 18vw, 6rem);
+  justify-self: start;
+}
+.site-brand-footer {
+  width: 4.5rem;
+  margin-bottom: 1rem;
+}
 .site-navigation {
   --nav-item-width: 3rem;
   --nav-gap: .1rem;

@@ -1,7 +1,12 @@
 <header class="py-4 no-print">
-  <nav class="site-navigation mx-auto font-sans text-sm" aria-label="Main navigation" data-site-navigation>
-    <a href="{{ '/' | relative_url }}" class="no-underline{% if page.url == '/' %} font-semibold{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
-    <a href="{{ '/cv/' | relative_url }}" class="no-underline{% if page.url == '/cv/' %} font-semibold{% endif %}"{% if page.url == '/cv/' %} aria-current="page"{% endif %}>CV</a>
-    <span class="site-nav-indicator" aria-hidden="true"></span>
-  </nav>
+  <div class="site-header-inner max-w-4xl mx-auto px-6">
+    <a href="{{ '/' | relative_url }}" class="site-brand site-brand-header no-underline" aria-label="WONIK — Home">
+      <img src="{{ '/assets/images/wonik-logo.svg' | relative_url }}" alt="WONIK" width="485" height="120">
+    </a>
+    <nav class="site-navigation mx-auto font-sans text-sm" aria-label="Main navigation" data-site-navigation>
+      <a href="{{ '/' | relative_url }}" class="no-underline{% if page.url == '/' %} font-semibold{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
+      <a href="{{ '/cv/' | relative_url }}" class="no-underline{% if page.url == '/cv/' %} font-semibold{% endif %}"{% if page.url == '/cv/' %} aria-current="page"{% endif %}>CV</a>
+      <span class="site-nav-indicator" aria-hidden="true"></span>
+    </nav>
+  </div>
 </header>
