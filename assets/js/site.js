@@ -226,16 +226,16 @@ document.addEventListener('click', (event) => {
   observeImages();
 })();
 
-// A shared email bubble, independent of the button's hover transform.
+// One shared bubble for email and profile links, with per-trigger text and color.
 (() => {
-  const selector = '[data-copy-email]';
+  const selector = '[data-copy-email], [data-tooltip]';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const tooltip = document.createElement('div');
   const surface = document.createElement('span');
-  tooltip.id = 'email-address-tooltip';
-  tooltip.className = 'email-tooltip no-print';
+  tooltip.id = 'contact-tooltip';
+  tooltip.className = 'contact-tooltip no-print';
   tooltip.setAttribute('role', 'tooltip');
-  surface.className = 'email-tooltip-surface';
+  surface.className = 'contact-tooltip-surface';
   tooltip.append(surface);
   tooltip.hidden = true;
   document.body.append(tooltip);
@@ -328,7 +328,7 @@ document.addEventListener('click', (event) => {
   }
 
   function show(control, clicked = false) {
-    const text = control.dataset.copyEmail.trim();
+    const text = (control.dataset.tooltip || control.dataset.copyEmail || '').trim();
     if (!text) return;
     if (active === control && tooltip.dataset.state !== 'closing' && !clicked) return;
     const start = active === control && !tooltip.hidden
@@ -336,6 +336,7 @@ document.addEventListener('click', (event) => {
     if (active !== control) reset();
     active = control;
     surface.textContent = text;
+    tooltip.dataset.theme = control.dataset.tooltipTheme || 'email';
     const descriptions = (control.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
     control.setAttribute('aria-describedby', [...new Set([...descriptions, tooltip.id])].join(' '));
     tooltip.hidden = false;
@@ -390,7 +391,8 @@ document.addEventListener('click', (event) => {
     if (event.key === 'Escape') hide(true);
   });
   document.addEventListener('click', (event) => {
-    const control = event.target.closest(selector);
+    // Copy clicks keep their bubble; profile links retain normal new-tab behavior.
+    const control = event.target.closest('[data-copy-email]');
     if (control) {
       show(control, true);
       return;

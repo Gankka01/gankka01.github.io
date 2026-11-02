@@ -6,7 +6,7 @@
   </a>
   {% endif %}
   {% if include.pub.code_url %}
-  <a href="{{ include.pub.code_url | escape }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" aria-label="Source code for {{ include.pub.title | escape }} (opens in a new tab)">
+  <a href="{{ include.pub.code_url | escape }}" target="_blank" rel="noopener noreferrer" class="{% if include.pub.code_url contains 'https://github.com/' %}github-link {% endif %}inline-flex items-center no-underline" aria-label="Source code for {{ include.pub.title | escape }} (opens in a new tab)">
     {% include icons/github.html class="w-4 h-4 mr-1.5" %}Code
   </a>
   {% endif %}

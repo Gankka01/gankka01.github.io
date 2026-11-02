@@ -5,7 +5,7 @@
     </a>
     <div class="flex justify-center items-center gap-5 mb-4">
       <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy" aria-label="Copy email address">{% include icons/envelope.html class="w-5 h-5" %}</button>
-      <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ site.name | escape }} on GitHub (opens in a new tab)">{% include icons/github.html class="w-5 h-5" %}</a>
+      <a href="https://github.com/{{ site.github_username }}" data-tooltip="{{ site.github_username | escape }}" data-tooltip-theme="github" target="_blank" rel="noopener noreferrer" class="github-link no-underline" aria-label="{{ site.name | escape }} on GitHub (opens in a new tab)">{% include icons/github.html class="w-5 h-5" %}</a>
       <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ site.name | escape }} on Google Scholar (opens in a new tab)"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
     </div>
     <p class="font-sans text-xs text-text-muted leading-relaxed">

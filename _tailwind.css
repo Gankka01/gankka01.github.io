@@ -7,6 +7,7 @@
   --color-surface-alt: #fbfcfe;
   --color-surface-muted: #f4f7fc;
   --color-accent: #2563EB;
+  --color-github: #8250df;
 
   /* Text colors */
   --color-text: #171717;
@@ -135,8 +136,13 @@ a.no-underline:hover {
 .publication-doi a {
   transform-origin: left center;
 }
-/* A fixed anchor and an independently animated, blue-outlined email bubble. */
-.email-tooltip {
+/* Reuse the normal link hover effect with GitHub Primer's purple accent. */
+a.github-link {
+  --color-link-hover: var(--color-github);
+}
+/* A shared beveled bubble; only the accent varies between email and GitHub. */
+.contact-tooltip {
+  --tooltip-accent: var(--color-accent);
   position: fixed;
   z-index: 50;
   width: max-content;
@@ -154,11 +160,14 @@ a.no-underline:hover {
   word-break: normal;
   hyphens: none;
 }
-.email-tooltip[hidden] {
+.contact-tooltip[data-theme="github"] {
+  --tooltip-accent: var(--color-github);
+}
+.contact-tooltip[hidden] {
   display: none;
 }
 /* A narrow hover bridge replaces the old time-based dismissal grace period. */
-.email-tooltip::before {
+.contact-tooltip::before {
   content: "";
   position: absolute;
   top: 100%;
@@ -166,18 +175,18 @@ a.no-underline:hover {
   width: var(--tooltip-trigger-width);
   height: var(--tooltip-bridge-height);
 }
-.email-tooltip[data-placement="bottom"]::before {
+.contact-tooltip[data-placement="bottom"]::before {
   top: auto;
   bottom: 100%;
 }
-.email-tooltip[data-state="closing"] {
+.contact-tooltip[data-state="closing"] {
   pointer-events: none;
 }
-.email-tooltip-surface {
+.contact-tooltip-surface {
   position: relative;
   display: block;
   padding: .45rem .65rem;
-  border: 1.5px solid var(--color-accent);
+  border: 1.5px solid var(--tooltip-accent);
   border-radius: .6rem;
   /* A flat face with a softly rounded rim; the surface stays opaque. */
   background: linear-gradient(180deg, #fff, #fbfcfe 7px,
@@ -188,15 +197,15 @@ a.no-underline:hover {
     0 3px 8px rgb(0 0 0 / .22), 0 1px 2px rgb(0 0 0 / .12);
   transform-origin: var(--tooltip-arrow-x) bottom;
 }
-.email-tooltip-surface::after {
+.contact-tooltip-surface::after {
   content: "";
   position: absolute;
   left: calc(var(--tooltip-arrow-x) - 6px);
   bottom: -7px;
   width: 12px;
   height: 12px;
-  border-right: 1.5px solid var(--color-accent);
-  border-bottom: 1.5px solid var(--color-accent);
+  border-right: 1.5px solid var(--tooltip-accent);
+  border-bottom: 1.5px solid var(--tooltip-accent);
   /* Carry the body's rounded rim into the tip, lit from the upper left. */
   background: linear-gradient(135deg, #fbfcfe 12%, #e9edf4 55%, #d4ddea);
   box-shadow: inset 0 -1px 1px rgb(255 255 255 / .9),
@@ -204,10 +213,10 @@ a.no-underline:hover {
     2px 2px 3px -1px rgb(15 23 42 / .18);
   transform: rotate(45deg);
 }
-.email-tooltip[data-placement="bottom"] .email-tooltip-surface {
+.contact-tooltip[data-placement="bottom"] .contact-tooltip-surface {
   transform-origin: var(--tooltip-arrow-x) top;
 }
-.email-tooltip[data-placement="bottom"] .email-tooltip-surface::after {
+.contact-tooltip[data-placement="bottom"] .contact-tooltip-surface::after {
   top: -7px;
   bottom: auto;
   /* Reverse the local lighting when the tip points upward. */
