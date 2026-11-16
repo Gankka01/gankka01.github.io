@@ -1,27 +1,35 @@
 {% assign pub = include.pub %}
+{% assign lang = page.lang | default: 'en' %}
+{% assign ui = site.data.i18n[lang] %}
+{% if lang == 'ko' %}
+  {% assign image_alt = pub.image_alt_ko | default: pub.image_alt %}{% assign venue = pub.venue_ko | default: pub.venue %}{% assign status = pub.status_ko | default: pub.status %}{% assign date = pub.date_ko | default: pub.date %}{% assign description = pub.description_ko | default: pub.description %}
+{% else %}
+  {% assign image_alt = pub.image_alt %}{% assign venue = pub.venue %}{% assign status = pub.status %}{% assign date = pub.date %}{% assign description = pub.description %}
+{% endif %}
 <article class="publication-row flex flex-col md:flex-row gap-6 py-6" aria-labelledby="pub-{{ pub.id }}">
   <div class="w-40 md:w-1/5 flex-shrink-0">
     {% if pub.image %}
     <div class="publication-image aspect-square rounded-lg">
-      <img src="{{ pub.image | relative_url }}" alt="{{ pub.image_alt | escape }}" width="400" height="400" loading="lazy" class="block aspect-square w-full object-contain rounded-lg">
+      <img src="{{ pub.image | relative_url }}" alt="{{ image_alt | escape }}" width="400" height="400" loading="lazy" class="block aspect-square w-full object-contain rounded-lg">
     </div>
     {% else %}
-    <div class="image-placeholder aspect-square w-full rounded-lg" aria-label="Research image placeholder for {{ pub.image_label | escape }}">
+    <div class="image-placeholder aspect-square w-full rounded-lg" aria-label="{{ ui.image_placeholder | escape }} {{ pub.image_label | escape }}">
       <span>{{ pub.image_label | escape }}</span>
     </div>
     {% endif %}
   </div>
   <div class="flex-1 min-w-0">
-    <h3 id="pub-{{ pub.id }}" class="font-serif text-xl font-semibold text-text leading-snug">
+    <h3 id="pub-{{ pub.id }}" lang="en" class="font-serif text-xl font-semibold text-text leading-snug">
       {% include publication-title.html pub=pub %}
     </h3>
+    {% if lang == 'ko' and pub.title_ko %}<p class="publication-title-ko">{{ pub.title_ko | escape }}</p>{% endif %}
     <p class="text-text-body mt-1">{% include authors.html authors=pub.authors %}</p>
     <p class="publication-meta text-text-muted text-sm mt-1">
-      {{ pub.venue | escape }}{% if pub.pages %}, pp. {{ pub.pages | escape }}{% endif %}.
-      {% if pub.status %}{{ pub.status | escape }}. {% endif %}{{ pub.date | escape }}.
+      {{ venue | escape }}{% if pub.pages %}, {% if lang == 'ko' %}{{ pub.pages | escape }}쪽{% else %}pp. {{ pub.pages | escape }}{% endif %}{% endif %}.
+      {% if status %}{{ status | escape }}. {% endif %}{{ date | escape }}.
       {% include publication-doi.html pub=pub %}
     </p>
-    <p class="text-text-body mt-3 leading-relaxed">{{ pub.description | escape }}</p>
+    <p class="text-text-body mt-3 leading-relaxed">{{ description | escape }}</p>
     {% include publication-links.html pub=pub %}
   </div>
 </article>

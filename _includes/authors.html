@@ -1,5 +1,6 @@
 {%- for author_id in include.authors -%}
   {%- assign author = site.data.authors[author_id] -%}
   {%- unless forloop.first -%}, {% endunless -%}
-  {%- if author.is_me -%}<strong class="font-semibold">{{ author.name | escape }}</strong>{%- else -%}{{ author.name | escape }}{%- endif -%}
+  {%- if page.lang == 'ko' -%}{%- assign author_name = author.name_ko | default: author.name -%}{%- else -%}{%- assign author_name = author.name -%}{%- endif -%}
+  {%- if author.is_me -%}<strong class="font-semibold">{{ author_name | escape }}</strong>{%- else -%}{{ author_name | escape }}{%- endif -%}
 {%- endfor -%}

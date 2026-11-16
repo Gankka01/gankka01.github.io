@@ -47,9 +47,10 @@ document.addEventListener('click', async (event) => {
     } else {
       copyWithSelection(email);
     }
-    showCopyStatus('Email address copied.');
+    showCopyStatus(document.documentElement.lang === 'ko' ? '이메일 주소를 복사했습니다.' : 'Email address copied.');
   } catch {
-    showCopyStatus(`Copy unavailable. Email: ${email}`, true);
+    showCopyStatus(document.documentElement.lang === 'ko'
+      ? `복사할 수 없습니다. 이메일: ${email}` : `Copy unavailable. Email: ${email}`, true);
   }
 });
 
@@ -406,18 +407,30 @@ document.addEventListener('click', (event) => {
   document.addEventListener('site:pagechange', reset);
 })();
 
-// The static HTML routes remain available for direct visits and without JS.
+// Both language versions are ordinary static pages and work without JavaScript.
 (() => {
   const nav = document.querySelector('[data-site-navigation]');
-  if (!nav || !window.fetch || !history.pushState) return;
+  const languageSwitch = document.querySelector('[data-language-switch]');
+  const brand = document.querySelector('[data-site-brand]');
+  if (!nav || !languageSwitch || !brand || !window.fetch || !history.pushState) return;
 
-  const links = [...nav.querySelectorAll('a[href]')];
+  const links = [...nav.querySelectorAll('a[data-page]')];
   const normalizePath = (path) => path.replace(/\/?$/, '/');
-  const routes = new Map(links.map((link, index) => [normalizePath(new URL(link.href).pathname), index]));
+  const routeItems = [
+    [nav.dataset.enHome, { language: 'en', page: 'home', index: 0 }],
+    [nav.dataset.enCv, { language: 'en', page: 'cv', index: 1 }],
+    [nav.dataset.koHome, { language: 'ko', page: 'home', index: 0 }],
+    [nav.dataset.koCv, { language: 'ko', page: 'cv', index: 1 }]
+  ];
+  if (links.length !== 2 || routeItems.some(([path]) => !path)) return;
+  const routes = new Map(routeItems.map(([path, info]) => [normalizePath(new URL(path, location.href).pathname), info]));
   const routeFor = (url) => url.origin === location.origin && !url.search && !url.hash
     ? routes.get(normalizePath(url.pathname)) : undefined;
   const metadata = ['meta[name="description"]', 'link[rel="canonical"]',
-    'meta[property="og:title"]', 'meta[property="og:description"]', 'meta[property="og:url"]'];
+    'link[rel="alternate"][hreflang="en"]', 'link[rel="alternate"][hreflang="ko"]',
+    'link[rel="alternate"][hreflang="x-default"]', 'meta[property="og:title"]',
+    'meta[property="og:description"]', 'meta[property="og:url"]',
+    'meta[property="og:locale"]', 'meta[property="og:image:alt"]'];
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const cache = new Map();
   let displayedURL = new URL(location.href);
@@ -426,6 +439,7 @@ document.addEventListener('click', (event) => {
   let requestNumber = 0;
   let controller;
   let transition;
+  let fallbackFade;
   let restoring = false;
   let scrollFrame;
   const newEntry = () => ({ key: `${Date.now()}-${++sequence}`, x: 0, y: 0 });
@@ -436,7 +450,6 @@ document.addEventListener('click', (event) => {
 
   function rememberPosition() {
     const entry = history.state?.siteNavigation;
-    // A popstate changes the history entry before the old DOM is replaced.
     if (restoring || entry?.key !== displayedKey) return;
     history.replaceState({ ...history.state,
       siteNavigation: { ...entry, x: scrollX, y: scrollY } }, '', location.href);
@@ -444,9 +457,25 @@ document.addEventListener('click', (event) => {
 
   function snapshot(doc) {
     const main = doc.querySelector('main#main-content');
-    if (!main || !doc.querySelector('[data-site-navigation]')) throw new Error('Unexpected page');
-    return { main: main.cloneNode(true), title: doc.title, bodyClass: doc.body.className,
-      metadata: metadata.map((selector) => doc.head.querySelector(selector)?.cloneNode(true)) };
+    const nextNav = doc.querySelector('[data-site-navigation]');
+    const nextLinks = [...(nextNav?.querySelectorAll('a[data-page]') || [])];
+    const nextSwitch = doc.querySelector('[data-language-switch]');
+    const nextBrand = doc.querySelector('[data-site-brand]');
+    const footer = doc.querySelector('body > footer');
+    const skip = doc.querySelector('.skip-link');
+    if (!main || nextLinks.length !== 2 || !nextSwitch || !nextBrand || !footer || !skip) {
+      throw new Error('Unexpected page');
+    }
+    return {
+      main: main.cloneNode(true), footer: footer.cloneNode(true),
+      language: doc.documentElement.lang, title: doc.title, bodyClass: doc.body.className,
+      navLabel: nextNav.getAttribute('aria-label'),
+      navLinks: nextLinks.map((link) => ({ href: link.getAttribute('href'), text: link.textContent })),
+      switchHref: nextSwitch.getAttribute('href'), switchLabel: nextSwitch.getAttribute('aria-label'),
+      brandHref: nextBrand.getAttribute('href'), brandLabel: nextBrand.getAttribute('aria-label'),
+      skipText: skip.textContent,
+      metadata: metadata.map((selector) => doc.head.querySelector(selector)?.cloneNode(true))
+    };
   }
 
   cache.set(normalizePath(displayedURL.pathname), snapshot(document));
@@ -465,50 +494,68 @@ document.addEventListener('click', (event) => {
     ++requestNumber;
     controller?.abort();
     transition?.skipTransition();
+    fallbackFade?.cancel();
     transition = null;
+    fallbackFade = null;
     restoring = false;
     document.querySelector('main')?.removeAttribute('aria-busy');
     delete document.documentElement.dataset.pageDirection;
+    delete document.documentElement.dataset.languageTransition;
   }
 
   async function navigate(url, traversalEntry = null) {
     const ticket = ++requestNumber;
     controller?.abort();
     transition?.skipTransition();
+    fallbackFade?.cancel();
     controller = new AbortController();
     if (!traversalEntry) rememberPosition();
     document.querySelector('main').setAttribute('aria-busy', 'true');
     try {
       const page = await loadPage(url, controller.signal);
       if (ticket !== requestNumber) return;
+      const targetRoute = routeFor(url);
+      const currentRoute = routes.get(normalizePath(displayedURL.pathname));
       const differentPage = normalizePath(url.pathname) !== normalizePath(displayedURL.pathname);
-      const forward = routes.get(normalizePath(url.pathname)) > routes.get(normalizePath(displayedURL.pathname));
+      const differentLanguage = targetRoute.language !== currentRoute.language;
+      const forward = targetRoute.index > currentRoute.index;
 
       const swap = () => {
         if (ticket !== requestNumber) return;
         if (!traversalEntry) rememberPosition();
         restoring = true;
         const entry = traversalEntry || newEntry();
-        if (!traversalEntry) {
-          history.pushState({ siteNavigation: entry }, '', url.href);
-        }
+        if (!traversalEntry) history.pushState({ siteNavigation: entry }, '', url.href);
         const main = page.main.cloneNode(true);
         main.removeAttribute('aria-busy');
         document.querySelector('main#main-content').replaceWith(main);
+        if (document.documentElement.lang !== page.language) {
+          document.querySelector('body > footer').replaceWith(page.footer.cloneNode(true));
+        }
+        document.documentElement.lang = page.language;
         document.body.className = page.bodyClass;
         document.title = page.title;
+        nav.setAttribute('aria-label', page.navLabel);
+        links.forEach((link, index) => {
+          link.setAttribute('href', page.navLinks[index].href);
+          link.textContent = page.navLinks[index].text;
+          const current = link.dataset.page === targetRoute.page;
+          link.classList.toggle('font-semibold', current);
+          if (current) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        });
+        languageSwitch.setAttribute('href', page.switchHref);
+        languageSwitch.setAttribute('aria-label', page.switchLabel);
+        languageSwitch.setAttribute('title', page.switchLabel);
+        brand.setAttribute('href', page.brandHref);
+        brand.setAttribute('aria-label', page.brandLabel);
+        document.querySelector('.skip-link').textContent = page.skipText;
         metadata.forEach((selector, index) => {
           const old = document.head.querySelector(selector);
           const next = page.metadata[index]?.cloneNode(true);
           if (old && next) old.replaceWith(next);
           else if (next) document.head.append(next);
           else old?.remove();
-        });
-        links.forEach((link) => {
-          const current = normalizePath(new URL(link.href).pathname) === normalizePath(url.pathname);
-          link.classList.toggle('font-semibold', current);
-          if (current) link.setAttribute('aria-current', 'page');
-          else link.removeAttribute('aria-current');
         });
         clearTimeout(statusTimeout);
         if (copyStatus) copyStatus.hidden = true;
@@ -522,23 +569,34 @@ document.addEventListener('click', (event) => {
       };
 
       if (differentPage && document.startViewTransition && !reducedMotion.matches) {
-        document.documentElement.dataset.pageDirection = forward ? 'forward' : 'back';
+        if (differentLanguage) document.documentElement.dataset.languageTransition = 'true';
+        else document.documentElement.dataset.pageDirection = forward ? 'forward' : 'back';
         transition = document.startViewTransition(swap);
         await transition.updateCallbackDone;
         await transition.finished.catch(() => {});
+      } else if (differentLanguage && !reducedMotion.matches && document.querySelector('main')?.animate) {
+        fallbackFade = document.querySelector('main').animate([{ opacity: 1 }, { opacity: 0 }],
+          { duration: 150, easing: 'ease-in', fill: 'forwards' });
+        await fallbackFade.finished.catch(() => {});
+        if (ticket !== requestNumber) return;
+        swap();
+        fallbackFade = document.querySelector('main').animate([{ opacity: 0 }, { opacity: 1 }],
+          { duration: 170, easing: 'ease-out' });
+        await fallbackFade.finished.catch(() => {});
       } else {
         swap();
       }
     } catch (error) {
       if (ticket !== requestNumber || error.name === 'AbortError') return;
-      // A failed enhancement must never strand the visitor on the wrong URL.
       if (traversalEntry) location.reload();
       else location.assign(url.href);
     } finally {
       if (ticket === requestNumber) {
         document.querySelector('main')?.removeAttribute('aria-busy');
         delete document.documentElement.dataset.pageDirection;
+        delete document.documentElement.dataset.languageTransition;
         transition = null;
+        fallbackFade = null;
         restoring = false;
       }
     }
@@ -554,7 +612,6 @@ document.addEventListener('click', (event) => {
     event.preventDefault();
     if (normalizePath(url.pathname) === normalizePath(displayedURL.pathname)
       && normalizePath(url.pathname) === normalizePath(location.pathname) && !location.hash) {
-      // Cancel a pending request if the user chooses the still-visible page.
       cancelPendingNavigation();
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       rememberPosition();
@@ -565,7 +622,6 @@ document.addEventListener('click', (event) => {
 
   addEventListener('popstate', (event) => {
     const url = new URL(location.href);
-    // Keep native in-page anchors (including the skip link) within this document.
     if (url.pathname === displayedURL.pathname && (url.hash || displayedURL.hash)) {
       cancelPendingNavigation();
       const entry = event.state?.siteNavigation || { ...newEntry(), x: scrollX, y: scrollY };
@@ -600,8 +656,9 @@ document.addEventListener('click', (event) => {
       }
     });
   }
-  // Warm the other small HTML page; failed prefetches leave ordinary navigation intact.
-  const prefetch = () => links.forEach((link) => { void loadPage(new URL(link.href)).catch(() => {}); });
+  const prefetch = () => routes.forEach((_, path) => {
+    void loadPage(new URL(path, location.origin)).catch(() => {});
+  });
   if ('requestIdleCallback' in window) requestIdleCallback(prefetch, { timeout: 1500 });
   else setTimeout(prefetch, 500);
 })();

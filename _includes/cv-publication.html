@@ -1,14 +1,17 @@
+{% assign lang = page.lang | default: 'en' %}
+{% if lang == 'ko' %}{% assign venue = include.pub.venue_ko | default: include.pub.venue %}{% assign status = include.pub.status_ko | default: include.pub.status %}{% assign date = include.pub.date_ko | default: include.pub.date %}{% else %}{% assign venue = include.pub.venue %}{% assign status = include.pub.status %}{% assign date = include.pub.date %}{% endif %}
 <li class="cv-item">
   <div class="cv-entry">
     <div class="min-w-0">
-      <h4 class="font-serif font-semibold leading-snug">{% include publication-title.html pub=include.pub %}</h4>
+      <h4 lang="en" class="font-serif font-semibold leading-snug">{% include publication-title.html pub=include.pub %}</h4>
+      {% if lang == 'ko' and include.pub.title_ko %}<p class="publication-title-ko cv-publication-title-ko">{{ include.pub.title_ko | escape }}</p>{% endif %}
       <p class="text-text-body text-sm mt-1">{% include authors.html authors=include.pub.authors %}</p>
       <p class="publication-meta text-text-muted text-sm">
-        {{ include.pub.venue | escape }}{% if include.pub.pages %}, pp. {{ include.pub.pages | escape }}{% endif %}.{% if include.pub.status %} {{ include.pub.status | escape }}.{% endif %}
+        {{ venue | escape }}{% if include.pub.pages %}, {% if lang == 'ko' %}{{ include.pub.pages | escape }}쪽{% else %}pp. {{ include.pub.pages | escape }}{% endif %}{% endif %}.{% if status %} {{ status | escape }}.{% endif %}
         {% include publication-doi.html pub=include.pub %}
       </p>
       {% include publication-links.html pub=include.pub %}
     </div>
-    <p class="cv-date">{{ include.pub.date | escape }}</p>
+    <p class="cv-date">{{ date | escape }}</p>
   </div>
 </li>

@@ -1,0 +1,158 @@
+{% assign lang = page.lang | default: 'en' %}
+{% assign ui = site.data.i18n[lang] %}
+{% if lang == 'ko' %}
+  {% assign display_name = site.name_ko %}{% assign display_position = site.position_ko %}{% assign display_affiliation = site.affiliation_ko %}{% assign display_location = site.location_ko %}{% assign display_updated = site.updated_ko %}
+{% else %}
+  {% assign display_name = site.name %}{% assign display_position = site.position %}{% assign display_affiliation = site.affiliation %}{% assign display_location = site.location %}{% assign display_updated = site.updated %}
+{% endif %}
+<header class="flex flex-col md:flex-row print:flex-row md:items-start gap-6 pb-6 border-b border-border-subtle">
+  <div class="flex-1 min-w-0">
+    <h1 class="font-display text-3xl md:text-4xl font-semibold text-text">{{ display_name | escape }}</h1>
+    <p class="text-text-body text-lg mt-1">{{ display_position | escape }}</p>
+    <p class="text-text-muted text-sm mt-1">{{ display_affiliation | escape }} · {{ display_location | escape }}</p>
+  </div>
+  <div class="text-sm text-text-body space-y-1 md:text-right print:text-right">
+    <p><button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy break-words" aria-label="{{ ui.copy_email | escape }}: {{ site.email | escape }}">{% include icons/envelope.html class="w-4 h-4 inline mr-1" %}{{ site.email | escape }}</button></p>
+    <p><a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ ui.scholar_aria | escape }}"><i class="ai ai-google-scholar mr-1" aria-hidden="true"></i>Google Scholar</a></p>
+    <p><a href="{% if lang == 'ko' %}{{ '/ko/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}" class="no-underline">{% include icons/globe.html class="w-4 h-4 inline mr-1" %}{{ site.url | remove: 'https://' | escape }}</a></p>
+    <p><a href="https://github.com/{{ site.github_username }}" data-tooltip="{{ site.github_username | escape }}" data-tooltip-theme="github" target="_blank" rel="noopener noreferrer" class="github-link no-underline" aria-label="{{ site.github_username | escape }} {{ ui.github_profile_suffix | escape }}">{% include icons/github.html class="w-4 h-4 inline mr-1" %}{{ site.github_username }}</a></p>
+    <p class="no-print"><a href="{{ site.cv_pdf | relative_url }}" target="_blank" rel="noopener" class="no-underline" aria-label="{{ ui.pdf_aria | escape }}">{% include icons/file.html class="w-4 h-4 inline mr-1" %}{{ ui.pdf | escape }}</a></p>
+  </div>
+</header>
+<section class="mt-8" aria-labelledby="research-interests">
+  {% include section-title.html id="research-interests" title=ui.research_interests %}
+  <ul class="cv-list text-text-body">
+    {% for interest in site.data.cv.interests %}<li>{% if lang == 'ko' %}{{ interest.text_ko | default: interest.text | escape }}{% else %}{{ interest.text | escape }}{% endif %}</li>{% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="education">
+  {% include section-title.html id="education" title=ui.education %}
+  {% for school in site.data.cv.education %}
+  <div class="cv-item mb-5">
+    <div class="cv-entry">
+      <div class="min-w-0">
+        <h3 class="font-serif font-semibold">{% if lang == 'ko' %}{{ school.institution_ko | default: school.institution | escape }}{% else %}{{ school.institution | escape }}{% endif %}</h3>
+        <p class="text-text-body">{% if lang == 'ko' %}{{ school.degree_ko | default: school.degree | escape }}{% else %}{{ school.degree | escape }}{% endif %}</p>
+      </div>
+      <div class="cv-entry-meta">
+        <p class="text-text-muted text-sm">{% if lang == 'ko' %}{{ school.location_ko | default: school.location | escape }}{% else %}{{ school.location | escape }}{% endif %}</p>
+        <p class="cv-date">{% if lang == 'ko' %}{{ school.dates_ko | default: school.dates | escape }}{% else %}{{ school.dates | escape }}{% endif %}</p>
+      </div>
+    </div>
+    <ul class="cv-list mt-1 text-text-body text-sm"><li>{% if lang == 'ko' %}{{ school.description_ko | default: school.description | escape }}{% else %}{{ school.description | escape }}{% endif %}</li></ul>
+  </div>
+  {% endfor %}
+</section>
+<section class="mt-8" aria-labelledby="cv-publications">
+  {% include section-title.html id="cv-publications" title=ui.publications %}
+  {% for group in site.data.cv.publication_groups %}
+  {% assign group_publications = site.data.publications | where: "category", group.id | sort: "sort_date" | reverse %}
+  {% if group_publications.size > 0 %}
+  <div class="mt-5">
+    <h3 class="cv-subheading">{% if lang == 'ko' %}{{ group.title_ko | default: group.title | escape }}{% else %}{{ group.title | escape }}{% endif %}</h3>
+    <ul class="cv-list space-y-5">
+      {% for pub in group_publications %}{% include cv-publication.html pub=pub %}{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endfor %}
+</section>
+<section class="mt-8" aria-labelledby="research">
+  {% include section-title.html id="research" title=ui.research %}
+  {% assign research = site.data.cv.research %}
+  <div class="cv-entry">
+    <div class="min-w-0">
+      <h3 class="font-serif font-semibold">{% if lang == 'ko' %}{{ research.institution_ko | default: research.institution | escape }}{% else %}{{ research.institution | escape }}{% endif %}</h3>
+      <p class="text-text-body">{% if lang == 'ko' %}{{ research.role_ko | default: research.role | escape }}{% else %}{{ research.role | escape }}{% endif %}</p>
+    </div>
+    <div class="cv-entry-meta">
+      <p class="text-text-muted text-sm">{% if lang == 'ko' %}{{ research.location_ko | default: research.location | escape }}{% else %}{{ research.location | escape }}{% endif %}</p>
+      <p class="cv-date">{% if lang == 'ko' %}{{ research.dates_ko | default: research.dates | escape }}{% else %}{{ research.dates | escape }}{% endif %}</p>
+    </div>
+  </div>
+  <ul class="cv-list mt-2 space-y-3 text-text-body">
+    {% for activity in research.activities %}
+    <li>
+      <h4 class="font-serif font-semibold">{% if lang == 'ko' %}{{ activity.title_ko | default: activity.title | escape }}{% else %}{{ activity.title | escape }}{% endif %} <span class="font-normal text-text-muted ml-1">{% if lang == 'ko' %}{{ activity.dates_ko | default: activity.dates | escape }}{% else %}{{ activity.dates | escape }}{% endif %}</span></h4>
+      <p class="text-sm">{% if lang == 'ko' %}{{ activity.description_ko | default: activity.description | escape }}{% else %}{{ activity.description | escape }}{% endif %}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="projects">
+  {% include section-title.html id="projects" title=ui.projects %}
+  {% for project in site.data.cv.projects %}
+  <div class="cv-item">
+    <div class="cv-entry">
+      <div class="min-w-0">
+        <h3 class="font-serif font-semibold">{% if lang == 'ko' %}{{ project.title_ko | default: project.title | escape }}{% else %}{{ project.title | escape }}{% endif %}</h3>
+        <p class="text-text-body text-sm">{% if lang == 'ko' %}{{ project.role_ko | default: project.role | escape }}, {{ project.team_ko | default: project.team | escape }}, {{ project.institution_ko | default: project.institution | escape }}{% else %}{{ project.role | escape }}, {{ project.team | escape }} (<span lang="ko">{{ project.team_ko | escape }}</span>), {{ project.institution | escape }}{% endif %}</p>
+      </div>
+      <p class="cv-date">{% if lang == 'ko' %}{{ project.dates_ko | default: project.dates | escape }}{% else %}{{ project.dates | escape }}{% endif %}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm">
+      {% for detail in project.details %}<li>{% if lang == 'ko' %}{{ detail.text_ko | default: detail.text | escape }}{% else %}{{ detail.text | escape }}{% endif %}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>
+<section class="mt-8" aria-labelledby="intellectual-property">
+  {% include section-title.html id="intellectual-property" title=ui.intellectual_property %}
+  <h3 class="cv-subheading">{{ ui.patent_applications | escape }}</h3>
+  <ul class="cv-list space-y-5">
+    {% for patent in site.data.cv.patents %}
+    <li class="cv-item">
+      <div class="cv-entry">
+        <div class="min-w-0">
+          <h4 class="font-serif font-semibold leading-snug">{% if lang == 'ko' %}{{ patent.title_ko | default: patent.title | escape }}{% else %}{{ patent.title | escape }}{% endif %}</h4>
+          <p class="text-text-body text-sm mt-1">{% include authors.html authors=patent.authors %}</p>
+          {% for detail in patent.details %}<p class="text-text-body text-sm">{% if lang == 'ko' %}{{ detail.text_ko | default: detail.text | escape }}{% else %}{{ detail.text | escape }}{% endif %}</p>{% endfor %}
+        </div>
+        <p class="cv-date">{% if lang == 'ko' %}{{ patent.date_ko | default: patent.date | escape }}{% else %}{{ patent.date | escape }}{% endif %}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <h3 class="cv-subheading mt-5">{{ ui.software_copyrights | escape }}</h3>
+  <ul class="cv-list space-y-5">
+    {% for copyright in site.data.cv.copyrights %}
+    <li class="cv-item">
+      <div class="cv-entry">
+        <div class="min-w-0">
+          <h4 class="font-serif font-semibold leading-snug">{% if lang == 'ko' %}{{ copyright.title_ko | default: copyright.title | escape }}{% else %}{{ copyright.title | escape }}{% endif %}</h4>
+          <p class="text-text-body text-sm mt-1">{% include authors.html authors=copyright.authors %}</p>
+          <p class="text-text-body text-sm">{% if lang == 'ko' %}{{ copyright.description_ko | default: copyright.description | escape }}{% else %}{{ copyright.description | escape }}{% endif %}</p>
+        </div>
+        <p class="cv-date">{% if lang == 'ko' %}{{ copyright.date_ko | default: copyright.date | escape }}{% else %}{{ copyright.date | escape }}{% endif %}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+<section class="mt-8" aria-labelledby="awards">
+  {% include section-title.html id="awards" title=ui.awards %}
+  {% for award in site.data.cv.awards %}
+  <div class="cv-item">
+    <div class="cv-entry">
+      <h3 class="font-serif font-semibold min-w-0 leading-snug">{% if lang == 'ko' %}{{ award.title_ko | default: award.title | escape }}{% else %}{{ award.title | escape }}{% endif %}</h3>
+      <p class="cv-date">{% if lang == 'ko' %}{{ award.date_ko | default: award.date | escape }}{% else %}{{ award.date | escape }}{% endif %}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm"><li>{% if lang == 'ko' %}{{ award.description_ko | default: award.description | escape }}{% else %}{{ award.description | escape }}{% endif %}</li></ul>
+  </div>
+  {% endfor %}
+</section>
+<section class="mt-8" aria-labelledby="leadership">
+  {% include section-title.html id="leadership" title=ui.leadership %}
+  {% for role in site.data.cv.leadership %}
+  <div class="cv-item mb-5">
+    <div class="cv-entry">
+      <h3 class="font-serif font-semibold min-w-0 leading-snug">{% if lang == 'ko' %}{{ role.title_ko | default: role.title | escape }}{% else %}{{ role.title | escape }}{% endif %}</h3>
+      <p class="cv-date">{% if lang == 'ko' %}{{ role.dates_ko | default: role.dates | escape }}{% else %}{{ role.dates | escape }}{% endif %}</p>
+    </div>
+    <ul class="cv-list mt-2 text-text-body text-sm">
+      {% for detail in role.details %}<li>{% if lang == 'ko' %}{{ detail.text_ko | default: detail.text | escape }}{% else %}{{ detail.text | escape }}{% endif %}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>
+<p class="mt-10 font-sans text-xs text-text-muted">{{ ui.updated | escape }} {{ display_updated | escape }}</p>

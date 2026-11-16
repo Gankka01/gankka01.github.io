@@ -1,16 +1,18 @@
+{% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.i18n[lang] %}
+{% if lang == 'ko' %}{% assign home_url = '/ko/' %}{% assign footer_name = site.name_ko %}{% else %}{% assign home_url = '/' %}{% assign footer_name = site.name %}{% endif %}
 <footer class="py-12 no-print">
   <div class="max-w-4xl mx-auto px-6 text-center">
-    <a href="{{ '/' | relative_url }}" class="site-brand site-brand-footer no-underline" aria-label="WONIK — Home">
+    <a href="{{ home_url | relative_url }}" class="site-brand site-brand-footer no-underline" aria-label="{{ ui.brand_home | escape }}">
       <img src="{{ '/assets/images/wonik-logo.svg' | relative_url }}" alt="WONIK" width="485" height="120" loading="lazy">
     </a>
     <div class="flex justify-center items-center gap-5 mb-4">
-      <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy" aria-label="Copy email address">{% include icons/envelope.html class="w-5 h-5" %}</button>
-      <a href="https://github.com/{{ site.github_username }}" data-tooltip="{{ site.github_username | escape }}" data-tooltip-theme="github" target="_blank" rel="noopener noreferrer" class="github-link no-underline" aria-label="{{ site.name | escape }} on GitHub (opens in a new tab)">{% include icons/github.html class="w-5 h-5" %}</a>
-      <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ site.name | escape }} on Google Scholar (opens in a new tab)"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
+      <button type="button" data-copy-email="{{ site.email | escape }}" class="email-copy" aria-label="{{ ui.copy_email | escape }}">{% include icons/envelope.html class="w-5 h-5" %}</button>
+      <a href="https://github.com/{{ site.github_username }}" data-tooltip="{{ site.github_username | escape }}" data-tooltip-theme="github" target="_blank" rel="noopener noreferrer" class="github-link no-underline" aria-label="{{ footer_name | escape }} {{ ui.github_profile_suffix | escape }}">{% include icons/github.html class="w-5 h-5" %}</a>
+      <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}" target="_blank" rel="noopener noreferrer" class="no-underline" aria-label="{{ footer_name | escape }} {{ ui.scholar_profile_suffix | escape }}"><i class="ai ai-google-scholar text-xl" aria-hidden="true"></i></a>
     </div>
     <p class="font-sans text-xs text-text-muted leading-relaxed">
-      Template adapted from <a href="https://github.com/keunhong/keunhong.github.io" target="_blank" rel="noopener noreferrer" aria-label="Keunhong Park template (opens in a new tab)">Keunhong Park</a>.
-      Thanks for sharing! · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer" aria-label="CC BY-SA 4.0 license (opens in a new tab)">CC BY-SA 4.0</a>
+      {% if lang == 'ko' %}<a href="https://github.com/keunhong/keunhong.github.io" target="_blank" rel="noopener noreferrer" aria-label="{{ ui.template_aria | escape }}">Keunhong Park</a> {{ ui.template_prefix | escape }}.{% else %}{{ ui.template_prefix | escape }} <a href="https://github.com/keunhong/keunhong.github.io" target="_blank" rel="noopener noreferrer" aria-label="{{ ui.template_aria | escape }}">Keunhong Park</a>.{% endif %}
+      {{ ui.template_thanks | escape }} · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer" aria-label="{{ ui.license_aria | escape }}">CC BY-SA 4.0</a>
     </p>
   </div>
 </footer>

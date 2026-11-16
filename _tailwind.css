@@ -396,6 +396,50 @@ a.github-link {
   width: clamp(4rem, 18vw, 6rem);
   justify-self: start;
 }
+.language-switch {
+  position: relative;
+  display: block;
+  justify-self: end;
+  width: 2.7rem;
+  height: 2.7rem;
+  flex: none;
+  line-height: 1;
+}
+.language-switch:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: .25rem;
+}
+.language-glyph {
+  position: absolute;
+  line-height: 1;
+  font-weight: 500;
+  color: #aaa;
+  transition: color 220ms ease;
+  pointer-events: none;
+}
+.language-glyph-en {
+  top: .05rem;
+  left: .12rem;
+  font-family: var(--font-display);
+  font-size: 2.05rem;
+}
+.language-glyph-ko {
+  right: .02rem;
+  bottom: .07rem;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 1.55rem;
+}
+html[lang="en"] .language-glyph-en,
+html[lang="ko"] .language-glyph-ko {
+  color: #171717;
+  z-index: 2;
+}
+html[lang="en"] .language-glyph-ko,
+html[lang="ko"] .language-glyph-en {
+  color: #aaa;
+  z-index: 1;
+}
 .site-brand-footer {
   width: 4.5rem;
   margin-bottom: 1rem;
@@ -485,6 +529,16 @@ html[data-page-direction]::view-transition-old(root) {
 html[data-page-direction]::view-transition-new(root) {
   animation-name: page-slide-in;
 }
+@keyframes language-fade-out { to { opacity: 0; } }
+@keyframes language-fade-in { from { opacity: 0; } }
+html[data-language-transition]::view-transition-old(root) {
+  animation: language-fade-out 150ms ease-in both;
+  mix-blend-mode: normal;
+}
+html[data-language-transition]::view-transition-new(root) {
+  animation: language-fade-in 170ms ease-out 120ms both;
+  mix-blend-mode: normal;
+}
 ::view-transition-group(site-header),
 ::view-transition-new(site-header) {
   animation: none;
@@ -503,7 +557,8 @@ html[data-page-direction]::view-transition-new(root) {
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-nav-indicator {
+  .site-nav-indicator,
+  .language-glyph {
     transition: none;
   }
   ::view-transition-group(*),
@@ -647,6 +702,20 @@ html[data-page-direction]::view-transition-new(root) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: .25rem 1.5rem;
+}
+.publication-title-ko {
+  margin-top: .28rem;
+  color: #666;
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.cv-publication-title-ko {
+  margin-top: .2rem;
+}
+html[lang="ko"] .cv-subheading {
+  letter-spacing: .01em;
 }
 .cv-date {
   color: var(--color-text-muted);

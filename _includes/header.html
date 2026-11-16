@@ -1,12 +1,21 @@
+{% assign lang = page.lang | default: 'en' %}
+{% assign ui = site.data.i18n[lang] %}
+{% if lang == 'ko' %}{% assign home_url = '/ko/' %}{% assign cv_url = '/ko/cv/' %}{% else %}{% assign home_url = '/' %}{% assign cv_url = '/cv/' %}{% endif %}
+{% if page.page_id == 'cv' %}{% if lang == 'ko' %}{% assign switch_url = '/cv/' %}{% else %}{% assign switch_url = '/ko/cv/' %}{% endif %}{% else %}{% if lang == 'ko' %}{% assign switch_url = '/' %}{% else %}{% assign switch_url = '/ko/' %}{% endif %}{% endif %}
 <header class="py-4 no-print">
   <div class="site-header-inner max-w-4xl mx-auto px-6">
-    <a href="{{ '/' | relative_url }}" class="site-brand site-brand-header no-underline" aria-label="WONIK — Home">
+    <a href="{{ home_url | relative_url }}" class="site-brand site-brand-header no-underline" data-site-brand aria-label="{{ ui.brand_home | escape }}">
       <img src="{{ '/assets/images/wonik-logo.svg' | relative_url }}" alt="WONIK" width="485" height="120">
     </a>
-    <nav class="site-navigation mx-auto font-sans text-sm" aria-label="Main navigation" data-site-navigation>
-      <a href="{{ '/' | relative_url }}" class="no-underline{% if page.url == '/' %} font-semibold{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %}>Home</a>
-      <a href="{{ '/cv/' | relative_url }}" class="no-underline{% if page.url == '/cv/' %} font-semibold{% endif %}"{% if page.url == '/cv/' %} aria-current="page"{% endif %}>CV</a>
+    <nav class="site-navigation mx-auto font-sans text-sm" aria-label="{{ ui.main_navigation | escape }}" data-site-navigation
+      data-en-home="{{ '/' | relative_url }}" data-en-cv="{{ '/cv/' | relative_url }}" data-ko-home="{{ '/ko/' | relative_url }}" data-ko-cv="{{ '/ko/cv/' | relative_url }}">
+      <a href="{{ home_url | relative_url }}" data-page="home" class="no-underline{% if page.page_id == 'home' %} font-semibold{% endif %}"{% if page.page_id == 'home' %} aria-current="page"{% endif %}>{{ ui.home | escape }}</a>
+      <a href="{{ cv_url | relative_url }}" data-page="cv" class="no-underline{% if page.page_id == 'cv' %} font-semibold{% endif %}"{% if page.page_id == 'cv' %} aria-current="page"{% endif %}>{{ ui.cv | escape }}</a>
       <span class="site-nav-indicator" aria-hidden="true"></span>
     </nav>
+    <a href="{{ switch_url | relative_url }}" class="language-switch no-underline" data-language-switch aria-label="{{ ui.switch_language | escape }}" title="{{ ui.switch_language | escape }}">
+      <span class="language-glyph language-glyph-en" lang="en" aria-hidden="true">A</span>
+      <span class="language-glyph language-glyph-ko" lang="ko" aria-hidden="true">가</span>
+    </a>
   </div>
 </header>
