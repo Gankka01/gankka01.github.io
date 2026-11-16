@@ -1,84 +1,139 @@
 interests:
-  - Reinforcement learning and multi-agent learning
-  - GPU resource scheduling and AI infrastructure
-  - Digital watermarking and AI-generated text detection
+  - text: Reinforcement learning and multi-agent learning
+    text_ko: 강화학습 및 다중 에이전트 학습
+  - text: GPU resource scheduling and AI infrastructure
+    text_ko: GPU 자원 스케줄링 및 AI 인프라
+  - text: Digital watermarking and AI-generated text detection
+    text_ko: 디지털 워터마킹 및 AI 생성 텍스트 탐지
 
 education:
   - institution: Kyung Hee University
+    institution_ko: 경희대학교
     degree: Master of Artificial Intelligence
+    degree_ko: 인공지능학과 석사과정
     location: Yongin, South Korea
+    location_ko: 대한민국 용인
     dates: Mar. 2025 – Feb. 2027
+    dates_ko: 2025년 3월 – 2027년 2월
     description: Graduate studies in artificial intelligence at ICNS Lab under the supervision of Prof. Eui-Nam Huh.
+    description_ko: ICNS 연구실에서 허의남 교수의 지도 아래 인공지능을 연구하고 있습니다.
   - institution: Kangnam University
+    institution_ko: 강남대학교
     degree: Bachelor's Degree in Data Science
+    degree_ko: 데이터사이언스전공 공학사
     location: Yongin, South Korea
+    location_ko: 대한민국 용인
     dates: Mar. 2019 – Feb. 2025
+    dates_ko: 2019년 3월 – 2025년 2월
     description: Double major in Data Science and Public Service.
+    description_ko: 공공인재학과를 복수전공하여 법행정학사 학위를 취득했습니다.
 
 publication_groups:
   - id: journal
     title: Journal Articles
+    title_ko: 학술지 논문
   - id: conference
     title: Conference Papers
+    title_ko: 학술대회 논문
   - id: manuscript
     title: Manuscripts Under Review
+    title_ko: 심사 중인 논문
 
 research:
   institution: ICNS Lab, Kyung Hee University
+  institution_ko: 경희대학교 ICNS 연구실
   role: Graduate Researcher
+  role_ko: 대학원 연구원
   location: Yongin, South Korea
+  location_ko: 대한민국 용인
   dates: 2025–2026
+  dates_ko: 2025–2026년
   activities:
     - title: AI-MCMP
+      title_ko: AI-MCMP
       dates: "2026"
+      dates_ko: 2026년
       description: Develop AIOps system components and design scheduler agents for cloud resource management.
+      description_ko: 클라우드 자원 관리를 위한 AIOps 시스템 구성 요소와 스케줄러 에이전트를 개발합니다.
     - title: Cloud Continuum Technologies for Large-Scale AI Services
+      title_ko: 대규모 AI 서비스를 위한 클라우드 컨티뉴엄 기술
       dates: 2025–2026
+      dates_ko: 2025–2026년
       description: Develop AI-generated text detection methods and document research outcomes.
+      description_ko: AI 생성 텍스트 탐지 기법을 개발하고 연구 성과를 문서화합니다.
     - title: CCRC Seminar Coordination
+      title_ko: CCRC 세미나 운영
       dates: 2025–2026
+      dates_ko: 2025–2026년
       description: Coordinate communication, seminar scheduling, and operations across participating laboratories.
+      description_ko: 참여 연구실 간 소통과 세미나 일정 및 운영을 조율합니다.
 
 projects:
   - title: Video-Based Matching of Lost Dogs
+    title_ko: 영상 기반 실종견 매칭
     role: Team Leader and Main Developer
+    role_ko: 팀장 및 메인 개발자
     team: Team Dasimanna
     team_ko: 다시만나
     institution: Kangnam University
+    institution_ko: 강남대학교
     dates: "2023"
+    dates_ko: 2023년
     details:
-      - Developed video analysis and deep learning classifiers for lost-dog matching.
-      - The team earned an Encouragement Award at the 2023 Data Youth Campus competition.
-      - The project led to a memorandum of understanding (MOU) with ToBePet.
+      - text: Developed video analysis and deep learning classifiers for lost-dog matching.
+        text_ko: 실종견 매칭을 위한 영상 분석 및 딥러닝 분류 모델을 개발했습니다.
+      - text: The team earned an Encouragement Award at the 2023 Data Youth Campus competition.
+        text_ko: 2023 데이터 청년 캠퍼스 경진대회에서 팀 장려상을 수상했습니다.
+      - text: The project led to a memorandum of understanding (MOU) with ToBePet.
+        text_ko: 해당 프로젝트를 계기로 투비펫과 업무협약(MOU)을 체결했습니다.
 
 patents:
   - title: Text Detection Device for AI-Generated Content Based on Part-of-Speech and Phonological and Method of Operating the Same
+    title_ko: 품사 및 음운을 기반으로 인공지능 생성 텍스트 탐지 장치 및 그의 동작 방법
     authors: [euinam_huh, wonik_jang]
     date: July 2025
+    date_ko: 2025년 7월
     details:
-      - Filed by the University-Industry Cooperation Group of Kyung Hee University.
-      - Korean application 10-2025-0088858, filed July 2, 2025.
-      - Corresponding PCT application PCT/KR2025/023209, filed December 30, 2025.
+      - text: Filed by the University-Industry Cooperation Group of Kyung Hee University.
+        text_ko: 경희대학교 산학협력단 출원.
+      - text: Korean application 10-2025-0088858, filed July 2, 2025.
+        text_ko: 국내 출원번호 10-2025-0088858, 2025년 7월 2일 출원.
+      - text: Corresponding PCT application PCT/KR2025/023209, filed December 30, 2025.
+        text_ko: 관련 PCT 출원번호 PCT/KR2025/023209, 2025년 12월 30일 출원.
 
 copyrights:
   - title: "DCC (Deep Classify Cut): Multiple Deep-Learning Classifiers"
+    title_ko: "DCC (Deep Classify Cut): 다중 딥러닝 분류기"
     authors: [wonik_jang]
     date: September 2023
+    date_ko: 2023년 9월
     description: Korea Copyright Commission, registration C-2023-039364, September 4, 2023.
+    description_ko: 한국저작권위원회, 등록번호 C-2023-039364, 2023년 9월 4일.
 
 awards:
   - title: Encouragement Award, 2023 Data Youth Campus Outstanding Project Competition
+    title_ko: 2023 데이터 청년 캠퍼스 우수 프로젝트 경진대회 장려상
     date: November 2023
+    date_ko: 2023년 11월
     description: Awarded by the President of the Korea Data Strategy Society for the team project Video-Based Matching of Lost Dogs.
+    description_ko: 영상 기반 실종견 매칭 팀 프로젝트로 한국데이터전략학회장상을 수상했습니다.
 
 leadership:
   - title: Campus Representative, CCC (Korea Campus Crusade for Christ) at Kangnam University
+    title_ko: 강남대학교 한국대학생선교회(CCC) 대표순장
     dates: 2023–2024
+    dates_ko: 2023–2024년
     details:
-      - Managed budgets and events for a student organization of approximately 100 members.
-      - Represented religious clubs and served on the university's student club council.
+      - text: Managed budgets and events for a student organization of approximately 100 members.
+        text_ko: 약 100명 규모의 학생 단체 예산과 행사를 관리했습니다.
+      - text: Represented religious clubs and served on the university's student club council.
+        text_ko: 종교 동아리를 대표하여 교내 동아리연합회에서 활동했습니다.
   - title: District Secretary, CCC Yongin District
+    title_ko: 한국대학생선교회(CCC) 용인지구 총무
     dates: 2022–2023
+    dates_ko: 2022–2023년
     details:
-      - Coordinated joint activities among CCC groups at eight campuses.
-      - Managed retreat budgets and logistics for approximately 200 district participants.
+      - text: Coordinated joint activities among CCC groups at eight campuses.
+        text_ko: 8개 캠퍼스 CCC의 연합 활동을 조율했습니다.
+      - text: Managed retreat budgets and logistics for approximately 200 district participants.
+        text_ko: 약 200명이 참여하는 지구 수련회의 예산과 운영을 관리했습니다.

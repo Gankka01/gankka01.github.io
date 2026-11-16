@@ -1,0 +1,96 @@
+en:
+  site_title: Wonik Jang
+  home_title: Wonik Jang
+  cv_title: CV — Wonik Jang
+  description: Wonik Jang is a master's student at Kyung Hee University researching reinforcement learning, AI infrastructure, and digital watermarking.
+  cv_description: Education, publications, research, projects, intellectual property, awards, and leadership of Wonik Jang.
+  skip: Skip to content
+  home: Home
+  cv: CV
+  main_navigation: Main navigation
+  switch_language: Switch to Korean
+  brand_home: WONIK — Home
+  hello: "Hello, I'm"
+  publications: Publications
+  research_interests: Research Interests
+  education: Education
+  research: Research
+  projects: Projects
+  intellectual_property: Intellectual Property
+  patent_applications: Patent Applications
+  software_copyrights: Software Copyright Registrations
+  awards: Awards
+  leadership: Leadership
+  updated: Updated
+  pdf: View PDF
+  pdf_home: CV
+  pdf_aria: View CV PDF (opens in a new tab)
+  scholar: Scholar
+  scholar_aria: Google Scholar (opens in a new tab)
+  github_aria: GitHub (opens in a new tab)
+  email: Email
+  copy_email: Copy email address
+  back_to_top: Back to top
+  publication: Publication
+  publication_preprint: Publication (Preprint)
+  code: Code
+  conference: Conference
+  opens_new_tab: opens in a new tab
+  template_prefix: Template adapted from
+  template_thanks: Thanks for sharing!
+  template_aria: Keunhong Park template (opens in a new tab)
+  license_aria: CC BY-SA 4.0 license (opens in a new tab)
+  github_profile_suffix: on GitHub (opens in a new tab)
+  scholar_profile_suffix: on Google Scholar (opens in a new tab)
+  portrait_alt: Portrait of Wonik Jang
+  portrait_placeholder: Portrait placeholder for
+  image_placeholder: Research image placeholder for
+  logo_alt: WONIK logo — navy and blue on a white background
+ko:
+  site_title: 장원익
+  home_title: 장원익
+  cv_title: 이력서 — 장원익
+  description: 경희대학교에서 강화학습, AI 인프라, 디지털 워터마킹을 연구하는 장원익의 홈페이지입니다.
+  cv_description: 장원익의 학력, 논문, 연구 및 프로젝트, 지식재산권, 수상 경력과 대외활동을 소개합니다.
+  skip: 본문으로 바로가기
+  home: 홈
+  cv: 이력서
+  main_navigation: 주요 메뉴
+  switch_language: 영어로 전환
+  brand_home: WONIK — 홈
+  hello: 안녕하세요,
+  publications: 논문
+  research_interests: 연구 관심 분야
+  education: 학력
+  research: 연구 경력
+  projects: 프로젝트
+  intellectual_property: 지식재산권
+  patent_applications: 특허 출원
+  software_copyrights: 소프트웨어 저작권 등록
+  awards: 수상 경력
+  leadership: 대외활동 및 리더십
+  updated: 최종 수정
+  pdf: 영문 PDF 보기
+  pdf_home: 영문 CV
+  pdf_aria: 영문 이력서 PDF 보기 (새 탭으로 열림)
+  scholar: Scholar
+  scholar_aria: Google Scholar (새 탭으로 열림)
+  github_aria: GitHub (새 탭으로 열림)
+  email: 이메일
+  copy_email: 이메일 주소 복사
+  back_to_top: 맨 위로
+  publication: 논문
+  publication_preprint: 논문 (프리프린트)
+  code: 코드
+  conference: 학회
+  opens_new_tab: 새 탭으로 열림
+  template_prefix: 다음 템플릿을 바탕으로 제작했습니다
+  template_thanks: 공유해 주셔서 감사합니다!
+  template_aria: Keunhong Park 템플릿 (새 탭으로 열림)
+  license_aria: CC BY-SA 4.0 라이선스 (새 탭으로 열림)
+  github_profile_suffix: GitHub 프로필 (새 탭으로 열림)
+  scholar_profile_suffix: Google Scholar 프로필 (새 탭으로 열림)
+  portrait_alt: 장원익의 프로필 사진
+  portrait_placeholder: 프로필 사진 자리 표시
+  image_placeholder: 연구 이미지 자리 표시
+  logo_alt: 흰색 배경의 남색과 파란색 WONIK 로고

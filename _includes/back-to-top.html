@@ -1,5 +1,6 @@
 <div class="back-to-top-wrap no-print">
-  <a href="#top" class="back-to-top no-underline inline-flex" data-back-to-top aria-label="Back to top" title="Back to top">
+  {% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.i18n[lang] %}
+  <a href="#top" class="back-to-top no-underline inline-flex" data-back-to-top aria-label="{{ ui.back_to_top | escape }}" title="{{ ui.back_to_top | escape }}">
     <span class="back-to-top-shadow" aria-hidden="true"></span>
     <span class="back-to-top-orb" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">
