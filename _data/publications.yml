@@ -1,5 +1,4 @@
 # Keep dates quoted. Home is sorted newest first; the CV sorts within each group.
-# Use show_on_home: false for manuscripts that should appear only on the CV.
 # Add an image path and descriptive image_alt when a research image is ready.
 - id: patchmark
   title: "PatchMark: Patch-Based Invisible Watermarking for High Payload with a 2D Barcode Mechanism"
@@ -14,7 +13,6 @@
   description: >-
     Patch-based invisible image watermarking with a 2D barcode mechanism
     for high-capacity message embedding and recovery.
-  show_on_home: true
   publication_url: https://ieeexplore.ieee.org/document/11745962
   publication_label: Publication (Preprint)
   code_url: https://github.com/Gankka01/PatchMark
@@ -33,7 +31,6 @@
   description: >-
     An analysis of how behavior-perturbed agents affect cooperation
     in multi-agent reinforcement learning.
-  show_on_home: true
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12929654
   code_url:
   image: /assets/images/marl-figure1-square.svg
@@ -52,7 +49,6 @@
   description: >-
     Detecting AI-generated Korean text using phonological
     and part-of-speech features.
-  show_on_home: true
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318433
   code_url:
   image: /assets/images/kobonet-architecture.svg
@@ -62,10 +58,17 @@
 - id: global-advantage-weighting
   title: Global Advantage Weighting with Job Feedback for GPU Cluster Scheduling
   authors: [wonik_jang, euinam_huh]
-  category: manuscript
-  sort_date: "2026-10-01"
-  date: October 2026
-  venue: Submitted to ICOIN 2027
-  show_on_home: false
+  category: conference
+  sort_date: "2026-11-01"
+  date: January 2027
+  venue: ICOIN 2027
+  status: Accepted for publication
+  conference_url: https://www.icoin.org/
+  description: >-
+    GPU cluster scheduling using job-specific feedback to weight a global
+    advantage signal during reinforcement learning.
   publication_url:
   code_url:
+  image: /assets/images/gaw-fig2-square.webp
+  image_alt: GPU allocation and mean waiting time for queued jobs in the GAW scheduling example
+  image_label: GAW
