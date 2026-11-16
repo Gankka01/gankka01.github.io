@@ -52,7 +52,7 @@
   description: >-
     Detecting AI-generated Korean text using phonological
     and part-of-speech features.
-  show_on_home: true
+  show_on_home: false
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318433
   code_url:
   image: /assets/images/kobonet-architecture.svg
@@ -62,10 +62,17 @@
 - id: global-advantage-weighting
   title: Global Advantage Weighting with Job Feedback for GPU Cluster Scheduling
   authors: [wonik_jang, euinam_huh]
-  category: manuscript
-  sort_date: "2026-10-01"
-  date: October 2026
-  venue: Submitted to ICOIN 2027
-  show_on_home: false
+  category: conference
+  sort_date: "2026-11-01"
+  date: "2027"
+  venue: ICOIN 2027
+  status: Accepted for publication
+  description: >-
+    GPU cluster scheduling using job-specific feedback to weight a global
+    advantage signal during reinforcement learning.
+  show_on_home: true
   publication_url:
   code_url:
+  image: /assets/images/gaw-fig2-square.webp
+  image_alt: GPU allocation and mean waiting time for queued jobs in the GAW scheduling example
+  image_label: GAW

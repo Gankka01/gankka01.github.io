@@ -20,8 +20,6 @@ publication_groups:
     title: Journal Articles
   - id: conference
     title: Conference Papers
-  - id: manuscript
-    title: Manuscripts Under Review
 
 research:
   institution: ICNS Lab, Kyung Hee University
