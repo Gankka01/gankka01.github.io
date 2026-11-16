@@ -45,13 +45,15 @@ permalink: /cv/
 <section class="mt-8" aria-labelledby="cv-publications">
   {% include section-title.html id="cv-publications" title="Publications" %}
   {% for group in site.data.cv.publication_groups %}
+  {% assign group_publications = site.data.publications | where: "category", group.id | sort: "sort_date" | reverse %}
+  {% if group_publications.size > 0 %}
   <div class="mt-5">
     <h3 class="cv-subheading">{{ group.title | escape }}</h3>
     <ul class="cv-list space-y-5">
-      {% assign group_publications = site.data.publications | where: "category", group.id | sort: "sort_date" | reverse %}
       {% for pub in group_publications %}{% include cv-publication.html pub=pub %}{% endfor %}
     </ul>
   </div>
+  {% endif %}
   {% endfor %}
 </section>
 <section class="mt-8" aria-labelledby="research">
