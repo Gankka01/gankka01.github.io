@@ -32,6 +32,7 @@
     An analysis of how behavior-perturbed agents affect cooperation
     in multi-agent reinforcement learning.
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12929654
+  conference_url: https://www.kiise.or.kr/conference/kcc/2026/
   code_url:
   image: /assets/images/marl-figure1-square.svg
   image_alt: Figure 1 comparing MAPPO and MAA2C learning curves across three cooperative multi-agent tasks
@@ -50,6 +51,7 @@
     Detecting AI-generated Korean text using phonological
     and part-of-speech features.
   publication_url: https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318433
+  conference_url: https://www.kiise.or.kr/conference/kcc/2025/
   code_url:
   image: /assets/images/kobonet-architecture.svg
   image_alt: KoboNet architecture combining pronunciation and part-of-speech features for human or AI text classification
