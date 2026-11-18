@@ -28,6 +28,7 @@
   --font-serif: 'Crimson Pro', 'Noto Serif KR', Georgia, Cambria, serif;
   --font-display: 'Cormorant Garamond', 'Noto Serif KR', Georgia, serif;
   --font-sans: 'Source Sans 3', system-ui, sans-serif;
+  --font-korean-body: 'Nanum Gothic', sans-serif;
 }
 
 @layer base {
@@ -82,6 +83,15 @@
     --tw-prose-th-borders: var(--color-border);
     --tw-prose-td-borders: var(--color-border-subtle);
   }
+}
+
+/* Korean body copy and controls keep the English layout's proportions. */
+html[lang="ko"] body {
+  font-family: var(--font-korean-body);
+  font-size: .94rem;
+}
+html[lang="ko"] :where(a:not(.language-switch), button.email-copy) {
+  font-family: var(--font-display);
 }
 
 /* Preserve the original template's quiet, underlined links. */
@@ -400,8 +410,8 @@ a.github-link {
   position: relative;
   display: block;
   justify-self: end;
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 2.25rem;
+  height: 2.25rem;
   flex: none;
   line-height: 1;
 }
@@ -415,25 +425,32 @@ a.github-link {
   line-height: 1;
   font-weight: 500;
   color: #aaa;
-  transition: color 220ms ease;
+  transition: color 220ms ease, font-size 220ms ease;
   pointer-events: none;
 }
 .language-glyph-en {
   top: .05rem;
   left: .12rem;
   font-family: var(--font-display);
-  font-size: 2.05rem;
+  font-size: 1.1rem;
 }
 .language-glyph-ko {
   right: .02rem;
   bottom: .07rem;
   font-family: 'Noto Serif KR', serif;
-  font-size: 1.55rem;
+  font-size: 1rem;
 }
 html[lang="en"] .language-glyph-en,
 html[lang="ko"] .language-glyph-ko {
   color: #171717;
   z-index: 2;
+}
+html[lang="en"] .language-glyph-en {
+  font-size: 1.65rem;
+}
+html[lang="ko"] .language-glyph-ko {
+  color: var(--color-accent);
+  font-size: 1.35rem;
 }
 html[lang="en"] .language-glyph-ko,
 html[lang="ko"] .language-glyph-en {
@@ -706,8 +723,8 @@ html[data-language-transition]::view-transition-new(root) {
 .publication-title-ko {
   margin-top: .28rem;
   color: #666;
-  font-family: var(--font-sans);
-  font-size: .875rem;
+  font-family: var(--font-korean-body);
+  font-size: .75rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
