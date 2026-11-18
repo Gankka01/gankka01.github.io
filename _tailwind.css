@@ -88,17 +88,43 @@
 /* Korean body copy and controls keep the English layout's proportions. */
 html[lang="ko"] body {
   font-family: var(--font-korean-body);
-  font-size: .94rem;
+  font-size: .84rem;
+  font-synthesis: none;
 }
 html[lang="ko"] .profile-portrait + div h1 {
   font-family: var(--font-korean-body);
   font-size: 1.75rem;
+  font-weight: 700;
 }
 html[lang="ko"] .profile-bio {
-  font-size: .9rem;
+  font-size: .84rem;
 }
 html[lang="ko"] :where(a:not(.language-switch), button.email-copy) {
   font-family: var(--font-display);
+}
+/* Icon links use the same Korean sans-serif as the surrounding copy. */
+html[lang="ko"] :is(.profile-bio + div, .publication-links, .cv > header) :is(a, button.email-copy) {
+  font-family: var(--font-korean-body);
+  font-size: .75rem;
+}
+html[lang="ko"] :is(.profile-bio strong, .publication-row strong, .cv strong) {
+  font-weight: 700;
+}
+/* Adjust Korean prose and metadata to the apparent size of the English. */
+html[lang="ko"] .publication-meta {
+  font-size: .7rem;
+}
+html[lang="ko"] .cv .text-sm,
+html[lang="ko"] .cv .cv-date,
+html[lang="ko"] .cv .cv-subheading {
+  font-size: .75rem;
+}
+html[lang="ko"] .cv .text-lg {
+  font-size: .94rem;
+}
+html[lang="ko"] .cv .cv-subheading {
+  font-family: var(--font-korean-body);
+  font-weight: 700;
 }
 
 /* Preserve the original template's quiet, underlined links. */
@@ -731,7 +757,7 @@ html[data-language-transition]::view-transition-new(root) {
   margin-top: .28rem;
   color: #666;
   font-family: var(--font-korean-body);
-  font-size: .75rem;
+  font-size: .7rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
