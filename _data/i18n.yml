@@ -70,9 +70,9 @@ ko:
   awards: 수상 경력
   leadership: 대외활동 및 리더십
   updated: 최종 수정
-  pdf: 영문 PDF 보기
-  pdf_home: 영문 CV
-  pdf_aria: 영문 이력서 PDF 보기 (새 탭으로 열림)
+  pdf: PDF 보기
+  pdf_home: CV
+  pdf_aria: 이력서 PDF 보기 (새 탭으로 열림)
   scholar: Scholar
   scholar_aria: Google Scholar (새 탭으로 열림)
   github_aria: GitHub (새 탭으로 열림)
