@@ -294,6 +294,17 @@ a.github-link {
 .publication-doi {
   overflow-wrap: anywhere;
 }
+/* Keep the DOI together when space allows; very narrow screens may wrap it. */
+html[lang="ko"] .publication-doi {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+@media (max-width: 20rem) {
+  html[lang="ko"] .publication-doi {
+    white-space: normal;
+  }
+}
 .profile-portrait-image {
   display: block;
   box-shadow: 12px 18px 28px -5px rgb(15 23 42 / .38),
@@ -453,7 +464,7 @@ a.github-link {
   font-size: 1.1rem;
 }
 .language-glyph-ko {
-  right: .02rem;
+  right: .24rem;
   bottom: .07rem;
   font-family: 'Noto Serif KR', serif;
   font-size: 1rem;

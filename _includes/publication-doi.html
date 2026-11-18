@@ -1,4 +1,4 @@
 {%- if include.pub.doi -%}
 {%- assign doi_lang = page.lang | default: 'en' -%}{%- assign doi_ui = site.data.i18n[doi_lang] -%}
-<br><span class="publication-doi">doi : <a href="https://doi.org/{{ include.pub.doi | escape }}" target="_blank" rel="noopener noreferrer" aria-label="DOI {{ include.pub.doi | escape }} ({{ doi_ui.opens_new_tab | escape }})">{{ include.pub.doi | escape }}</a></span>
+{%- if doi_lang == 'ko' -%}&#32;{%- else -%}<br>{%- endif -%}<span class="publication-doi">doi : <a href="https://doi.org/{{ include.pub.doi | escape }}" target="_blank" rel="noopener noreferrer" aria-label="DOI {{ include.pub.doi | escape }} ({{ doi_ui.opens_new_tab | escape }})">{{ include.pub.doi | escape }}</a></span>
 {%- endif -%}
