@@ -1,7 +1,7 @@
 # Keep dates quoted. Home is sorted newest first; the CV sorts within each group.
 # Add an image path and descriptive image_alt when a research image is ready.
 - id: patchmark
-  title: "PatchMark: Patch-Based Invisible Watermarking for High Payload with a 2D Barcode Mechanism"
+  title: "PatchMark: Patch-Based Invisible Watermarking for High Payload With a 2-D Barcode Mechanism"
   title_ko: "PatchMark: 2차원 바코드 메커니즘을 이용한 고용량 패치 기반 비가시 워터마킹"
   accent_name: PatchMark
   authors: [wonik_jang, euinam_huh]
@@ -9,9 +9,10 @@
   sort_date: "2026-10-01"
   date: October 2026
   date_ko: 2026년 10월
-  venue: IEEE Access
-  status: Accepted for publication
-  status_ko: 게재 승인 (출판 예정)
+  venue: "IEEE Access, vol. 14"
+  venue_ko: "IEEE Access, 제14권"
+  pages: "163386–163400"
+  published: true
   doi: 10.1109/ACCESS.2026.3745881
   description: >-
     Patch-based invisible image watermarking with a 2D barcode mechanism
@@ -20,8 +21,8 @@
     2차원 바코드 메커니즘으로 대용량 메시지를 삽입하고 복원하는
     패치 기반 비가시 이미지 워터마킹 기법입니다.
   publication_url: https://ieeexplore.ieee.org/document/11745962
-  publication_label: Publication (Preprint)
   code_url: https://github.com/Gankka01/PatchMark
+  research_portal_url: https://khu.elsevierpure.com/en/publications/patchmark-patch-based-invisible-watermarking-for-high-payload-wit/
   image: /assets/images/patchmark.png
   image_alt: A boardwalk divided into the original scene and an illustrative QR watermark overlay
   image_alt_ko: 원본 풍경과 QR 워터마크 예시로 나뉜 나무 산책로 이미지

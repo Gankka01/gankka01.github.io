@@ -34,6 +34,8 @@ en:
   publication: Publication
   publication_preprint: Publication (Preprint)
   code: Code
+  research_portal: KHU
+  research_portal_aria: Kyung Hee University research output
   conference: Conference
   opens_new_tab: opens in a new tab
   template_prefix: Template adapted from
@@ -82,6 +84,8 @@ ko:
   publication: 논문
   publication_preprint: 논문 (프리프린트)
   code: 코드
+  research_portal: 경희대
+  research_portal_aria: 경희대학교 연구성과
   conference: 학회
   opens_new_tab: 새 탭으로 열림
   template_prefix: 다음 템플릿을 바탕으로 제작했습니다

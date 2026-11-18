@@ -25,8 +25,7 @@
     {% if lang == 'ko' and pub.title_ko %}<p class="publication-title-ko">{{ pub.title_ko | escape }}</p>{% endif %}
     <p class="text-text-body mt-1">{% include authors.html authors=pub.authors %}</p>
     <p class="publication-meta text-text-muted text-sm mt-1">
-      {{ venue | escape }}{% if pub.pages %}, {% if lang == 'ko' %}{{ pub.pages | escape }}쪽{% else %}pp. {{ pub.pages | escape }}{% endif %}{% endif %}.
-      {% if status %}{{ status | escape }}. {% endif %}{{ date | escape }}.
+      {{ venue | escape }}{% if pub.pages %}, {% if lang == 'ko' %}{{ pub.pages | escape }}쪽{% else %}pp. {{ pub.pages | escape }}{% endif %}{% endif %}{% if pub.published %}, {{ date | escape }}{% if lang == 'ko' %} 게재{% endif %}.{% else %}. {% if status %}{{ status | escape }}. {% endif %}{{ date | escape }}.{% endif %}
       {% include publication-doi.html pub=pub %}
     </p>
     <p class="text-text-body mt-3 leading-relaxed">{{ description | escape }}</p>

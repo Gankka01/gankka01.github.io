@@ -1,6 +1,6 @@
 {% assign lang = page.lang | default: 'en' %}
 {% assign ui = site.data.i18n[lang] %}
-{% if include.pub.publication_url or include.pub.code_url or include.pub.conference_url %}
+{% if include.pub.publication_url or include.pub.code_url or include.pub.research_portal_url or include.pub.conference_url %}
 <div class="publication-links flex flex-wrap gap-x-4 gap-y-2 mt-3 font-sans text-sm no-print">
   {% if include.pub.publication_url %}
   {% assign publication_label = include.pub.publication_label | default: ui.publication %}
@@ -12,6 +12,11 @@
   {% if include.pub.code_url %}
   <a href="{{ include.pub.code_url | escape }}" target="_blank" rel="noopener noreferrer" class="{% if include.pub.code_url contains 'https://github.com/' %}github-link {% endif %}inline-flex items-center no-underline" aria-label="{{ ui.code | escape }} — {{ include.pub.title | escape }} ({{ ui.opens_new_tab | escape }})">
     {% include icons/github.html class="w-4 h-4 mr-1.5" %}{{ ui.code | escape }}
+  </a>
+  {% endif %}
+  {% if include.pub.research_portal_url %}
+  <a href="{{ include.pub.research_portal_url | escape }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center no-underline" title="{{ ui.research_portal_aria | escape }}" aria-label="{{ ui.research_portal_aria | escape }} — {{ include.pub.title | escape }} ({{ ui.opens_new_tab | escape }})">
+    {% include icons/academic-cap.html class="w-4 h-4 mr-1.5" %}{{ ui.research_portal | escape }}
   </a>
   {% endif %}
   {% if include.pub.conference_url %}
