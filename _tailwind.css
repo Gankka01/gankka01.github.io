@@ -85,46 +85,31 @@
   }
 }
 
-/* Korean body copy and controls keep the English layout's proportions. */
+/* Keep each English text style and scale Korean glyphs in the fallback face. */
+html[lang="ko"] {
+  --font-serif: 'Crimson Pro', 'Nanum Gothic Balanced', 'Nanum Gothic', Georgia, Cambria, serif;
+  --font-sans: 'Source Sans 3', 'Nanum Gothic Balanced', 'Nanum Gothic', system-ui, sans-serif;
+}
 html[lang="ko"] body {
-  font-family: var(--font-korean-body);
-  font-size: .84rem;
   font-synthesis: none;
 }
 html[lang="ko"] .profile-portrait + div h1 {
-  font-family: var(--font-korean-body);
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-family: 'Cormorant Garamond', 'Nanum Gothic Balanced', 'Nanum Gothic', Georgia, serif;
 }
-html[lang="ko"] .profile-bio {
-  font-size: .84rem;
+/* The Korean section labels are adjusted independently of English copy. */
+html[lang="ko"] .cv-section-title {
+  font-size: 1.6rem;
 }
-html[lang="ko"] :where(a:not(.language-switch), button.email-copy) {
-  font-family: var(--font-display);
+html[lang="ko"] .publications-section > div > h2 {
+  font-size: 1.25rem;
 }
-/* Icon links use the same Korean sans-serif as the surrounding copy. */
-html[lang="ko"] :is(.profile-bio + div, .publication-links, .cv > header) :is(a, button.email-copy) {
-  font-family: var(--font-korean-body);
-  font-size: .75rem;
+html[lang="ko"] .cv > header h1 {
+  font-size: 1.65rem;
 }
-html[lang="ko"] :is(.profile-bio strong, .publication-row strong, .cv strong) {
-  font-weight: 700;
-}
-/* Adjust Korean prose and metadata to the apparent size of the English. */
-html[lang="ko"] .publication-meta {
-  font-size: .7rem;
-}
-html[lang="ko"] .cv .text-sm,
-html[lang="ko"] .cv .cv-date,
-html[lang="ko"] .cv .cv-subheading {
-  font-size: .75rem;
-}
-html[lang="ko"] .cv .text-lg {
-  font-size: .94rem;
-}
-html[lang="ko"] .cv .cv-subheading {
-  font-family: var(--font-korean-body);
-  font-weight: 700;
+@media (min-width: 48rem) {
+  html[lang="ko"] .cv > header h1 {
+    font-size: 1.98rem;
+  }
 }
 
 /* Preserve the original template's quiet, underlined links. */
@@ -756,8 +741,8 @@ html[data-language-transition]::view-transition-new(root) {
 .publication-title-ko {
   margin-top: .28rem;
   color: #666;
-  font-family: var(--font-korean-body);
-  font-size: .7rem;
+  font-family: var(--font-sans);
+  font-size: .8rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
