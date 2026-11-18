@@ -90,6 +90,9 @@ html[lang="ko"] body {
   font-family: var(--font-korean-body);
   font-size: .94rem;
 }
+html[lang="ko"] .profile-bio {
+  font-size: .9rem;
+}
 html[lang="ko"] :where(a:not(.language-switch), button.email-copy) {
   font-family: var(--font-display);
 }
