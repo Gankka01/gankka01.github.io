@@ -295,13 +295,15 @@ a.github-link {
   overflow-wrap: anywhere;
 }
 /* Keep the DOI together when space allows; very narrow screens may wrap it. */
+html[lang="en"] .publication-doi,
 html[lang="ko"] .publication-doi {
   display: inline-block;
   max-width: 100%;
   white-space: nowrap;
 }
 @media (max-width: 20rem) {
-  html[lang="ko"] .publication-doi {
+  html[lang="en"] .publication-doi,
+html[lang="ko"] .publication-doi {
     white-space: normal;
   }
 }
