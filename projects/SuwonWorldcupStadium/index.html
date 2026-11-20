@@ -48,7 +48,7 @@ noindex: true
     <p class="mt-2 text-text-body">Views from Blender, the Paradox Mods listing, and the in-game unlock artwork.</p>
     <ul class="mt-5 grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 md:gap-x-6 md:gap-y-6">
       {% for shot in project.gallery %}
-      {% assign shot_url = image_dir | append: shot.image | append: '.webp' | relative_url %}
+      {% assign shot_url = image_dir | append: shot.image | append: '.webp' | relative_url | append: '?v=2' %}
       <li class="min-w-0">
         <figure>
           <a href="{{ shot_url }}" class="!block overflow-hidden rounded-lg" aria-label="Open full-size image: {{ shot.title | escape }}">
