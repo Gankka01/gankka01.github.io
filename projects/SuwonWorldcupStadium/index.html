@@ -1,0 +1,63 @@
+---
+layout: cv
+title: Suwon Worldcup Stadium
+description: "Big Bird, a recreation of Suwon World Cup Stadium in Blender and a building asset for Cities: Skylines II."
+permalink: /projects/SuwonWorldcupStadium/
+lang: en
+page_id: suwon-stadium
+language_switch_disabled: true
+noindex: true
+---
+{% assign project = site.data.suwon_stadium %}
+{% assign image_dir = '/assets/images/projects/suwon-stadium/' %}
+
+<article aria-labelledby="project-title">
+  <header class="border-b border-border-subtle pb-6">
+    <h1 id="project-title" class="font-display text-3xl md:text-4xl font-semibold text-text">{{ page.title | escape }}</h1>
+    <p class="mt-3 max-w-prose text-lg text-text-body leading-relaxed">
+      Suwon World Cup Stadium, known as Big Bird, is the home of Suwon Samsung Bluewings in South Korea.
+      I recreated the stadium in Blender with the help of AI and released the model as a custom building asset for <em>Cities: Skylines II</em>.
+    </p>
+  </header>
+
+  <figure class="mx-auto mt-8 max-w-3xl">
+    <a href="{{ image_dir | append: 'overview.webp' | relative_url }}" class="!block overflow-hidden rounded-lg" aria-label="Open the full-size stadium model overview">
+      <img src="{{ image_dir | append: 'overview.webp' | relative_url }}" alt="An aerial view of the Big Bird model from the northeast, showing the two curved roofs and the pitch" width="1600" height="900" fetchpriority="high" class="block w-full rounded-lg">
+    </a>
+    <figcaption class="mt-2 text-center text-sm text-text-muted">[Overview of the stadium model]</figcaption>
+  </figure>
+
+  <section class="mt-10" aria-labelledby="project-links">
+    <h2 id="project-links" class="font-display text-2xl font-semibold text-text">Links</h2>
+    <p class="mt-2 text-text-body">
+      <a href="{{ project.mod_url | escape }}" class="underline underline-offset-4">Paradox Mods</a>
+      <span class="ml-2 text-sm text-text-muted">Cities: Skylines II</span>
+    </p>
+    <ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-text-body" aria-label="Blender model downloads">
+      {% for model in project.downloads %}
+      <li>
+        <a href="{{ model.url | escape }}" class="underline underline-offset-4">{{ model.label | escape }}</a>
+        <span class="ml-1 whitespace-nowrap text-sm text-text-muted">{{ model.size | escape }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="mt-10 border-t border-border-subtle pt-6 pb-8" aria-labelledby="project-gallery">
+    <h2 id="project-gallery" class="font-display text-2xl font-semibold text-text">Gallery</h2>
+    <p class="mt-2 text-text-body">Views from Blender, the Paradox Mods listing, and the in-game unlock artwork.</p>
+    <ul class="mt-5 grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 md:gap-x-6 md:gap-y-6">
+      {% for shot in project.gallery %}
+      {% assign shot_url = image_dir | append: shot.image | append: '.webp' | relative_url %}
+      <li class="min-w-0">
+        <figure>
+          <a href="{{ shot_url }}" class="!block overflow-hidden rounded-lg" aria-label="Open full-size image: {{ shot.title | escape }}">
+            <img src="{{ shot_url }}" alt="{{ shot.alt | escape }}" width="1008" height="567" loading="lazy" decoding="async" class="block aspect-video w-full object-cover">
+          </a>
+          <figcaption class="mt-1.5 text-sm text-text-muted">{{ shot.title | escape }}{% if shot.source %} · {{ shot.source | escape }}{% endif %}</figcaption>
+        </figure>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</article>

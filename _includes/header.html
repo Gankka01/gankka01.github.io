@@ -11,11 +11,18 @@
       data-en-home="{{ '/' | relative_url }}" data-en-cv="{{ '/cv/' | relative_url }}" data-ko-home="{{ '/ko/' | relative_url }}" data-ko-cv="{{ '/ko/cv/' | relative_url }}">
       <a href="{{ home_url | relative_url }}" data-page="home" class="no-underline{% if page.page_id == 'home' %} font-semibold{% endif %}"{% if page.page_id == 'home' %} aria-current="page"{% endif %}>{{ ui.home | escape }}</a>
       <a href="{{ cv_url | relative_url }}" data-page="cv" class="no-underline{% if page.page_id == 'cv' %} font-semibold{% endif %}"{% if page.page_id == 'cv' %} aria-current="page"{% endif %}>{{ ui.cv | escape }}</a>
-      <span class="site-nav-indicator" aria-hidden="true"></span>
+      {% unless page.language_switch_disabled %}<span class="site-nav-indicator" aria-hidden="true"></span>{% endunless %}
     </nav>
+    {% if page.language_switch_disabled %}
+    <button type="button" class="language-switch cursor-default border-0 bg-transparent p-0" disabled aria-label="Language switching unavailable">
+      <span class="language-glyph language-glyph-en" lang="en" aria-hidden="true">A</span>
+      <span class="language-glyph language-glyph-ko" lang="ko" aria-hidden="true">가</span>
+    </button>
+    {% else %}
     <a href="{{ switch_url | relative_url }}" class="language-switch no-underline" data-language-switch aria-label="{{ ui.switch_language | escape }}" title="{{ ui.switch_language | escape }}">
       <span class="language-glyph language-glyph-en" lang="en" aria-hidden="true">A</span>
       <span class="language-glyph language-glyph-ko" lang="ko" aria-hidden="true">가</span>
     </a>
+    {% endif %}
   </div>
 </header>

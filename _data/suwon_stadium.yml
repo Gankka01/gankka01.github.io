@@ -1,0 +1,72 @@
+mod_url: https://mods.paradoxplaza.com/mods/168240/Windows
+downloads:
+  - label: Original (.blend)
+    size: 324.0 MiB
+    url: https://drive.google.com/file/d/1d8pV-kaQICqalgsuGqUpH9NkHvHGDl7-/view?usp=drivesdk
+  - label: LOD0 (.blend)
+    size: 91.5 MiB
+    url: https://drive.google.com/file/d/1C7nmZf6HZCO2V_Q0n-V2BqKSJ7IZYWlm/view?usp=drivesdk
+  - label: LOD1 (.blend)
+    size: 22.8 MiB
+    url: https://drive.google.com/file/d/1NpE0Ikjp-o1q0eKilb9aOQ1GAx6tzoWn/view?usp=drivesdk
+  - label: LOD2 (.blend)
+    size: 6.7 MiB
+    url: https://drive.google.com/file/d/1ahK3D2E3_SPQFuuxn5F3IBDzYsNt4AbL/view?usp=drivesdk
+gallery:
+  - image: south-stand
+    title: View from the south stand
+    alt: The pitch and patterned blue and orange seats seen from the south stand
+    source: Mod listing
+  - image: northwest-aerial
+    title: Northwest aerial view
+    alt: Both curved stadium roofs from the northwest
+  - image: west-upper-stand
+    title: West upper stand
+    alt: The pitch and far stands from the upper tier on the west side
+    source: Mod listing
+  - image: east-aerial
+    title: Southeast aerial view
+    alt: A wide view from the southeast showing the roof and the stadium perimeter
+  - image: southwest-aerial
+    title: Southwest aerial view
+    alt: The stadium and entrance platforms from the southwest
+  - image: unlock-artwork
+    title: In-game unlock artwork
+    alt: Cutout of the stadium model used in the in-game unlock artwork
+  - image: north-entry
+    title: North entry
+    alt: The pedestrian approach to the north entry of the stadium
+  - image: south-exterior
+    title: South exterior
+    alt: The stadium's southern structure and exterior approaches
+  - image: east-gate
+    title: East gate
+    alt: The glazed east gate below the stadium's concrete supports
+    source: Mod listing
+  - image: west-store
+    title: West-side team store
+    alt: The team store and adjoining stadium exterior at ground level
+  - image: west-concourse
+    title: West concourse
+    alt: The public concourse beneath the west stand
+  - image: east-glazing
+    title: East glazing detail
+    alt: A close view of the glass panels along the east side
+  - image: north-upper-gallery
+    title: North upper gallery
+    alt: The concrete columns and ramp of the north upper gallery
+  - image: pitch-level
+    title: Pitch-level view
+    alt: The stadium bowl viewed from near the pitch
+  - image: north-seating
+    title: North seating detail
+    alt: The seating pattern across the north stand
+  - image: roof-trusses
+    title: West roof trusses
+    alt: The exposed structure on the underside of the west roof
+  - image: night-aerial
+    title: Match-night aerial view
+    alt: The illuminated stadium model from above at night
+  - image: night-pitch
+    title: Match-night pitch view
+    alt: The floodlit pitch and north stand during the model's match-night lighting setup
