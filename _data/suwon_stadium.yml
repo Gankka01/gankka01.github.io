@@ -4,15 +4,15 @@ downloads:
     size: 324.0 MiB
     triangles: '3,866,731'
     url: https://drive.google.com/file/d/1d8pV-kaQICqalgsuGqUpH9NkHvHGDl7-/view?usp=drivesdk
-  - label: High (LOD0)
+  - label: High
     size: 91.5 MiB
     triangles: '399,921'
     url: https://drive.google.com/file/d/1C7nmZf6HZCO2V_Q0n-V2BqKSJ7IZYWlm/view?usp=drivesdk
-  - label: Medium (LOD1)
+  - label: Medium
     size: 22.8 MiB
     triangles: '106,917'
     url: https://drive.google.com/file/d/1NpE0Ikjp-o1q0eKilb9aOQ1GAx6tzoWn/view?usp=drivesdk
-  - label: Low (LOD2)
+  - label: Low
     size: 6.7 MiB
     triangles: '33,748'
     url: https://drive.google.com/file/d/1ahK3D2E3_SPQFuuxn5F3IBDzYsNt4AbL/view?usp=drivesdk

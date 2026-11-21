@@ -757,12 +757,91 @@ html[data-language-transition]::view-transition-new(root) {
 .stadium-image-frame {
   box-shadow: 4px 6px 12px rgb(15 23 42 / .17);
 }
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .stadium-gallery-image img {
-    transition: transform 240ms cubic-bezier(.22, .61, .36, 1);
+.stadium-gallery-row {
+  --stadium-gallery-arrow-width: clamp(1.6rem, 5vw, 2.7rem);
+  display: grid;
+  grid-template-columns: var(--stadium-gallery-arrow-width) minmax(0, 1fr) var(--stadium-gallery-arrow-width);
+  align-items: center;
+}
+.stadium-gallery-center {
+  grid-area: 1 / 2;
+}
+.stadium-gallery-arrow {
+  display: grid;
+  min-height: 2.5rem;
+  place-items: center;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.stadium-gallery-arrow[hidden] {
+  display: none;
+}
+.stadium-gallery-arrow:disabled {
+  color: var(--color-text-subtle);
+  cursor: default;
+}
+.stadium-gallery-arrow-previous {
+  grid-area: 1 / 1;
+}
+.stadium-gallery-arrow-next {
+  grid-area: 1 / 3;
+}
+.stadium-gallery-arrow::before {
+  content: "";
+}
+.stadium-gallery-triangle::before {
+  width: .64rem;
+  height: 1.5rem;
+  background: currentColor;
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+.stadium-gallery-triangle.stadium-gallery-arrow-next::before {
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+.stadium-gallery-chevron::before {
+  width: .55rem;
+  height: .55rem;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+  rotate: -45deg;
+}
+.stadium-gallery-chevron.stadium-gallery-arrow-next::before {
+  rotate: 135deg;
+}
+.stadium-gallery-thumbnails {
+  --stadium-thumbnail-width: clamp(4rem, 14vw, 6.2rem);
+  --stadium-thumbnail-fade: clamp(1rem, 12%, 4rem);
+  position: relative;
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: .3rem;
+  padding-inline: calc((100% - var(--stadium-thumbnail-width)) / 2);
+  mask-image: linear-gradient(to right, transparent, black var(--stadium-thumbnail-fade), black calc(100% - var(--stadium-thumbnail-fade)), transparent);
+}
+.stadium-gallery-thumbnail {
+  flex: 0 0 var(--stadium-thumbnail-width);
+  cursor: pointer;
+}
+.stadium-gallery-thumbnail[aria-current="true"] {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.stadium-gallery-thumbnail:focus-visible {
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .stadium-gallery-arrow:not(:disabled):hover {
+    color: var(--color-accent);
   }
-  .stadium-gallery-image:hover img {
-    transform: scale(1.06);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .stadium-gallery-triangle::before {
+    transition: transform 160ms ease-out;
+  }
+  .stadium-gallery-triangle:hover::before {
+    transform: scale(1.04);
   }
 }
 
