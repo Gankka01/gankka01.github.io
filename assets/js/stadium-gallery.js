@@ -11,6 +11,7 @@
   const next = gallery.querySelector('[data-gallery-next]');
   const scrollLeft = gallery.querySelector('[data-gallery-scroll-left]');
   const scrollRight = gallery.querySelector('[data-gallery-scroll-right]');
+  const scrollbar = gallery.querySelector('[data-gallery-scrollbar]');
   const status = gallery.querySelector('[data-gallery-status]');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
@@ -25,9 +26,23 @@
     strip.scrollTo({ left: center - strip.clientWidth / 2, behavior });
   }
 
-  function updateStripArrows() {
+  function syncStripControls() {
     scrollLeft.disabled = strip.scrollLeft <= 1;
     scrollRight.disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 1;
+    scrollbar.value = Math.round(strip.scrollLeft);
+  }
+
+  function updateStripLayout() {
+    const scrollWidth = strip.scrollWidth;
+    const visibleWidth = strip.clientWidth;
+    const max = scrollWidth - visibleWidth;
+    scrollbar.max = max;
+    scrollbar.hidden = max <= 1;
+    if (!scrollbar.hidden) {
+      scrollbar.style.setProperty('--stadium-scrollbar-thumb-width', `${100 * visibleWidth / scrollWidth}%`);
+    }
+    centerThumbnail('auto');
+    syncStripControls();
   }
 
   function selectImage(index) {
@@ -60,7 +75,10 @@
   next.addEventListener('click', () => selectImage(current + 1));
   scrollLeft.addEventListener('click', () => scrollThumbnails(-1));
   scrollRight.addEventListener('click', () => scrollThumbnails(1));
-  strip.addEventListener('scroll', updateStripArrows, { passive: true });
+  scrollbar.addEventListener('input', () => {
+    strip.scrollTo({ left: scrollbar.valueAsNumber, behavior: 'auto' });
+  });
+  strip.addEventListener('scroll', syncStripControls, { passive: true });
   thumbnails.forEach((thumbnail, index) => {
     thumbnail.addEventListener('click', () => selectImage(index));
   });
@@ -68,9 +86,6 @@
   scrollLeft.hidden = false;
   scrollRight.hidden = false;
   selectImage(0);
-  updateStripArrows();
-  new ResizeObserver(() => {
-    centerThumbnail('auto');
-    updateStripArrows();
-  }).observe(strip);
+  updateStripLayout();
+  new ResizeObserver(updateStripLayout).observe(strip);
 })();

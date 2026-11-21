@@ -21,7 +21,9 @@ noindex: true
   </header>
 
   <figure class="mx-auto mt-8 max-w-3xl">
-    <img src="{{ image_dir | append: 'south-stand.webp' | relative_url }}" alt="The pitch and patterned blue and orange seats seen from the south stand" width="1008" height="567" fetchpriority="high" class="stadium-image-frame block w-full">
+    <div class="stadium-cover-frame">
+      <img src="{{ image_dir | append: 'south-stand.webp' | relative_url }}" alt="The pitch and patterned blue and orange seats seen from the south stand" width="1008" height="567" fetchpriority="high" class="block w-full">
+    </div>
     <figcaption class="mt-3 text-center text-sm text-text-muted">[Suwon World Cup Stadium]</figcaption>
   </figure>
 
@@ -91,6 +93,7 @@ noindex: true
         {% endfor %}
       </div>
       <button type="button" class="stadium-gallery-arrow stadium-gallery-arrow-next stadium-gallery-chevron" data-gallery-scroll-right aria-label="Scroll thumbnails right" aria-controls="stadium-gallery-thumbnails" hidden></button>
+      <input type="range" class="stadium-gallery-scrollbar" data-gallery-scrollbar min="0" max="1" value="0" aria-label="Gallery thumbnail scroll position" aria-controls="stadium-gallery-thumbnails" hidden>
     </div>
     <p class="sr-only" role="status" data-gallery-status></p>
   </section>
