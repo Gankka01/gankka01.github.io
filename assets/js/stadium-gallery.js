@@ -23,12 +23,16 @@
   function centerThumbnail(behavior) {
     const thumbnail = thumbnails[current];
     const center = thumbnail.offsetLeft + thumbnail.offsetWidth / 2;
-    strip.scrollTo({ left: center - strip.clientWidth / 2, behavior });
+    const max = strip.scrollWidth - strip.clientWidth;
+    const left = Math.max(0, Math.min(max, center - strip.clientWidth / 2));
+    strip.scrollTo({ left, behavior });
   }
 
   function syncStripControls() {
     scrollLeft.disabled = strip.scrollLeft <= 1;
     scrollRight.disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 1;
+    strip.toggleAttribute('data-at-start', scrollLeft.disabled);
+    strip.toggleAttribute('data-at-end', scrollRight.disabled);
     scrollbar.value = Math.round(strip.scrollLeft);
   }
 

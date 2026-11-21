@@ -837,18 +837,25 @@ html[data-language-transition]::view-transition-new(root) {
   --stadium-thumbnail-width: clamp(4rem, 14vw, 6.2rem);
   --stadium-thumbnail-edge: calc(var(--stadium-thumbnail-width) * .18);
   --stadium-thumbnail-fade: calc(var(--stadium-thumbnail-width) * .52);
+  --stadium-thumbnail-left-mask: transparent;
+  --stadium-thumbnail-right-mask: transparent;
   position: relative;
   display: flex;
   gap: .5rem;
   overflow-x: auto;
   scrollbar-width: none;
-  padding-block: .3rem;
-  padding-inline: calc((100% - var(--stadium-thumbnail-width)) / 2);
+  padding: .3rem;
   mask-image: linear-gradient(to right,
-    transparent var(--stadium-thumbnail-edge),
+    var(--stadium-thumbnail-left-mask) var(--stadium-thumbnail-edge),
     black var(--stadium-thumbnail-fade),
     black calc(100% - var(--stadium-thumbnail-fade)),
-    transparent calc(100% - var(--stadium-thumbnail-edge)));
+    var(--stadium-thumbnail-right-mask) calc(100% - var(--stadium-thumbnail-edge)));
+}
+.stadium-gallery-thumbnails[data-at-start] {
+  --stadium-thumbnail-left-mask: black;
+}
+.stadium-gallery-thumbnails[data-at-end] {
+  --stadium-thumbnail-right-mask: black;
 }
 .stadium-gallery-thumbnail {
   flex: 0 0 var(--stadium-thumbnail-width);
