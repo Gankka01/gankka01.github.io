@@ -764,21 +764,28 @@ html[data-language-transition]::view-transition-new(root) {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 8rem));
+  grid-template-columns: repeat(2, minmax(0, 10.5rem));
   gap: 1.5rem clamp(.85rem, 3vw, 1.65rem);
   align-items: start;
 }
 @media (min-width: 48rem) {
   .project-grid {
-    grid-template-columns: repeat(3, minmax(0, 8rem));
+    grid-template-columns: repeat(3, minmax(0, 10.5rem));
   }
   .project-grid[data-columns="4"] {
-    grid-template-columns: repeat(4, minmax(0, 8rem));
+    grid-template-columns: repeat(4, minmax(0, 10.5rem));
   }
 }
 .project-card {
   display: block;
   transform-origin: top left;
+}
+.project-card-image {
+  max-width: 8rem;
+}
+.project-card-title {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 .project-card:hover .project-card-title {
   color: var(--color-accent);
