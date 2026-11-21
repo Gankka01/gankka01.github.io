@@ -37,7 +37,7 @@
     if (index !== current) {
       thumbnails[current].removeAttribute('aria-current');
       thumbnail.setAttribute('aria-current', 'true');
-      preview.src = thumbnail.querySelector('img').src;
+      preview.src = thumbnail.dataset.gallerySource;
       preview.alt = thumbnail.dataset.galleryAlt;
       status.textContent = `Image ${index + 1} of ${thumbnails.length}. ${preview.alt}`;
       current = index;
@@ -51,7 +51,9 @@
   }
 
   function scrollThumbnails(direction) {
-    strip.scrollBy({ left: direction * strip.clientWidth * .7, behavior: scrollBehavior() });
+    const end = thumbnails[Math.min(3, thumbnails.length - 1)];
+    const distance = end.getBoundingClientRect().left - thumbnails[0].getBoundingClientRect().left;
+    strip.scrollBy({ left: direction * distance, behavior: scrollBehavior() });
   }
 
   previous.addEventListener('click', () => selectImage(current - 1));

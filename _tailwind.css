@@ -766,6 +766,12 @@ html[data-language-transition]::view-transition-new(root) {
 .stadium-gallery-center {
   grid-area: 1 / 2;
 }
+.stadium-gallery-stage {
+  --stadium-gallery-hit-depth: 8%;
+  position: relative;
+  width: 94%;
+  justify-self: center;
+}
 .stadium-gallery-arrow {
   display: grid;
   min-height: 2.5rem;
@@ -789,9 +795,22 @@ html[data-language-transition]::view-transition-new(root) {
 .stadium-gallery-arrow::before {
   content: "";
 }
+.stadium-gallery-triangle {
+  position: absolute;
+  inset-block: 0;
+  width: calc(var(--stadium-gallery-arrow-width) + var(--stadium-gallery-hit-depth));
+}
+.stadium-gallery-triangle.stadium-gallery-arrow-previous {
+  inset-inline-start: calc(-1 * var(--stadium-gallery-arrow-width));
+  padding-inline-end: var(--stadium-gallery-hit-depth);
+}
+.stadium-gallery-triangle.stadium-gallery-arrow-next {
+  inset-inline-end: calc(-1 * var(--stadium-gallery-arrow-width));
+  padding-inline-start: var(--stadium-gallery-hit-depth);
+}
 .stadium-gallery-triangle::before {
-  width: .64rem;
-  height: 1.5rem;
+  width: .896rem;
+  height: 3rem;
   background: currentColor;
   clip-path: polygon(0 50%, 100% 0, 100% 100%);
 }
@@ -799,10 +818,10 @@ html[data-language-transition]::view-transition-new(root) {
   clip-path: polygon(100% 50%, 0 0, 0 100%);
 }
 .stadium-gallery-chevron::before {
-  width: .55rem;
-  height: .55rem;
-  border-top: 1.5px solid currentColor;
-  border-left: 1.5px solid currentColor;
+  width: .715rem;
+  height: .715rem;
+  border-top: 3px solid currentColor;
+  border-left: 3px solid currentColor;
   rotate: -45deg;
 }
 .stadium-gallery-chevron.stadium-gallery-arrow-next::before {
@@ -810,7 +829,8 @@ html[data-language-transition]::view-transition-new(root) {
 }
 .stadium-gallery-thumbnails {
   --stadium-thumbnail-width: clamp(4rem, 14vw, 6.2rem);
-  --stadium-thumbnail-fade: clamp(1rem, 12%, 4rem);
+  --stadium-thumbnail-edge: calc(var(--stadium-thumbnail-width) * .18);
+  --stadium-thumbnail-fade: calc(var(--stadium-thumbnail-width) * .52);
   position: relative;
   display: flex;
   gap: .5rem;
@@ -818,7 +838,11 @@ html[data-language-transition]::view-transition-new(root) {
   scrollbar-width: none;
   padding-block: .3rem;
   padding-inline: calc((100% - var(--stadium-thumbnail-width)) / 2);
-  mask-image: linear-gradient(to right, transparent, black var(--stadium-thumbnail-fade), black calc(100% - var(--stadium-thumbnail-fade)), transparent);
+  mask-image: linear-gradient(to right,
+    transparent var(--stadium-thumbnail-edge),
+    black var(--stadium-thumbnail-fade),
+    black calc(100% - var(--stadium-thumbnail-fade)),
+    transparent calc(100% - var(--stadium-thumbnail-edge)));
 }
 .stadium-gallery-thumbnail {
   flex: 0 0 var(--stadium-thumbnail-width);

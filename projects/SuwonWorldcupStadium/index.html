@@ -47,13 +47,13 @@ noindex: true
             <th scope="col" class="w-1/4 py-2 font-semibold">Download</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-border-subtle border-b border-border">
+        <tbody class="divide-y divide-border-subtle border-b border-border text-xs leading-tight">
           {% for model in project.downloads %}
           <tr>
-            <th scope="row" class="py-2 pr-1 font-semibold">{{ model.label | escape }}</th>
-            <td class="whitespace-nowrap py-2 pr-1">{{ model.size | escape }}</td>
-            <td class="py-2 pr-1">{{ model.triangles | escape }}</td>
-            <td class="py-2">
+            <th scope="row" class="py-1.5 pr-1 font-semibold">{{ model.label | escape }}</th>
+            <td class="whitespace-nowrap py-1.5 pr-1">{{ model.size | escape }}</td>
+            <td class="py-1.5 pr-1">{{ model.triangles | escape }}</td>
+            <td class="py-1.5">
               <a href="{{ model.url | escape }}" class="stadium-link inline-flex items-center gap-1.5 sm:whitespace-nowrap" aria-label="Google Drive: {{ model.label | escape }} Blender model">
                 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 shrink-0">
                   <path d="M12 3v12m-4-4 4 4 4-4M4.5 16v3a1.5 1.5 0 0 0 1.5 1.5h12a1.5 1.5 0 0 0 1.5-1.5v-3" />
@@ -73,11 +73,11 @@ noindex: true
     {% assign first_shot = project.gallery | first %}
     {% assign first_shot_url = image_dir | append: first_shot.image | append: '.webp' | relative_url | append: '?v=2' %}
     <div class="stadium-gallery-row mt-5">
-      <button type="button" class="stadium-gallery-arrow stadium-gallery-arrow-previous stadium-gallery-triangle" data-gallery-previous aria-label="Previous image" aria-controls="stadium-gallery-preview" hidden></button>
-      <div class="stadium-gallery-center stadium-image-frame">
-        <img id="stadium-gallery-preview" src="{{ first_shot_url }}" alt="{{ first_shot.alt | escape }}" width="1008" height="567" loading="lazy" decoding="async" class="block aspect-video w-full object-cover">
+      <div class="stadium-gallery-center stadium-gallery-stage">
+        <img id="stadium-gallery-preview" src="{{ first_shot_url }}" alt="{{ first_shot.alt | escape }}" width="1600" height="900" loading="lazy" decoding="async" class="stadium-image-frame block aspect-video w-full object-contain">
+        <button type="button" class="stadium-gallery-arrow stadium-gallery-triangle stadium-gallery-arrow-previous" data-gallery-previous aria-label="Previous image" aria-controls="stadium-gallery-preview" hidden></button>
+        <button type="button" class="stadium-gallery-arrow stadium-gallery-triangle stadium-gallery-arrow-next" data-gallery-next aria-label="Next image" aria-controls="stadium-gallery-preview" hidden></button>
       </div>
-      <button type="button" class="stadium-gallery-arrow stadium-gallery-arrow-next stadium-gallery-triangle" data-gallery-next aria-label="Next image" aria-controls="stadium-gallery-preview" hidden></button>
     </div>
 
     <div class="stadium-gallery-row mt-3">
@@ -85,7 +85,7 @@ noindex: true
       <div id="stadium-gallery-thumbnails" class="stadium-gallery-center stadium-gallery-thumbnails" role="group" aria-label="Gallery thumbnails">
         {% for shot in project.gallery %}
         {% assign shot_url = image_dir | append: shot.image | append: '.webp' | relative_url | append: '?v=2' %}
-        <button type="button" class="stadium-gallery-thumbnail" data-gallery-alt="{{ shot.alt | escape }}" aria-label="Show {{ shot.title | escape }}" aria-controls="stadium-gallery-preview"{% if forloop.first %} aria-current="true"{% endif %}>
+        <button type="button" class="stadium-gallery-thumbnail" data-gallery-source="{{ shot_url }}" data-gallery-alt="{{ shot.alt | escape }}" aria-label="Show {{ shot.title | escape }}" aria-controls="stadium-gallery-preview"{% if forloop.first %} aria-current="true"{% endif %}>
           <img src="{{ shot_url }}" alt="" width="1008" height="567" loading="lazy" decoding="async" draggable="false" class="block aspect-video w-full object-cover">
         </button>
         {% endfor %}
