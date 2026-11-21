@@ -1,76 +1,161 @@
 mod_url: https://mods.paradoxplaza.com/mods/168240/Windows
+copy:
+  en:
+    venue: Suwon World Cup Stadium, also known as Big Bird. Home of Suwon Samsung Bluewings.
+    release: 'The model and asset were created with Codex and released for Cities: Skylines II.'
+    cover_alt: The pitch and patterned blue and orange seats seen from the south stand
+    links: Links
+    mod: 'Paradox Mods · Cities: Skylines II'
+    downloads: Downloads
+    download_table: Blender model downloads
+    level: Level
+    file_size: File Size
+    triangles: Triangles
+    download: Download
+    drive_link: 'Google Drive: %level% Blender model'
+    gallery: Gallery
+    previous: Previous image
+    next: Next image
+    scroll_left: Scroll thumbnails left
+    scroll_right: Scroll thumbnails right
+    thumbnails: Gallery thumbnails
+    thumbnail: Show %title%
+    scroll_position: Gallery thumbnail scroll position
+    status: Image {current} of {total}. {description}
+  ko:
+    venue: 수원 월드컵 경기장, 빅버드. 수원 삼성 블루윙즈의 홈 경기장.
+    release: Codex로 제작한 모델과 에셋을 시티즈 스카이라인 2에서 배포합니다.
+    cover_alt: 남쪽 관중석에서 바라본 경기장과 파란색·주황색 좌석
+    links: 링크
+    mod: 패러독스 모드 · 시티즈 스카이라인 2
+    downloads: 다운로드
+    download_table: Blender 모델 다운로드
+    level: 레벨
+    file_size: 파일 크기
+    triangles: 삼각형 수
+    download: 다운로드
+    drive_link: Google Drive에서 %level% Blender 모델 다운로드
+    gallery: 갤러리
+    previous: 이전 사진
+    next: 다음 사진
+    scroll_left: 썸네일 목록을 왼쪽으로 이동
+    scroll_right: 썸네일 목록을 오른쪽으로 이동
+    thumbnails: 갤러리 썸네일
+    thumbnail: '%title% 보기'
+    scroll_position: 갤러리 썸네일 스크롤 위치
+    status: '{total}장 중 {current}번째 사진. {description}'
 downloads:
   - label: Original
+    label_ko: 원본
     size: 324.0 MiB
     triangles: '3,866,731'
     url: https://drive.google.com/file/d/1d8pV-kaQICqalgsuGqUpH9NkHvHGDl7-/view?usp=drivesdk
   - label: High
+    label_ko: 높음
     size: 91.5 MiB
     triangles: '399,921'
     url: https://drive.google.com/file/d/1C7nmZf6HZCO2V_Q0n-V2BqKSJ7IZYWlm/view?usp=drivesdk
   - label: Medium
+    label_ko: 중간
     size: 22.8 MiB
     triangles: '106,917'
     url: https://drive.google.com/file/d/1NpE0Ikjp-o1q0eKilb9aOQ1GAx6tzoWn/view?usp=drivesdk
   - label: Low
+    label_ko: 낮음
     size: 6.7 MiB
     triangles: '33,748'
     url: https://drive.google.com/file/d/1ahK3D2E3_SPQFuuxn5F3IBDzYsNt4AbL/view?usp=drivesdk
 gallery:
   - image: overview
     title: Northeast aerial view
+    title_ko: 북동쪽 조감도
     alt: An aerial view of the Big Bird model from the northeast, showing the two curved roofs and the pitch
+    alt_ko: 북동쪽에서 내려다본 경기장 모델의 두 곡선 지붕과 그라운드
     source: Mod listing
   - image: northwest-aerial
     title: Northwest aerial view
+    title_ko: 북서쪽 조감도
     alt: Both curved stadium roofs from the northwest
+    alt_ko: 북서쪽에서 바라본 경기장의 두 곡선 지붕
   - image: west-upper-stand
     title: West upper stand
+    title_ko: 서쪽 상단 관중석
     alt: The pitch and far stands from the upper tier on the west side
+    alt_ko: 서쪽 상단 관중석에서 바라본 그라운드와 맞은편 관중석
     source: Mod listing
   - image: east-aerial
     title: Southeast aerial view
+    title_ko: 남동쪽 조감도
     alt: A wide view from the southeast showing the roof and the stadium perimeter
+    alt_ko: 남동쪽에서 내려다본 지붕과 경기장 외곽 전경
   - image: southwest-aerial
     title: Southwest aerial view
+    title_ko: 남서쪽 조감도
     alt: The stadium and entrance platforms from the southwest
+    alt_ko: 남서쪽에서 내려다본 경기장과 입구 광장
   - image: unlock-artwork
     title: In-game unlock artwork
+    title_ko: 게임 내 잠금 해제 이미지
     alt: Cutout of the stadium model used in the in-game unlock artwork
+    alt_ko: 게임에서 에셋이 해금될 때 표시되는 경기장 모델 이미지
   - image: north-entry
     title: North entry
+    title_ko: 북쪽 입구
     alt: The pedestrian approach to the north entry of the stadium
+    alt_ko: 경기장 북쪽 입구로 이어지는 보행로
   - image: south-exterior
     title: South exterior
+    title_ko: 남쪽 외관
     alt: The stadium's southern structure and exterior approaches
+    alt_ko: 경기장 남쪽 구조물과 외부 진입로
   - image: east-gate
     title: East gate
+    title_ko: 동쪽 출입구
     alt: The glazed east gate below the stadium's concrete supports
+    alt_ko: 콘크리트 기둥 아래 유리로 마감한 동쪽 출입구
     source: Mod listing
   - image: west-store
     title: West-side team store
+    title_ko: 서쪽 구단 매장
     alt: The team store and adjoining stadium exterior at ground level
+    alt_ko: 지상에서 바라본 구단 매장과 인접한 경기장 외벽
   - image: west-concourse
     title: West concourse
+    title_ko: 서쪽 관중석 통로
     alt: The public concourse beneath the west stand
+    alt_ko: 서쪽 관중석 아래의 관람객 통로
   - image: east-glazing
     title: East glazing detail
+    title_ko: 동쪽 유리 외벽
     alt: A close view of the glass panels along the east side
+    alt_ko: 동쪽 외벽 유리 패널을 가까이서 본 모습
   - image: north-upper-gallery
     title: North upper gallery
+    title_ko: 북쪽 상층 통로
     alt: The concrete columns and ramp of the north upper gallery
+    alt_ko: 북쪽 상층 통로의 콘크리트 기둥과 경사로
   - image: pitch-level
     title: Pitch-level view
+    title_ko: 그라운드에서 본 경기장
     alt: The stadium bowl viewed from near the pitch
+    alt_ko: 그라운드 가까이에서 바라본 경기장 내부
   - image: north-seating
     title: North seating detail
+    title_ko: 북쪽 관중석 상세
     alt: The seating pattern across the north stand
+    alt_ko: 북쪽 관중석의 좌석 배치와 색상 패턴
   - image: roof-trusses
     title: West roof trusses
+    title_ko: 서쪽 지붕 트러스
     alt: The exposed structure on the underside of the west roof
+    alt_ko: 서쪽 지붕 아래에 드러난 철골 트러스 구조
   - image: night-aerial
     title: Match-night aerial view
+    title_ko: 야간 경기장 조감도
     alt: The illuminated stadium model from above at night
+    alt_ko: 조명을 밝힌 야간 경기장 모델을 위에서 내려다본 모습
   - image: night-pitch
     title: Match-night pitch view
+    title_ko: 야간 그라운드 전경
     alt: The floodlit pitch and north stand during the model's match-night lighting setup
+    alt_ko: 야간 경기 조명이 켜진 그라운드와 북쪽 관중석

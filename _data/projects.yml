@@ -1,0 +1,10 @@
+columns: 3
+categories:
+  modeling:
+    en: Modeling
+    ko: 모델링
+items:
+  - id: suwon-stadium
+    category: modeling
+    featured: true
+    image: /assets/images/projects/suwon-stadium/south-stand.webp

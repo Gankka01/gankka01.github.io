@@ -1,0 +1,12 @@
+{% assign lang = page.lang | default: 'en' %}
+{% assign groups = site.data.projects.items | group_by: 'category' %}
+<article class="mx-auto max-w-4xl px-6 py-8" aria-labelledby="projects-title">
+  <h1 id="projects-title" class="font-display text-3xl font-semibold text-text md:text-4xl">{{ page.title | escape }}</h1>
+  {% for group in groups %}
+  {% assign category = site.data.projects.categories[group.name] %}
+  <section class="mt-7 border-t border-border-subtle pt-5" aria-labelledby="projects-{{ group.name | slugify }}">
+    <h2 id="projects-{{ group.name | slugify }}" class="mb-4 font-display text-2xl font-semibold text-text">{{ category[lang] | escape }}</h2>
+    {% include project-cards.html items=group.items lang=lang columns=site.data.projects.columns %}
+  </section>
+  {% endfor %}
+</article>

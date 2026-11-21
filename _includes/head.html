@@ -1,6 +1,5 @@
 {% assign lang = page.lang | default: 'en' %}
 {% assign ui = site.data.i18n[lang] %}
-{% if page.page_id == 'cv' %}{% assign en_url = '/cv/' %}{% assign ko_url = '/ko/cv/' %}{% else %}{% assign en_url = '/' %}{% assign ko_url = '/ko/' %}{% endif %}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ page.title | default: site.title | escape }}</title>
@@ -8,9 +7,11 @@
 <link rel="canonical" href="{{ page.url | absolute_url }}">
 {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
 {% unless page.language_switch_disabled %}
-<link rel="alternate" hreflang="en" href="{{ en_url | absolute_url }}">
-<link rel="alternate" hreflang="ko" href="{{ ko_url | absolute_url }}">
-<link rel="alternate" hreflang="x-default" href="{{ en_url | absolute_url }}">
+{% assign translations = site.pages | where: 'page_id', page.page_id %}
+{% for translation in translations %}
+<link rel="alternate" hreflang="{{ translation.lang | escape }}" href="{{ translation.url | absolute_url }}">
+{% if translation.lang == 'en' %}<link rel="alternate" hreflang="x-default" href="{{ translation.url | absolute_url }}">{% endif %}
+{% endfor %}
 {% endunless %}
 <link rel="icon" href="{{ '/favicon.ico' | relative_url }}?v=wonik-1" sizes="16x16 32x32 48x48">
 <link rel="icon" href="{{ '/assets/icons/favicon.svg' | relative_url }}?v=wonik-1" type="image/svg+xml" sizes="any">
@@ -32,3 +33,4 @@
 <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <script src="{{ '/assets/js/site.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<script src="{{ '/assets/js/stadium-gallery.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

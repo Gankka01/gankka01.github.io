@@ -413,12 +413,12 @@ html[lang="ko"] .publication-doi {
   50% { transform: translate(4%, -3%) rotate(55deg); }
 }
 
-/* Home sits to the left of CV; the shared menu stays in place. */
+/* Keep the shared menu in place as the page content moves. */
 :root {
   --page-motion-duration: 320ms;
   --page-motion-easing: cubic-bezier(.22, .61, .36, 1);
 }
-/* Equal side columns keep Home/CV centered independently of the wordmark. */
+/* Equal side columns keep the navigation centered independently of the wordmark. */
 .site-header-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -493,19 +493,31 @@ html[lang="ko"] .language-glyph-en {
   margin-bottom: 1rem;
 }
 .site-navigation {
-  --nav-item-width: 3rem;
+  --nav-item-width: clamp(2.85rem, 15vw, 4.1rem);
   --nav-gap: .1rem;
-  --nav-line-width: 3.5rem;
+  --nav-line-width: min(3.5rem, var(--nav-item-width));
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, var(--nav-item-width));
+  grid-template-columns: repeat(3, var(--nav-item-width));
   gap: var(--nav-gap);
   width: max-content;
   text-align: center;
 }
-.site-navigation a[aria-current="page"] {
+.site-navigation a[aria-current] {
   color: #111;
   font-weight: 600;
+}
+@media (max-width: 27rem) {
+  .site-header-inner {
+    column-gap: .3rem;
+    padding-inline: .9rem;
+  }
+  .site-brand-header {
+    width: clamp(3.2rem, 16vw, 4.5rem);
+  }
+  .site-navigation {
+    font-size: .75rem;
+  }
 }
 .site-navigation a:hover {
   color: var(--color-link-hover);
@@ -522,8 +534,11 @@ html[lang="ko"] .language-glyph-en {
   transition: transform var(--page-motion-duration) var(--page-motion-easing);
   view-transition-name: site-nav-indicator;
 }
-.site-navigation a:nth-of-type(2)[aria-current="page"] ~ .site-nav-indicator {
+.site-navigation a[data-page="cv"][aria-current] ~ .site-nav-indicator {
   transform: translateX(calc(var(--nav-item-width) + var(--nav-gap)));
+}
+.site-navigation a[data-page="projects"][aria-current] ~ .site-nav-indicator {
+  transform: translateX(calc(2 * (var(--nav-item-width) + var(--nav-gap))));
 }
 .site-nav-indicator::before,
 .site-nav-indicator::after {
@@ -745,6 +760,28 @@ html[data-language-transition]::view-transition-new(root) {
   .publication-image::after {
     animation: none !important;
   }
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 8rem));
+  gap: 1.5rem clamp(.85rem, 3vw, 1.65rem);
+  align-items: start;
+}
+@media (min-width: 48rem) {
+  .project-grid {
+    grid-template-columns: repeat(3, minmax(0, 8rem));
+  }
+  .project-grid[data-columns="4"] {
+    grid-template-columns: repeat(4, minmax(0, 8rem));
+  }
+}
+.project-card {
+  display: block;
+  transform-origin: top left;
+}
+.project-card:hover .project-card-title {
+  color: var(--color-accent);
 }
 
 .stadium-link,

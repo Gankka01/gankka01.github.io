@@ -24,6 +24,15 @@
     </div>
   </div>
 </section>
+{% assign featured_projects = site.data.projects.items | where: 'featured', true | slice: 0, 3 %}
+{% if featured_projects.size > 0 %}
+<section class="pb-4 md:pb-6" aria-labelledby="featured-projects">
+  <div class="mx-auto max-w-4xl px-6">
+    <h2 id="featured-projects" class="mb-5 font-display text-2xl font-semibold text-text">{{ ui.projects | escape }}</h2>
+    {% include project-cards.html items=featured_projects lang=lang %}
+  </div>
+</section>
+{% endif %}
 <section class="publications-section py-12 md:py-16" aria-labelledby="publications">
   <div class="max-w-4xl mx-auto px-6">
     <h2 id="publications" class="font-display text-2xl font-semibold text-text mb-8">{{ ui.publications | escape }}</h2>

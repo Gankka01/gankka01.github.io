@@ -60,7 +60,7 @@ document.addEventListener('click', (event) => {
   if (!control || event.defaultPrevented || event.button !== 0 || event.metaKey
     || event.ctrlKey || event.shiftKey || event.altKey) return;
   event.preventDefault();
-  document.querySelector('[data-site-navigation] a[aria-current="page"]')
+  document.querySelector('[data-site-navigation] a[aria-current]')
     ?.focus({ preventScroll: true });
   window.scrollTo({ top: 0, left: 0,
     behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
@@ -416,17 +416,20 @@ document.addEventListener('click', (event) => {
 
   const links = [...nav.querySelectorAll('a[data-page]')];
   const normalizePath = (path) => path.replace(/\/?$/, '/');
-  const routeItems = [
-    [nav.dataset.enHome, { language: 'en', page: 'home', index: 0 }],
-    [nav.dataset.enCv, { language: 'en', page: 'cv', index: 1 }],
-    [nav.dataset.koHome, { language: 'ko', page: 'home', index: 0 }],
-    [nav.dataset.koCv, { language: 'ko', page: 'cv', index: 1 }]
-  ];
-  if (links.length !== 2 || routeItems.some(([path]) => !path)) return;
-  const routes = new Map(routeItems.map(([path, info]) => [normalizePath(new URL(path, location.href).pathname), info]));
+  const menuRoutes = links.flatMap((link, index) => [
+    [link.dataset.enUrl, { language: 'en', index }],
+    [link.dataset.koUrl, { language: 'ko', index }]
+  ]);
+  if (!links.length || menuRoutes.some(([path]) => !path)) return;
+  const detailIndex = links.findIndex(link => link.dataset.page === 'projects') + 1;
+  const details = JSON.parse(document.getElementById('site-project-routes')?.textContent || '[]');
+  const detailRoutes = details.map(({ path, language }) => [path, { language, index: detailIndex }]);
+  const routes = new Map([...menuRoutes, ...detailRoutes].map(([path, info]) => [
+    normalizePath(new URL(path, location.href).pathname), info
+  ]));
   const routeFor = (url) => url.origin === location.origin && !url.search && !url.hash
     ? routes.get(normalizePath(url.pathname)) : undefined;
-  const metadata = ['meta[name="description"]', 'link[rel="canonical"]',
+  const metadata = ['meta[name="description"]', 'meta[name="robots"]', 'link[rel="canonical"]',
     'link[rel="alternate"][hreflang="en"]', 'link[rel="alternate"][hreflang="ko"]',
     'link[rel="alternate"][hreflang="x-default"]', 'meta[property="og:title"]',
     'meta[property="og:description"]', 'meta[property="og:url"]',
@@ -463,14 +466,16 @@ document.addEventListener('click', (event) => {
     const nextBrand = doc.querySelector('[data-site-brand]');
     const footer = doc.querySelector('body > footer');
     const skip = doc.querySelector('.skip-link');
-    if (!main || nextLinks.length !== 2 || !nextSwitch || !nextBrand || !footer || !skip) {
+    if (!main || nextLinks.length !== links.length || !nextSwitch || !nextBrand || !footer || !skip) {
       throw new Error('Unexpected page');
     }
     return {
       main: main.cloneNode(true), footer: footer.cloneNode(true),
       language: doc.documentElement.lang, title: doc.title, bodyClass: doc.body.className,
       navLabel: nextNav.getAttribute('aria-label'),
-      navLinks: nextLinks.map((link) => ({ href: link.getAttribute('href'), text: link.textContent })),
+      navLinks: nextLinks.map(link => ({
+        href: link.getAttribute('href'), text: link.textContent, current: link.getAttribute('aria-current')
+      })),
       switchHref: nextSwitch.getAttribute('href'), switchLabel: nextSwitch.getAttribute('aria-label'),
       brandHref: nextBrand.getAttribute('href'), brandLabel: nextBrand.getAttribute('aria-label'),
       skipText: skip.textContent,
@@ -537,11 +542,11 @@ document.addEventListener('click', (event) => {
         document.title = page.title;
         nav.setAttribute('aria-label', page.navLabel);
         links.forEach((link, index) => {
-          link.setAttribute('href', page.navLinks[index].href);
-          link.textContent = page.navLinks[index].text;
-          const current = link.dataset.page === targetRoute.page;
-          link.classList.toggle('font-semibold', current);
-          if (current) link.setAttribute('aria-current', 'page');
+          const item = page.navLinks[index];
+          link.setAttribute('href', item.href);
+          link.textContent = item.text;
+          link.classList.toggle('font-semibold', Boolean(item.current));
+          if (item.current) link.setAttribute('aria-current', item.current);
           else link.removeAttribute('aria-current');
         });
         languageSwitch.setAttribute('href', page.switchHref);
@@ -656,7 +661,7 @@ document.addEventListener('click', (event) => {
       }
     });
   }
-  const prefetch = () => routes.forEach((_, path) => {
+  const prefetch = () => menuRoutes.forEach(([path]) => {
     void loadPage(new URL(path, location.origin)).catch(() => {});
   });
   if ('requestIdleCallback' in window) requestIdleCallback(prefetch, { timeout: 1500 });

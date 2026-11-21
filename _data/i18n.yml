@@ -9,6 +9,7 @@ en:
   cv: CV
   main_navigation: Main navigation
   switch_language: Switch to Korean
+  language_unavailable: Language switching unavailable
   brand_home: WONIK — Home
   hello: "Hello, I'm"
   publications: Publications
@@ -59,6 +60,7 @@ ko:
   cv: 이력서
   main_navigation: 주요 메뉴
   switch_language: 영어로 전환
+  language_unavailable: 언어 전환을 사용할 수 없습니다
   brand_home: WONIK — 홈
   hello: 안녕하세요,
   publications: 논문
