@@ -1,21 +1,25 @@
 mod_url: https://mods.paradoxplaza.com/mods/168240/Windows
 downloads:
-  - label: Original (.blend)
+  - label: Original
     size: 324.0 MiB
+    triangles: '3,866,731'
     url: https://drive.google.com/file/d/1d8pV-kaQICqalgsuGqUpH9NkHvHGDl7-/view?usp=drivesdk
-  - label: LOD0 (.blend)
+  - label: High (LOD0)
     size: 91.5 MiB
+    triangles: '399,921'
     url: https://drive.google.com/file/d/1C7nmZf6HZCO2V_Q0n-V2BqKSJ7IZYWlm/view?usp=drivesdk
-  - label: LOD1 (.blend)
+  - label: Medium (LOD1)
     size: 22.8 MiB
+    triangles: '106,917'
     url: https://drive.google.com/file/d/1NpE0Ikjp-o1q0eKilb9aOQ1GAx6tzoWn/view?usp=drivesdk
-  - label: LOD2 (.blend)
+  - label: Low (LOD2)
     size: 6.7 MiB
+    triangles: '33,748'
     url: https://drive.google.com/file/d/1ahK3D2E3_SPQFuuxn5F3IBDzYsNt4AbL/view?usp=drivesdk
 gallery:
-  - image: south-stand
-    title: View from the south stand
-    alt: The pitch and patterned blue and orange seats seen from the south stand
+  - image: overview
+    title: Northeast aerial view
+    alt: An aerial view of the Big Bird model from the northeast, showing the two curved roofs and the pitch
     source: Mod listing
   - image: northwest-aerial
     title: Northwest aerial view

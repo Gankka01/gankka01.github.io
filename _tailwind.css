@@ -746,6 +746,26 @@ html[data-language-transition]::view-transition-new(root) {
     animation: none !important;
   }
 }
+
+.stadium-link,
+.stadium-link:hover {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+  transform: none;
+  transition: none;
+}
+.stadium-image-frame {
+  box-shadow: 4px 6px 12px rgb(15 23 42 / .17);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .stadium-gallery-image img {
+    transition: transform 240ms cubic-bezier(.22, .61, .36, 1);
+  }
+  .stadium-gallery-image:hover img {
+    transform: scale(1.06);
+  }
+}
+
 .cv-entry {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
