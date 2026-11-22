@@ -9,7 +9,7 @@
 <article class="publication-row flex flex-col md:flex-row gap-6 py-6" aria-labelledby="pub-{{ pub.id }}">
   <div class="w-40 md:w-1/5 flex-shrink-0">
     {% if pub.image %}
-    <div class="publication-image thumbnail-glow aspect-square overflow-hidden rounded-lg{% if page.page_id == 'home' %} home-thumbnail-border{% endif %}">
+    <div class="publication-image thumbnail-glow aspect-square overflow-hidden{% if page.page_id == 'home' %} home-thumbnail-border{% endif %}">
       <img src="{{ pub.image | relative_url }}" alt="{{ image_alt | escape }}" width="400" height="400" loading="lazy" class="block h-full w-full object-contain">
     </div>
     {% else %}
