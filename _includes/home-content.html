@@ -28,14 +28,14 @@
 {% if featured_projects.size > 0 %}
 <section class="pb-4 md:pb-6" aria-labelledby="featured-projects">
   <div class="mx-auto max-w-4xl px-6">
-    <h2 id="featured-projects" class="mb-5 font-display text-2xl font-semibold text-text">{{ ui.projects | escape }}</h2>
+    <h2 id="featured-projects" class="home-section-title mb-5 font-display font-semibold text-text">{{ ui.projects | escape }}</h2>
     {% include project-cards.html items=featured_projects lang=lang %}
   </div>
 </section>
 {% endif %}
 <section class="publications-section py-12 md:py-16" aria-labelledby="publications">
   <div class="max-w-4xl mx-auto px-6">
-    <h2 id="publications" class="font-display text-2xl font-semibold text-text mb-8">{{ ui.publications | escape }}</h2>
+    <h2 id="publications" class="home-section-title mb-8 font-display font-semibold text-text">{{ ui.publications | escape }}</h2>
     {% assign home_publications = site.data.publications | sort: "sort_date" | reverse %}
     {% for pub in home_publications %}
       {% include publication.html pub=pub %}

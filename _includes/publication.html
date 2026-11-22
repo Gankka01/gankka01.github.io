@@ -10,7 +10,7 @@
   <div class="w-40 md:w-1/5 flex-shrink-0">
     {% if pub.image %}
     <div class="publication-image thumbnail-glow aspect-square overflow-hidden rounded-lg{% if page.page_id == 'home' %} home-thumbnail-border{% endif %}">
-      <img src="{{ pub.image | relative_url }}" alt="{{ image_alt | escape }}" width="400" height="400" loading="lazy" class="block aspect-square w-full object-contain">
+      <img src="{{ pub.image | relative_url }}" alt="{{ image_alt | escape }}" width="400" height="400" loading="lazy" class="block h-full w-full object-contain">
     </div>
     {% else %}
     <div class="image-placeholder aspect-square w-full rounded-lg" aria-label="{{ ui.image_placeholder | escape }} {{ pub.image_label | escape }}">

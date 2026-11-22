@@ -100,8 +100,8 @@ html[lang="ko"] .profile-portrait + div h1 {
 html[lang="ko"] .cv-section-title {
   font-size: 1.6rem;
 }
-html[lang="ko"] .publications-section > div > h2 {
-  font-size: 1.25rem;
+html[lang="ko"] .publications-section .home-section-title {
+  font-size: 1.625rem;
 }
 html[lang="ko"] .cv > header h1 {
   font-size: 1.65rem;
@@ -284,6 +284,10 @@ a.github-link {
 }
 .publications-section {
   background: linear-gradient(to bottom, #fff, #f7f9fd 12%, #f7f9fd 88%, #fff);
+}
+.home-section-title {
+  font-size: 1.95rem;
+  line-height: 1.3;
 }
 .publication-row + .publication-row {
   border-top: 1px solid var(--color-border-subtle);
@@ -644,8 +648,14 @@ html[data-language-transition]::view-transition-new(root) {
   cursor: default;
   transition: transform 420ms cubic-bezier(.22, .61, .36, 1);
 }
-.home-thumbnail-border {
-  border: 3px solid var(--color-text);
+.home-thumbnail-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border: 1px solid var(--color-text);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .thumbnail-glow::after {
   --publication-glow-width: 16px;
