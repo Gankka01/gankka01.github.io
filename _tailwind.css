@@ -643,27 +643,10 @@ html[data-language-transition]::view-transition-new(root) {
 .thumbnail-glow {
   position: relative;
   isolation: isolate;
-  border-radius: var(--thumbnail-radius, 0px);
 }
 .publication-image {
-  --thumbnail-radius: var(--radius-lg);
   cursor: default;
   transition: transform 420ms cubic-bezier(.22, .61, .36, 1);
-}
-.home-thumbnail-border::before {
-  /* Scale a full-pixel stroke to retain a fractional edge on 1x displays. */
-  --stroke-scale: .75;
-  content: "";
-  position: absolute;
-  inset: 0 auto auto 0;
-  z-index: 2;
-  width: calc(100% / var(--stroke-scale));
-  height: calc(100% / var(--stroke-scale));
-  border: 1px solid var(--color-text);
-  border-radius: calc(var(--thumbnail-radius, 0px) / var(--stroke-scale));
-  transform: scale(var(--stroke-scale));
-  transform-origin: top left;
-  pointer-events: none;
 }
 .thumbnail-glow::after {
   --publication-glow-width: 16px;
@@ -843,6 +826,7 @@ html[lang="ko"] .project-card-title {
   transform: none;
   transition: none;
 }
+.home-thumbnail-shadow,
 .stadium-image-frame {
   box-shadow: 4px 6px 12px rgb(15 23 42 / .17);
 }
