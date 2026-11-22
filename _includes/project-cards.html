@@ -5,7 +5,7 @@
   {% if detail %}
   <li>
     <a href="{{ detail.url | relative_url }}" class="project-card no-underline">
-      <div class="project-card-image thumbnail-glow aspect-square overflow-hidden bg-surface-muted{% if page.page_id == 'home' %} home-thumbnail-shadow{% endif %}">
+      <div class="project-card-image thumbnail-glow thumbnail-shadow aspect-square overflow-hidden bg-surface-muted">
         <img src="{{ entry.image | relative_url }}" alt="" width="180" height="180" loading="lazy" decoding="async" class="block h-full w-full object-cover object-center">
       </div>
       <span class="project-card-title mt-2 block font-display text-base font-semibold text-text">{{ detail.title | escape }}</span>

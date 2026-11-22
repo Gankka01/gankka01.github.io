@@ -826,7 +826,7 @@ html[lang="ko"] .project-card-title {
   transform: none;
   transition: none;
 }
-.home-thumbnail-shadow,
+.thumbnail-shadow,
 .stadium-image-frame {
   box-shadow: 4px 6px 12px rgb(15 23 42 / .17);
 }
