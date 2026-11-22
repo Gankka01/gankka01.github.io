@@ -24,7 +24,7 @@ copy:
     status: Image {current} of {total}. {description}
   ko:
     venue: 수원 월드컵 경기장, 빅버드. 수원 삼성 블루윙즈의 홈 경기장.
-    release: Codex로 제작한 모델과 에셋을 시티즈 스카이라인 2에서 배포합니다.
+    release: Codex로 제작한 모델과 에셋은 시티즈 스카이라인 2에서 배포되었습니다.
     cover_alt: 남쪽 관중석에서 바라본 경기장과 파란색·주황색 좌석
     links: 링크
     mod: 패러독스 모드 · 시티즈 스카이라인 2

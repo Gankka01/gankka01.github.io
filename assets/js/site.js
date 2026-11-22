@@ -146,11 +146,12 @@ document.addEventListener('click', (event) => {
   scheduleBottom();
 })();
 
-// Touch feedback never captures scrolling; each paper gets one quiet entrance glow.
+// Touch feedback never captures scrolling; each thumbnail gets one entrance glow.
 (() => {
   const touchLayout = matchMedia('(hover: none) and (pointer: coarse)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const selector = '.publication-image, .profile-portrait';
+  const thumbnailSelector = '.thumbnail-glow';
+  const selector = `${thumbnailSelector}, .profile-portrait`;
   const timers = new Map();
   const revealedImages = new Set();
   let gesture;
@@ -182,7 +183,7 @@ document.addEventListener('click', (event) => {
         if (!element.classList.contains('is-touch-active')) element.classList.add('is-scroll-glowing');
       }
     }, { threshold: .25 });
-    document.querySelectorAll('.publication-image').forEach((element) => {
+    document.querySelectorAll(thumbnailSelector).forEach((element) => {
       if (!revealedImages.has(element.querySelector('img')?.getAttribute('src'))) observer.observe(element);
     });
   }
@@ -210,11 +211,11 @@ document.addEventListener('click', (event) => {
     element.classList.remove('is-scroll-glowing');
     element.classList.add('is-touch-active');
     clearTimeout(timers.get(element));
-    // Keep the paper's hover state for 0.5 s, then let CSS ease it back to rest.
+    // Keep the thumbnail's hover state for 0.5 s, then ease it back to rest.
     timers.set(element, setTimeout(() => {
       element.classList.remove('is-touch-active');
       timers.delete(element);
-    }, element.matches('.publication-image') ? 500 : 650));
+    }, element.matches(thumbnailSelector) ? 500 : 650));
   }, { passive: true });
   document.addEventListener('animationend', (event) => {
     if (event.animationName === 'publication-border-glimpse') event.target.classList.remove('is-scroll-glowing');
